@@ -1,0 +1,90 @@
+/* app css stylesheet */
+
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.main {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background:#F3F3F3;
+    overflow: hidden;
+}
+
+.side {
+    position: absolute;
+    width: 27%;
+    height: 100%;
+    top: 0;
+    right: -27%;
+    background:white;
+    -webkit-transition: right 1s;
+}
+
+.side .side-top{
+    background: #F3F3F3;
+    height:5%;
+    top:0;
+}
+
+.side .side-content{
+    height:85%;
+    overflow: auto;
+}
+
+.side .side-bottom{
+    height: 10%;
+    bottom: 0;
+    overflow:auto;
+}
+
+.side.side-show{
+    right:0;
+}
+
+.side .side-tag {
+    background: white;
+    position: absolute;
+    width: 25px;
+    height: 5%;
+    left: -25px;
+}
+
+.icon-container{
+    display:flex;
+    align-items:center;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
+.side-bottom > a+a:before{
+    padding: 0 5px;
+    color: #ccc;
+    content: "/\00a0";
+}
+
+.side-bottom a{
+    display: inline-block;
+}
+
+.side-bottom a:last-child{
+    color: #C0C0C0;
+    cursor:default;
+}
+
+.side-bottom a:not(:last-child):hover{
+    color:#C0C0C0;
+}
+
+.downStairIcon{
+    right:0;
+    position:absolute;
+}

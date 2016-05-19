@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body layout="column" ng-controller="ctrl">
+
+<md-toolbar class="md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+        <h3>Iotdm</h3>
+        <span flex></span>
+        <md-button md-no-ink class="md-raised">Expand All</md-button>
+
+        <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
+        </md-autocomplete>
+    </div>
+</md-toolbar>
+
+<div class="main">
+
+    <div class="side md-whiteframe-1dp"  ng-class="{'side-show':side.show}">
+        <div  class="icon-container side-tag md-whiteframe-1dp " ng-click="toggleSide()">
+            <span class="material-icons">{{side.icon}}</span>
+        </div>
+
+        <div class="icon-container side-top md-whiteframe-1dp">
+            <div flex="5" class="icon-container" ng-hide="isTopStair()" ng-click="upperStair()">
+                <div  class="material-icons">chevron_left</div>
+            </div>
+            <h3 flex="90" style="text-align: center">{{currentStairName()}}</h3>
+        </div>
+
+        <div class="side-content">
+            <md-input-container class="md-block" ng-repeat="(name,value) in currentStair()">
+                <label>{{name}}</label>
+
+                <input ng-if="!isComplex(value)" ng-model="value">
+                <input ng-if="isComplex(value)" disabled >
+
+                <span class="material-icons downStairIcon" ng-show="isComplex(value)"  ng-click="downStair(name)">chevron_right</span>
+            </md-input-container>
+        </div>
+
+        <div class="side-bottom md-whiteframe-1dp">
+            <md-divider></md-divider>
+            <a ng-repeat="value in side.stairs" ng-click="goToStair($index)">{{value}}</a>
+        </div>
+    </div>
+</div>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.min.js"></script>
+<script src="bower_components/angular-messages/angular-messages.min.js"></script>
+<script src="bower_components/angular-material/angular-material.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
