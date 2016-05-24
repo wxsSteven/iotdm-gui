@@ -1,0 +1,19 @@
+<md-input-container class="md-block" >
+
+    <label>{{name}}</label>
+
+    <div class="input">
+        <input ng-if="isValue" ng-model="value" ng-disabled="isDisabled" ng-required="isMandatory">
+        <input ng-if="!isValue" disabled>
+    </div>
+
+    <div class="icon">
+        <span class="material-icons downStairIcon"  ng-if="!isValue" ng-click="side.downStair(name)">chevron_right</span>
+    </div>
+    <div class="content">
+
+    </div>
+    <div class="error" ng-messages>
+        <div ng-message="required">This is Mandatory!</div>
+    </div>
+</md-input-container>
