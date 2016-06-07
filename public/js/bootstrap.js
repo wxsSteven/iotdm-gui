@@ -1,0 +1,5 @@
+(function (angular) {
+    angular.element(document).ready(function () {
+        angular.bootstrap(document, ['iotdmApp']);
+    });
+})(angular);

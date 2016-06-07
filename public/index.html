@@ -1,41 +1,96 @@
 <!DOCTYPE html>
 
-<html lang="en" ng-app="app">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Iotdm Gui</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" href="bower_components/next-bower/css/next.css"/>
     <link rel="stylesheet" href="css/app.css">
-
 </head>
-<body layout="column" ng-controller="ctrl">
+<body ng-controller="MainCtrl">
 
-<md-toolbar class="md-whiteframe-1dp">
-    <div class="md-toolbar-tools">
-        <h3>Iotdm</h3>
-        <span flex></span>
-        <md-button md-no-ink class="md-raised">Expand All</md-button>
+<div layout="column" class="container">
+    <md-toolbar class="md-whiteframe-1dp">
+        <div class="md-toolbar-tools">
+            <h3>Iotdm</h3>
+            <span flex></span>
+            <md-button md-no-ink class="md-raised">Expand All</md-button>
 
-        <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
-        </md-autocomplete>
-    </div>
-</md-toolbar>
+            <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
+            </md-autocomplete>
+        </div>
+    </md-toolbar>
 
-<div id="main">
-    <onem2m-topology data="data" node="node"></onem2m-topology>
-    <side node="node"></side>
+    <section layout="row" flex>
+        <div id="topology" flex></div>
+
+        <div class="side md-whiteframe-1dp" ng-controller="SidePanelCtrl" ng-class="{'side-hide':hide}" layout="column">
+
+            <div class="show-tag icon-container md-whiteframe-1dp" ng-click="toggle()">
+                <span class="material-icons" ng-hide="hide">chevron_right</span>
+                <span class="material-icons" ng-show="hide">chevron_left</span>
+            </div>
+
+            <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
+                <span class="material-icons">chevron_left</span>
+            </div>
+
+            <div class="side-top md-whiteframe-1dp" layout="row">
+                <h3>{{yourName()}}</h3>
+            </div>
+
+            <div class="side-content md-whiteframe-1dp">
+                <div ng-repeat="(name,value) in yourself()">
+                    <md-input-container class="md-block">
+                        <label>{{name}}</label>
+
+                        <div class="input">
+                            <input ng-if="isValue(value)" ng-model="value" ng-disabled="isDisabled" ng-required="isMandatory">
+                            <input ng-if="!isValue(value)" disabled>
+                        </div>
+
+                        <div class="icon">
+                            <span class="material-icons downStairIcon" ng-if="!isValue(value)" ng-click="children(name)">chevron_right</span>
+                        </div>
+                        <div class="content">
+
+                        </div>
+                        <div class="error" ng-messages>
+                            <div ng-message="required">This is Mandatory!</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="side-bottom md-whiteframe-1dp">
+                <a ng-repeat="value in path" ng-click="ancestor($index)">{{value}}</a>
+            </div>
+        </div>
+    </section>
 </div>
 
-<script src="bower_components/next-bower/js/next.js"></script>
 <script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/next-bower/js/next.js"></script>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
 <script src="bower_components/angular-aria/angular-aria.min.js"></script>
 <script src="bower_components/angular-messages/angular-messages.min.js"></script>
 <script src="bower_components/angular-material/angular-material.min.js"></script>
-<script src="js/onem2m.js"></script>
-<script src="js/app.js"></script>
+<script src="bower_components/restangular/dist/restangular.js"></script>
+
+<script src="js/app.module.js"></script>
+<script src="js/services/Onem2mService.js"></script>
+<script src="js/services/NxService.js"></script>
+<script src="js/services/TreeLayoutService.js"></script>
+<script src="js/services/CRUDSerivice.js"></script>
+<script src="js/services/DataStoreService.js"></script>
+<script src="js/services/TopologyService.js"></script>
+
+<script src="js/controllers/MainCtrl.js"></script>
+<script src="js/controllers/SidePanelCtrl.js"></script>
+<script src="js/bootstrap.js"></script>
 </body>
 </html>
 

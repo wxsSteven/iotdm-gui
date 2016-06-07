@@ -1,93 +1,69 @@
-/* app css stylesheet */
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url(../bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2) format('woff2');
-}
 
-.material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-}
 /* fallback */
 
 
-html, body {
+html, body{
     height: 100%;
     width: 100%;
     padding: 0;
     margin: 0;
+    overflow: hidden;
 }
-
-/*.main {*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*position: relative;*/
-    /*background:#F3F3F3;*/
-    /*overflow: auto;*/
-/*}*/
-
-.side {
-    position: absolute;
-    width: 27%;
+.container{
     height: 100%;
-    top: 0;
-    right: -27%;
-    background:white;
-    -webkit-transition: right 1s;
-    z-index: 1;
-}
-
-.side .side-top{
-    background: #F3F3F3;
-    height:5%;
-    top:0;
-}
-
-.side .side-content{
-    height:85%;
-    overflow: auto;
-}
-
-.side .side-bottom{
-    height: 10%;
-    bottom: 0;
-    overflow:auto;
-}
-
-.side.side-show{
-    right:0;
-}
-
-.side .side-tag {
-    background: white;
-    position: absolute;
-    width: 25px;
-    height: 5%;
-    left: -25px;
-}
-
-.icon-container{
-    display:flex;
-    align-items:center;
+    width: 100%;
+    overflow: hidden;
 }
 
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
     cursor: pointer;
+}
+
+.side {
+    position:relative;
+    width:20%;
+    background:white;
+    -webkit-transition: all 1s;
+}
+
+.side .show-tag {
+    background: white;
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    left: -25px;
+}
+.side .nav-tag {
+    position: absolute;
+    width: 25px;
+    height: 50px;
+    left: 0px;
+}
+
+.side .side-top{
+    background: #F3F3F3;
+    height:50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.side .side-content {
+    flex-grow: 8;
+    overflow: auto;
+}
+.side .side-bottom{
+    height:100px;
+}
+
+.side.side-hide{
+    width:0;
+}
+
+.icon-container{
+    display:flex;
+    align-items:center;
 }
 
 .side-bottom > a+a:before{
@@ -128,10 +104,3 @@ md-input-container .md-errors-spacer{
     min-height:12px;
 }
 
-#main {
-    position: relative;
-    background:#F3F3F3;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-}

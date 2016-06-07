@@ -9,7 +9,7 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
 
     $scope.$watch('node', function (node) {
         $scope.node = node;
-    })
+    });
 }).directive("side", function () {
     return {
         restrict: 'E',
@@ -38,7 +38,7 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
                             $scope.side.icon = chevrons[1];
                         }
                     }
-                }
+                };
             }();
 
             $scope.goToStair = function (index) {
@@ -98,43 +98,6 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
                 }
             });
             this.downStair = $scope.downStair;
-        }
-    }
-}).directive('onem2mInputContainer', function (InterpretName) {
-    var isValue = function (value) {
-        return !angular.isObject(value) && !angular.isArray(value);
-    };
-
-    var isDate = function (name) {
-
-    };
-
-    var isEnum = function (name, value) {
-
-    };
-
-    return {
-        restrict: 'E',
-        //todo remove the require
-        require: ["^^side"],
-        templateUrl: "./template/onem2mInputContainer.html",
-        scope: {
-            key: "=",
-            value: "="
-        },
-        link: function (scope, element, attrs, controllers) {
-            scope.side = controllers[0];
-
-            var nameAttr = InterpretName(scope.key);
-
-            scope.name = nameAttr.name;
-            scope.description = nameAttr.description;
-            scope.isMandatory = nameAttr.mandatory;
-            scope.isDisabled = nameAttr.disabled;
-
-            scope.isValue = isValue(scope.value);
-            scope.isDate = isDate(scope.name);
-            scope.isEnum = isEnum(scope.name, scope.value);
         }
     }
 }).service('nx', function () {
@@ -273,12 +236,6 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
                 return result;
             }
 
-            nx.define("Onem2mNode", nx.graphic.Topology.Node, {
-                view: function (view) {
-
-                    return view;
-                }
-            });
 
             nx.define("nx.tree", nx.ui.Component, {
                 properties: {
@@ -297,15 +254,12 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
                         type: 'nx.graphic.Topology',
                         props: {
                             adaptive: true,
-                            // nodeInstanceClass:"Onem2mNode",
                             nodeConfig: {
                                 label: function (vertex) {
                                     return vertex.get(onem2mLabel());
                                 },
                                 iconType: '{#icon}'
                             },
-                            width: document.getElementById('main').offsetWidth,
-                            height: document.getElementById('main').offsetHeight,
                             showIcon: true,
                             data: data,
                             identityKey: onem2mId()
@@ -347,6 +301,6 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
             app.container(document.getElementById('main'));
             app.start();
         }
-    }
+    };
 });
 
