@@ -1,0 +1,37 @@
+<div ng-controller="SidePanelRetrieveCSECtrl" class="h100" layout="column">
+    <div class="side-panel-top md-whiteframe-1dp" layout="row">
+        <h3>Retrieve CSE</h3>
+    </div>
+    <div class="side-panel-content md-whiteframe-1dp">
+        <form name="form">
+            <md-input-container class="md-block">
+                <label>Host</label>
+                <div class="input">
+                    <input ng-model="host" name="host" required>
+                </div>
+                <div class="error" ng-messages>
+                    <div ng-message="required">This is Mandatory!</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Port</label>
+                <div class="input">
+                    <input ng-model="port" name="port" required>
+                </div>
+                <div class="error" ng-messages>
+                    <div ng-message="required">This is Mandatory!</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>CSE Name</label>
+                <div class="input">
+                    <input ng-model="CSEName" name="CSEName" required>
+                </div>
+                <div class="error" ng-messages>
+                    <div ng-message="required">This is Mandatory!</div>
+                </div>
+            </md-input-container>
+            <md-button ng-disabled="form.$invalid" class="md-raised md-primary submit" ng-click="submit(host,port,CSEName)">Submit</md-button>
+        </form>
+    </div>
+</div>

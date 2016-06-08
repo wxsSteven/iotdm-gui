@@ -1,96 +1,85 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Iotdm Gui</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="bower_components/next-bower/css/next.css"/>
+    <link rel="stylesheet" href="bower_components/next-bower/css/next.css" />
     <link rel="stylesheet" href="css/app.css">
 </head>
-<body ng-controller="MainCtrl">
 
-<div layout="column" class="container">
-    <md-toolbar class="md-whiteframe-1dp">
-        <div class="md-toolbar-tools">
-            <h3>Iotdm</h3>
-            <span flex></span>
-            <md-button md-no-ink class="md-raised">Expand All</md-button>
+<body ng-controller="IotdmGuiCtrl">
 
-            <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
-            </md-autocomplete>
-        </div>
-    </md-toolbar>
-
-    <section layout="row" flex>
-        <div id="topology" flex></div>
-
-        <div class="side md-whiteframe-1dp" ng-controller="SidePanelCtrl" ng-class="{'side-hide':hide}" layout="column">
-
-            <div class="show-tag icon-container md-whiteframe-1dp" ng-click="toggle()">
-                <span class="material-icons" ng-hide="hide">chevron_right</span>
-                <span class="material-icons" ng-show="hide">chevron_left</span>
+    <div layout="column" class="container">
+        <md-toolbar class="md-whiteframe-1dp toolbar-main">
+            <div class="md-toolbar-tools toolbar-main">
+                <span class="title">Iotdm</span>
+                <span flex></span>
+                <!-- <md-button md-no-ink class="md-raised">Expand All</md-button>
+                <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
+                </md-autocomplete> -->
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('retrieve cse')" ng-hide="isSelect">Retrieve CSE</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('create')" ng-show="isSelect">Create</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('retrieve')" ng-show="isSelect">Retrieve</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('update')" ng-show="isSelect">Update</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('delete')" ng-show="isSelect">Delete</md-button>
             </div>
+        </md-toolbar>
 
-            <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
-                <span class="material-icons">chevron_left</span>
-            </div>
-
-            <div class="side-top md-whiteframe-1dp" layout="row">
-                <h3>{{yourName()}}</h3>
-            </div>
-
-            <div class="side-content md-whiteframe-1dp">
-                <div ng-repeat="(name,value) in yourself()">
-                    <md-input-container class="md-block">
-                        <label>{{name}}</label>
-
-                        <div class="input">
-                            <input ng-if="isValue(value)" ng-model="value" ng-disabled="isDisabled" ng-required="isMandatory">
-                            <input ng-if="!isValue(value)" disabled>
-                        </div>
-
-                        <div class="icon">
-                            <span class="material-icons downStairIcon" ng-if="!isValue(value)" ng-click="children(name)">chevron_right</span>
-                        </div>
-                        <div class="content">
-
-                        </div>
-                        <div class="error" ng-messages>
-                            <div ng-message="required">This is Mandatory!</div>
-                        </div>
-                    </md-input-container>
+        <section layout="row" flex>
+            <div id="topology" flex></div>
+            <section class="side-panel md-whiteframe-1dp" ng-class="{'side-panel-hide':sidePanel.hide}" class="h100 w100">
+                <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="sidePanel.hide" ng-click="closeSidePanel()">
+                    <span class="material-icons">chevron_right</span>
                 </div>
-            </div>
+                <div ng-show="sidePanel.mode=='info'" ng-include="'template/side-panel-info.tplt.html'" class="h100 w100"></div>
+                <div ng-show="sidePanel.mode=='retrieve cse'" ng-include="'template/side-panel-retrieve-cse.tplt.html'" class="h100 w100"></div>
+                <div ng-show="sidePanel.mode=='create'" ng-include="'template/side-panel-create.tplt.html'" class="h100 w100"></div>
+                <div ng-show="sidePanel.mode=='retrieve'" ng-include="'template/side-panel-retrieve.tplt.html'" class="h100 w100"></div>
+                <div ng-show="sidePanel.mode=='update'" ng-include="'template/side-panel-update.tplt.html'" class="h100 w100"></div>
+                <div ng-show="sidePanel.mode=='delete'" ng-include="'template/side-panel-delete.tplt.html'" class="h100 w100"></div>
+            </section>
+        </section>
+    </div>
 
-            <div class="side-bottom md-whiteframe-1dp">
-                <a ng-repeat="value in path" ng-click="ancestor($index)">{{value}}</a>
-            </div>
-        </div>
-    </section>
-</div>
+    //vendors
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/next-bower/js/next.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
 
-<script src="bower_components/d3/d3.js"></script>
-<script src="bower_components/next-bower/js/next.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-aria/angular-aria.min.js"></script>
-<script src="bower_components/angular-messages/angular-messages.min.js"></script>
-<script src="bower_components/angular-material/angular-material.min.js"></script>
-<script src="bower_components/restangular/dist/restangular.js"></script>
+    //modules
+    <script src="js/app.module.js"></script>
 
-<script src="js/app.module.js"></script>
-<script src="js/services/Onem2mService.js"></script>
-<script src="js/services/NxService.js"></script>
-<script src="js/services/TreeLayoutService.js"></script>
-<script src="js/services/CRUDSerivice.js"></script>
-<script src="js/services/DataStoreService.js"></script>
-<script src="js/services/TopologyService.js"></script>
+    //services
+    <script src="js/services/onem2m-crud.service.js"></script>
+    <script src="js/services/onem2m-helper.service.js"></script>
+    <script src="js/services/datastore-onem2m-data-adaptor.service.js"></script>
+    <script src="js/services/nx.service.js"></script>
+    <script src="js/services/tree-layout.service.js"></script>
+    <script src="js/services/onem2m-crud.service.js"></script>
+    <script src="js/services/datastore.service.js"></script>
+    <script src="js/services/topology.service.js"></script>
 
-<script src="js/controllers/MainCtrl.js"></script>
-<script src="js/controllers/SidePanelCtrl.js"></script>
-<script src="js/bootstrap.js"></script>
+    //filters
+    <script src="js/filter/short-to-long.filter.js"></script>
+
+    //ctrls
+    <script src="js/controllers/iotdm-gui.controller.js"></script>
+    <script src="js/controllers/side-panel-info.controller.js"></script>
+    <script src="js/controllers/side-panel-create.controller.js"></script>
+    <script src="js/controllers/side-panel-retrieve.controller.js"></script>
+    <script src="js/controllers/side-panel-update.controller.js"></script>
+    <script src="js/controllers/side-panel-delete.controller.js"></script>
+    <script src="js/controllers/side-panel-retrieve-cse.controller.js"></script>
+    <script src="js/bootstrap.js"></script>
 </body>
-</html>
 
+</html>

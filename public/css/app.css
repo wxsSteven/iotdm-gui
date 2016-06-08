@@ -1,6 +1,36 @@
 
 /* fallback */
 
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'), local('MaterialIcons-Regular'),url(/font/MaterialIcons-Regular.woff2) format('woff2')
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
 
 html, body{
     height: 100%;
@@ -9,6 +39,23 @@ html, body{
     margin: 0;
     overflow: hidden;
 }
+
+.toolbar-main {
+  background-color: #000000;
+}
+
+.title {
+  font-weight: 800;
+}
+
+.h100{
+  height:100%;
+}
+
+.w100{
+  width:100%;
+}
+
 .container{
     height: 100%;
     width: 100%;
@@ -21,44 +68,67 @@ html, body{
     cursor: pointer;
 }
 
-.side {
+.side-panel {
     position:relative;
     width:20%;
     background:white;
     -webkit-transition: all 1s;
 }
 
-.side .show-tag {
+.md-button.animate-hide{
+  -webkit-transition: all 0.5s;
+  opacity:1;
+}
+
+.md-button.animate-hide.ng-hide{
+  opacity:0
+}
+
+.side-panel .show-tag {
     background: white;
     position: absolute;
     width: 25px;
     height: 50px;
     left: -25px;
 }
-.side .nav-tag {
+.side-panel-top .nav-tag {
     position: absolute;
     width: 25px;
     height: 50px;
     left: 0px;
 }
 
-.side .side-top{
+.side-panel-top{
     background: #F3F3F3;
     height:50px;
+    width:100%;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-.side .side-content {
-    flex-grow: 8;
+.side-panel-content {
+    flex: 1;
     overflow: auto;
 }
-.side .side-bottom{
+.side-panel-bottom{
     height:100px;
 }
 
-.side.side-hide{
+.side-panel.side-panel-hide{
     width:0;
+}
+.submit{
+    margin:0;
+    padding:0;
+    opacity: 1;
+    width:100%;
+    -webkit-transition: all 1s;
+}
+
+.submit.ng-hide{
+  opacity:0;
+  -webkit-transition: all 1s;
 }
 
 .icon-container{
@@ -66,26 +136,26 @@ html, body{
     align-items:center;
 }
 
-.side-bottom > a+a:before{
+.breadcrumb > a+a:before{
     padding: 0 5px;
     color: #ccc;
     content: "/\00a0";
 }
 
-.side-bottom a{
+.breadcrumb a{
     display: inline-block;
 }
 
-.side-bottom a:last-child{
+.breadcrumb a:last-child{
     color: #C0C0C0;
     cursor:default;
 }
 
-.side-bottom a:not(:last-child):hover{
+.breadcrumb a:not(:last-child):hover{
     color:#C0C0C0;
 }
 
-.downStairIcon{
+.material-icons.right{
     right:0;
     position:absolute;
 }
@@ -103,4 +173,3 @@ html, body{
 md-input-container .md-errors-spacer{
     min-height:12px;
 }
-

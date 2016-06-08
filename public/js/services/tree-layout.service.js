@@ -38,6 +38,6 @@
             }
         }
     }
-    TreeLayoutService.$inject=['Onem2mService'];
+    TreeLayoutService.$inject=['Onem2mHelperService'];
     app.service('TreeLayoutService',TreeLayoutService);
 })(app,d3);
