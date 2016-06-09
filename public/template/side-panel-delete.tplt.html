@@ -1,16 +1,16 @@
-  <div ng-controller="SidePanelDeleteCtrl" class="h100" layout="column">
-    <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
-        <span class="material-icons">chevron_left</span>
-    </div>
+<div ng-controller="SidePanelDeleteCtrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <h3>Delete</h3>
+        <h3 class="title" flex>{{yourName()|shortToLong}}</h3>
+        <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
+            <span class="material-icons">chevron_left</span>
+        </div>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in yourself()">
+        <div ng-repeat="(name,value) in yourself() as you">
             <md-input-container class="md-block">
                 <label>{{name|shortToLong}}</label>
                 <div class="input">
-                    <input ng-if="isValue(value)" ng-model="value">
+                    <input ng-if="isValue(value)" ng-model="you[name]">
 
                     <div ng-if="!isValue(value)">
                         <input disabled>
@@ -25,6 +25,7 @@
                 </div>
             </md-input-container>
         </div>
+        <md-button ng-click="submit(request)"class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
     </div>
     <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
         <a ng-repeat="value in path" ng-click="ancestor($index)">{{value|shortToLong}}</a>

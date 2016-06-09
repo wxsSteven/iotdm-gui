@@ -706,6 +706,437 @@
         "contentSerialization": "csz"
     };
 
+    var requestPrimitive = {
+        1: {
+            "operation": 1,
+            "to": null,
+            "from": null,
+            "requestIdentifier": null,
+            "resourceType": null,
+            "primitiveContent": null,
+            role: null,
+            originatingTimestamp: null,
+            requestExpirationTimestamp: null,
+            resultExpirationTimestamp: null,
+            operationExecutionTime: null,
+            responseType: {
+                responseTypeValue: null,
+                notificationURI: [null]
+            },
+            resultPersistence: null,
+            resultContent: null,
+            eventCategory: null,
+            deliveryAggregation: null,
+            groupRequestIdentifier: null,
+        },
+        2: {
+            "operation": 2,
+            "to": null,
+            "from": null,
+            "requestIdentifier": null,
+            role: null,
+            originatingTimestamp: null,
+            requestExpirationTimestamp: null,
+            resultExpirationTimestamp: null,
+            operationExecutionTime: null,
+            responseType: {
+                responseTypeValue: null,
+                notificationURI: [null]
+            },
+            resultPersistence: null,
+            resultContent: null,
+            eventCategory: null,
+            deliveryAggregation: null,
+            groupRequestIdentifier: null,
+            filterCriteria: {
+                createdBefore: null,
+                createdAfter: null,
+                modifiedSince: null,
+                unmodifiedSince: null,
+                stateTagSmaller: null,
+                stateTagBigger: null,
+                expireBefore: null,
+                expireAfter: null,
+                labels: [null],
+                resourceType: null,
+                sizeAbove: null,
+                sizeBelow: null,
+                contentType: [null],
+                attribute: [{
+                    name: null,
+                    value: null
+                }],
+                filterUsage: null,
+                limit: null
+            },
+            discoveryResultType: null
+        },
+        3: {
+            "operation": 3,
+            "to": null,
+            "from": null,
+            "requestIdentifier": null,
+            "primitiveContent": null,
+            role: null,
+            originatingTimestamp: null,
+            requestExpirationTimestamp: null,
+            resultExpirationTimestamp: null,
+            operationExecutionTime: null,
+            responseType: {
+                responseTypeValue: null,
+                notificationURI: [null]
+            },
+            resultPersistence: null,
+            resultContent: null,
+            eventCategory: null,
+            deliveryAggregation: null,
+            groupRequestIdentifier: null,
+            filterCriteria: {
+                createdBefore: null,
+                createdAfter: null,
+                modifiedSince: null,
+                unmodifiedSince: null,
+                stateTagSmaller: null,
+                stateTagBigger: null,
+                expireBefore: null,
+                expireAfter: null,
+                labels: [null],
+                resourceType: null,
+                sizeAbove: null,
+                sizeBelow: null,
+                contentType: [null],
+                attribute: [{
+                    name: null,
+                    value: null
+                }],
+                filterUsage: null,
+                limit: null
+            }
+        },
+        4: {
+            "operation": 4,
+            "to": null,
+            "from": null,
+            "requestIdentifier": null,
+            role: null,
+            originatingTimestamp: null,
+            requestExpirationTimestamp: null,
+            resultExpirationTimestamp: null,
+            operationExecutionTime: null,
+            responseType: {
+                responseTypeValue: null,
+                notificationURI: [null]
+            },
+            resultPersistence: null,
+            resultContent: null,
+            eventCategory: null,
+            deliveryAggregation: null,
+            groupRequestIdentifier: null,
+            filterCriteria: {
+                createdBefore: null,
+                createdAfter: null,
+                modifiedSince: null,
+                unmodifiedSince: null,
+                stateTagSmaller: null,
+                stateTagBigger: null,
+                expireBefore: null,
+                expireAfter: null,
+                labels: [null],
+                resourceType: null,
+                sizeAbove: null,
+                sizeBelow: null,
+                contentType: [null],
+                attribute: [{
+                    name: null,
+                    value: null
+                }],
+                filterUsage: null,
+                limit: null
+            }
+        }
+    }
+    var accessControlPolicy = {
+        1: {
+            resourceName: null,
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            "privileges": {
+                accessControlRule: [{
+                    accessControlOriginators: [null],
+                    accessControlOperations: null,
+                    accessControlContexts: [{
+                        accessControlWindow: [null],
+                        accessControlIpAddresses: {
+                            ipv4Addresses: [null],
+                            ipv6Addresses: [null]
+                        },
+                        accessControlLocationRegion: {
+                            countryCode: [null],
+                            circRegion: [null]
+                        }
+                    }]
+                }]
+            },
+            "selfPrivileges": {
+                accessControlRule: [{
+                    accessControlOriginators: [null],
+                    accessControlOperations: null,
+                    accessControlContexts: [{
+                        accessControlWindow: [null],
+                        accessControlIpAddresses: {
+                            ipv4Addresses: [null],
+                            ipv6Addresses: [null]
+                        },
+                        accessControlLocationRegion: {
+                            countryCode: [null],
+                            circRegion: [null]
+                        }
+                    }]
+                }]
+            }
+        },
+        3: {
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            privileges: {
+                accessControlRule: [{
+                    accessControlOriginators: [null],
+                    accessControlOperations: null,
+                    accessControlContexts: [{
+                        accessControlWindow: [null],
+                        accessControlIpAddresses: {
+                            ipv4Addresses: [null],
+                            ipv6Addresses: [null]
+                        },
+                        accessControlLocationRegion: {
+                            countryCode: [null],
+                            circRegion: [null]
+                        }
+                    }]
+                }]
+            },
+            selfPrivileges: {
+                accessControlRule: [{
+                    accessControlOriginators: [null],
+                    accessControlOperations: null,
+                    accessControlContexts: [{
+                        accessControlWindow: [null],
+                        accessControlIpAddresses: {
+                            ipv4Addresses: [null],
+                            ipv6Addresses: [null]
+                        },
+                        accessControlLocationRegion: {
+                            countryCode: [null],
+                            circRegion: [null]
+                        }
+                    }]
+                }]
+            }
+        }
+    }
+    var AE = {
+        1: {
+            rn: null,
+            acp: [null],
+            et: null,
+            lbl: [null],
+            at: [null],
+            aa: [null],
+            apn: null,
+            api: null,
+            poa: [null],
+            or: null,
+            rr: null
+        },
+        3: {
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            appName: null,
+            pointOfAccess: [null],
+            ontologyRef: null
+        }
+    }
+    var container = {
+        1: {
+            resourceName: null,
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            creator: null,
+            maxNrOfInstances: null,
+            maxByteSize: null,
+            maxInstanceAge: null,
+            locationID: null,
+            ontologyRef: null
+        },
+        3: {
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            maxNrOfInstances: null,
+            maxByteSize: null,
+            maxInstanceAge: null,
+            locationID: null,
+            ontologyRef: null
+        }
+    }
+    var contentInstance = {
+        1: {
+            resourceName: null,
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            creator: null,
+            contentInfo: null,
+            contentSize: null,
+            ontologyRef: null,
+            "content": null
+        }
+    }
+    var node = {
+        1: {
+            resourceName: null,
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            "nodeID": null,
+            hostedCSELink: null
+        },
+        3: {
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            nodeID: null
+        }
+    }
+    var group = {
+        1: {
+            resourceName: null,
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            creator: null,
+            memberType: null,
+            "maxNrOfMembers": null,
+            "memberIDs": [null],
+            membersAccessControlPolicyIDs: [null],
+            consistencyStrategy: null,
+            groupName: null
+        },
+        3: {
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            announceTo: [null],
+            announcedAttribute: [null],
+            maxNrOfMembers: null,
+            memberIDs: [null],
+            membersAccessControlPolicyIDs: [null],
+            groupName: null
+        }
+    }
+    var subscription = {
+        1: {
+            resourceName: null,
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            eventNotificationCriteria: {
+                createdBefore: null,
+                createdAfter: null,
+                modifiedSince: null,
+                unmodifiedSince: null,
+                stateTagSmaller: null,
+                stateTagBigger: null,
+                expireBefore: null,
+                expireAfter: null,
+                sizeAbove: null,
+                sizeBelow: null,
+                operationMonitor: [null],
+                attribute: [{
+                    name: null,
+                    value: null
+                }],
+                notificationEventType: [null]
+            },
+            expirationCounter: null,
+            "notificationURI": [null],
+            groupID: null,
+            notificationForwardingURI: null,
+            batchNotify: {
+                name: null,
+                duration: null
+            },
+            rateLimit: {
+                maxNrOfNotify: null,
+                timeWindow: null
+            },
+            preSubscriptionNotify: null,
+            pendingNotification: null,
+            notificationStoragePriority: null,
+            latestNotify: null,
+            notificationContentType: null,
+            notificationEventCat: null,
+            creator: null,
+            subscriberURI: null
+        },
+        3: {
+            accessControlPolicyIDs: [null],
+            expirationTime: null,
+            labels: [null],
+            eventNotificationCriteria: {
+                createdBefore: null,
+                createdAfter: null,
+                modifiedSince: null,
+                unmodifiedSince: null,
+                stateTagSmaller: null,
+                stateTagBigger: null,
+                expireBefore: null,
+                expireAfter: null,
+                sizeAbove: null,
+                sizeBelow: null,
+                operationMonitor: [null],
+                attribute: [{
+                    name: null,
+                    value: null
+                }],
+                notificationEventType: [null]
+            },
+            expirationCounter: null,
+            notificationURI: [null],
+            groupID: null,
+            notificationForwardingURI: null,
+            batchNotify: {
+                name: null,
+                duration: null
+            },
+            rateLimit: {
+                maxNrOfNotify: null,
+                timeWindow: null
+            },
+            pendingNotification: null,
+            notificationStoragePriority: null,
+            latestNotify: null,
+            notificationContentType: null,
+            notificationEventCat: null
+        }
+    }
+
+
     var resourceTypeReverse = reverse(resourceType);
     var cseTypeIDReverse = reverse(cseTypeID);
     var locationSourceReverse = reverse(locationSource);
@@ -716,39 +1147,52 @@
     var discResTypeReverse = reverse(discResType);
     var responseTypeReverse = reverse(responseType);
     var shortToLongDictionary = reverse(longToShortDictionary);
+    var resources = {
+        accessControlPolicy: accessControlPolicy,
+        AE: AE,
+        container: container,
+        contentInstance: contentInstance,
+        node: node,
+        group: group,
+        subscription: subscription
+    };
 
     function Onem2mHelperService($http) {
-        this.resourceType=resourceType;
-        this.cseTypeID=cseTypeID;
-        this.locationSource=locationSource;
-        this.stdEventCats=stdEventCats;
-        this.operation=operation;
-        this.responseType=responseType;
-        this.resultContent=resultContent;
-        this.discResType=discResType;
-        this.responseStatusCode=responseStatusCode;
-        this.requestStatus=requestStatus;
-        this.memberType=memberType;
-        this.consistencyStrategy=consistencyStrategy;
-        this.cmdType=cmdType;
-        this.execModetType=execModetType;
-        this.execStatusType=execStatusType;
-        this.execResultType=execResultType;
-        this.pendingNotification=pendingNotification;
-        this.notificationContentType=notificationContentType;
-        this.notificationEventType=notificationEventType;
-        this.status=status;
-        this.batteryStatus=batteryStatus;
-        this.mgmtDefinition=mgmtDefinition;
-        this.logTypeId=logTypeId;
-        this.logStatus=logStatus;
-        this.eventType=eventType;
-        this.statsRuleStatusType=statsRuleStatusType;
-        this.statModelType=statModelType;
-        this.encodingType=encodingType;
-        this.accessControlOperations=accessControlOperations;
-        this.SRole_ID=SRole_ID;
-        this.filterUsage=filterUsage;
+        this.NULL = Math.random();
+
+        this.resourceType = resourceType;
+        this.cseTypeID = cseTypeID;
+        this.locationSource = locationSource;
+        this.stdEventCats = stdEventCats;
+        this.operation = operation;
+        this.responseType = responseType;
+        this.resultContent = resultContent;
+        this.discResType = discResType;
+        this.responseStatusCode = responseStatusCode;
+        this.requestStatus = requestStatus;
+        this.memberType = memberType;
+        this.consistencyStrategy = consistencyStrategy;
+        this.cmdType = cmdType;
+        this.execModetType = execModetType;
+        this.execStatusType = execStatusType;
+        this.execResultType = execResultType;
+        this.pendingNotification = pendingNotification;
+        this.notificationContentType = notificationContentType;
+        this.notificationEventType = notificationEventType;
+        this.status = status;
+        this.batteryStatus = batteryStatus;
+        this.mgmtDefinition = mgmtDefinition;
+        this.logTypeId = logTypeId;
+        this.logStatus = logStatus;
+        this.eventType = eventType;
+        this.statsRuleStatusType = statsRuleStatusType;
+        this.statModelType = statModelType;
+        this.encodingType = encodingType;
+        this.accessControlOperations = accessControlOperations;
+        this.SRole_ID = SRole_ID;
+        this.filterUsage = filterUsage;
+
+        this.getRequestPrimitiveByOperation = getRequestPrimitiveByOperation;
 
         this.id = id;
         this.parentId = parentId;
@@ -757,6 +1201,10 @@
         this.children = children;
         this.toShort = toShort;
         this.toLong = toLong;
+        this.toOnem2mJson = toOnem2mJson;
+        this.assignFrom = assignFrom;
+        this.assignRequestIdentifier = assignRequestIdentifierHelper();
+        this.getResourceByResourceTypeAndOperation = getResourceByResourceTypeAndOperation;
 
         function children(node) {
             return node.value.ch;
@@ -808,10 +1256,74 @@
         }
 
         function toLong(short) {
-            if (short) {
+            if (short != null || short != undefined) {
                 short = short.toString();
                 short = short.startsWith(PREFIX) ? short.slice(PREFIX.length) : short;
                 return shortToLongDictionary[short] ? shortToLongDictionary[short] : short;
+            }
+        }
+
+        function getRequestPrimitiveByOperation(operation) {
+            return angular.copy(requestPrimitive[operation])
+        }
+
+        function toOnem2mJson(json) {
+
+            function handleArray(json) {
+              if (angular.isArray(json)) {
+                  json.shift();
+                  json.forEach(function(j){
+                    handleArray(j);
+                  })
+              }else if(angular.isObject(json)){
+                for(var key in json){
+                  handleArray(json[key]);
+                }
+              }
+            }
+
+            function stringToValue(json) {
+                if (angular.isObject(json)) {
+                    Object.keys(json).forEach(function(key) {
+                        var value = json[key];
+                        if (value == null || value == undefined || value == "" || (angular.isArray(value) && value.length == 0))
+                            delete json[key];
+                        else if (value == "true" || value == "false") {
+                            json[key] = value == "true";
+                        } else if (!isNaN(value)) {
+                            json[key] = parseFloat(value);
+                        } else if (angular.isString(value)) {
+                            json[key] = value;
+                        } else {
+                            stringToValue(value);
+                        }
+                    })
+                }
+            }
+            json=angular.copy(json);
+            handleArray(json);
+            stringToValue(json);
+            return json;
+        }
+
+        function assignFrom() {
+            return "//localhost";
+        }
+
+        function assignRequestIdentifierHelper() {
+            var count = 1;
+            return function() {
+                return count++;
+            }
+        }
+
+        function getResourceByResourceTypeAndOperation(resourceType, operation) {
+            var resourceTypeName = resourceTypeReverse[resourceType];
+            if (resources[resourceTypeName]) {
+                var key = PREFIX + toShort(resourceTypeName);
+                var result = {};
+                result[key] = resources[resourceTypeName][operation];
+                return angular.copy(result);
             }
         }
     }

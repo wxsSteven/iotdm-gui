@@ -4,22 +4,22 @@
     var PORT = '8181';
     var CSE_NAME = "";
 
-    function Onem2mCRUDService($http,Onem2m) {
+    function Onem2mCRUDService($http, Onem2m) {
         this.CRUD = CRUD;
-        this.setHost = setHost;
+        this.setBaseDir = setBaseDir;
         this.retrieveCSE = retrieveCSE;
         this.discovery = discovery;
 
-        function setHost(host, port, cseName) {
+        function setBaseDir(host, port, cseName) {
             HOST = host;
             PORT = port;
             CSE_NAME = cseName;
         }
 
         function retrieveCSE(host, port, cseName) {
-            setHost(host, port, cseName);
+            setBaseDir(host, port, cseName);
             var request = {
-                to: CSE_NAME,
+                to: "",
                 operation: Onem2m.operation.retrieve,
                 requestIdentifier: "id",
                 from: "//localhost",
@@ -28,9 +28,9 @@
         }
 
         function discovery(host, port, cseName) {
-            setHost(host, port, cseName);
+            setBaseDir(host, port, cseName);
             var request = {
-                to: CSE_NAME,
+                to: "",
                 operation: Onem2m.operation.retrieve,
                 requestIdentifier: "id",
                 from: "//localhost",
@@ -65,24 +65,30 @@
 
         function _create(request) {
             var httpRequest = parseRequest(request);
+            var attrsSent = httpRequest.payload;
             return $http.post(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
-                return parseHttpResponse(httpResponse);
+                var attrsReceived = parseHttpResponse(httpResponse);
+                var data = combineAttrs(attrsSent, attrsReceived);
+                return data;
             });
         };
 
         function _update(request) {
             var httpRequest = parseRequest(request);
+            var attrsSent = httpRequest.payload;
             return $http.put(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
-                return parseHttpResponse(httpResponse);
+                var attrsReceived = parseHttpResponse(httpResponse);
+                var data = combineAttrs(attrsSent, attrsReceived);
+                return data;
             });
         };
 
         function _delete(request) {
-            var httpRequest = parseRequest(request, host);
+            var httpRequest = parseRequest(request);
             return $http.delete(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
@@ -91,7 +97,7 @@
         };
 
         function parseRequest(request) {
-            var url = "http://" + HOST + ":" + PORT + "/" + request.to;
+            var url = "http://" + HOST + ":" + PORT + "/" + CSE_NAME + "/" + request.to;
             var query = {};
             query.rt = request.responseType && request.responseType.responseTypeValue;
             query.rp = request.resultPersistence;
@@ -171,11 +177,7 @@
             if (request.eventCategory)
                 headers["X-M2M-EC"] = request.eventCategory;
 
-            var payload = {};
-            for (var key in request.primitiveContent) {
-                payload[toShort(key)] = toShort(request.primitiveContent[key]);
-            }
-
+            var payload = request.primitiveContent;
 
             var httpRequest = {
                 url: url,
@@ -198,8 +200,20 @@
             response.eventCategory = headers["X-M2M-EC".toLowerCase()];
             return response.primitiveContent;
         }
+
+        function getWrapper(object) {
+            return Object.keys(object)[0];
+        }
+
+        function combineAttrs(oldAttrs, newAtts) {
+            var key = getWrapper(oldAttrs);
+            for (var k in newAtts[key]) {
+                oldAttrs[key][k] = newAtts[key][k];
+            }
+            return oldAttrs;
+        }
     }
 
-    Onem2mCRUDService.$inject = ['$http','Onem2mHelperService'];
+    Onem2mCRUDService.$inject = ['$http', 'Onem2mHelperService'];
     app.service('Onem2mCRUDService', Onem2mCRUDService);
 })(app);

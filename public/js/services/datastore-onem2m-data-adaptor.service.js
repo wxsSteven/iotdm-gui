@@ -1,7 +1,7 @@
 (function(app) {
     function DataStoreOnem2mDataAdaptorService() {
         return function onem2mDataAdaptor(data) {
-            if (angular.isObject(data)) {
+            if (!data[key]&&angular.isObject(data)) {
                 var key = Object.keys(data)[0];
                 var value = data[key];
                 return {

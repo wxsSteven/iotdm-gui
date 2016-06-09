@@ -44,10 +44,13 @@ html, body{
   background-color: #000000;
 }
 
-.title {
+.logo {
   font-weight: 800;
 }
 
+.title{
+  text-align: center;
+}
 .h100{
   height:100%;
 }
@@ -102,7 +105,6 @@ html, body{
     background: #F3F3F3;
     height:50px;
     width:100%;
-    justify-content: center;
     align-items: center;
     overflow: hidden;
 }

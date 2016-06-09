@@ -11,13 +11,13 @@
             closeSidePanel();
         });
 
-        DataStore.addSelectNodeListener(function(selectNode) {
+        Topology.addSelectNodeListener(function(selectNode) {
             $scope.isSelect = true;
             openSidePanel('info');
             $scope.$apply();
         })
 
-        DataStore.addUnSelectNodeListener(function(selectNode) {
+        Topology.addUnSelectNodeListener(function() {
             $scope.isSelect = false;
             closeSidePanel();
             $scope.$apply();
@@ -31,6 +31,12 @@
         function closeSidePanel() {
             $scope.sidePanel.hide = true;
         }
+
+        function init(){
+          Topology.initTopology('topology');
+          Topology.setDataStoreAccessKey(DataStore.getAccessKey());
+        }
+        init();
     }
 
     IotdmGuiCtrl.$inject = ['$scope', 'TopologyService', 'DataStoreService', 'TreeLayoutService'];

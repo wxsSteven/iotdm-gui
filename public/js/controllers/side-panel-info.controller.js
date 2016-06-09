@@ -36,7 +36,7 @@
             return $scope.path.length == 1;
         };
 
-        DataStore.addSelectNodeListener(function(selectNode){
+        Topology.addSelectNodeListener(function(selectNode){
           tree = {};
           $scope.path = [];
           var node = selectNode;

@@ -6,27 +6,28 @@
     var selectNodeListeners = [];
     var unSelectNodeListeners = [];
 
-    function DataStoreService(Onem2m,Onem2mDataAdaptor,CRUD) {
+    function DataStoreService(Onem2m, Onem2mDataAdaptor, CRUD) {
 
-        this.topologyData = topologyData;
+        this.getAccessKey = getAccessKey;
         this.addNode = addNode;
         this.removeNode = removeNode;
         this.retrieveNode = retrieveNode;
-        this.addSelectNodeListener = addSelectNodeListener;
-        this.addUnSelectNodeListener = addUnSelectNodeListener;
-        this.selectNode = selectNode;
-        this.unSelectNode = unSelectNode;
         this.rebuild = rebuild;
         this.syncAllData = syncAllData;
 
-        function topologyData() {
+        function getAccessKey() {
             return {
-                nodes: values(cacheNodesById),
-                links: values(cacheLinksBySourceId)
+                getData:function() {
+                  return{
+                    nodes: values(cacheNodesById),
+                    links: values(cacheLinksBySourceId)
+                  }
+                }
             }
         };
 
         function addNode(node) {
+           node=Onem2mDataAdaptor(node);
             var id = Onem2m.id(node);
             var parentId = Onem2m.parentId(node);
             if (id) {
@@ -34,19 +35,20 @@
             }
             if (parentId && id) {
                 cacheLinksBySourceId[id] = {
-                    source: parentId,
-                    target: id
+                    source: id,
+                    target: parentId
                 };
             }
         };
 
         function removeNode(node) {
+            node=Onem2mDataAdaptor(node);
             var id = Onem2m.id(node);
             if (cacheNodesById[id]) {
                 delete cacheNodesById[id];
             }
             if (cacheLinksBySourceId[id]) {
-                delete cacheNodesById[id];
+                delete cacheLinksBySourceId[id];
             }
         };
 
@@ -54,30 +56,12 @@
             return cacheNodesById[id];
         };
 
-        function addSelectNodeListener(listener) {
-            selectNodeListeners.push(listener);
-        };
-
-        function addUnSelectNodeListener(listener) {
-            unSelectNodeListeners.push(listener);
-        };
-
-        function selectNode(id) {
-            selectNode = retrieveNode(id);
-            notifyListeners(selectNodeListeners, selectNode);
-        };
-
-        function unSelectNode() {
-            notifyListeners(unSelectNodeListeners, selectNode);
-        };
-
         function rebuild(host, port, cseName) {
-            var cacheNodesById = {};
-            var cacheLinksBySourceId = {};
-            var selectNode = {};
+            cacheNodesById = {};
+            cacheLinksBySourceId = {};
+            selectNode = {};
             return CRUD.retrieveCSE(host, port, cseName).then(function(onem2mData) {
-                var data = Onem2mDataAdaptor(onem2mData);
-                addNode(data);
+                addNode(onem2mData);
             });
         }
 
@@ -86,17 +70,10 @@
             var cacheLinksBySourceId = {};
             var selectNode = {};
             return CRUD.discovery(host, port, cseName).then(function(onem2mDatas) {
-                ronem2mDatas.forEach(function(onem2mData) {
-                    var data = Onem2mDataAdaptor(onem2mData);
-                    addNode(data);
+                onem2mDatas.forEach(function(onem2mData) {
+                    addNode(onem2mData);
                 });
             });
-        }
-
-        function notifyListeners(listeners, notification) {
-            listeners.forEach(function(listener) {
-                listener(notification);
-            })
         }
 
         function values(object) {
@@ -108,6 +85,6 @@
         }
     }
 
-    DataStoreService.$inject = ['Onem2mHelperService','DataStoreOnem2mDataAdaptorService','Onem2mCRUDService'];
+    DataStoreService.$inject = ['Onem2mHelperService', 'DataStoreOnem2mDataAdaptorService', 'Onem2mCRUDService'];
     app.service('DataStoreService', DataStoreService);
 })(app);

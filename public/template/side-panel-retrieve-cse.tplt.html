@@ -1,6 +1,7 @@
 <div ng-controller="SidePanelRetrieveCSECtrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <h3>Retrieve CSE</h3>
+        <h3 flex="90" class="title">{{allDescendant ? "Retrieve CSE With All Descendant" :"Retrieve CSE" }}</h3>
+        <md-switch ng-model="allDescendant"></md-switch>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
         <form name="form">
