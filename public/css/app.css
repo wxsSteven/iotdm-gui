@@ -50,6 +50,13 @@ html, body{
 
 .title{
   text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.subtitle{
+  text-align:center;
+  font-size:8pt;
 }
 .h100{
   height:100%;
@@ -106,6 +113,7 @@ html, body{
     height:50px;
     width:100%;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 

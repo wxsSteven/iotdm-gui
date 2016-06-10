@@ -10,6 +10,7 @@
 
         this.getAccessKey = getAccessKey;
         this.addNode = addNode;
+        this.updateNode=updateNode;
         this.removeNode = removeNode;
         this.retrieveNode = retrieveNode;
         this.rebuild = rebuild;
@@ -17,40 +18,68 @@
 
         function getAccessKey() {
             return {
-                getData:function() {
-                  return{
-                    nodes: values(cacheNodesById),
-                    links: values(cacheLinksBySourceId)
-                  }
+                getData: function() {
+                    return {
+                        nodes: values(cacheNodesById),
+                        links: values(cacheLinksBySourceId)
+                    }
                 }
             }
         };
 
         function addNode(node) {
-           node=Onem2mDataAdaptor(node);
-            var id = Onem2m.id(node);
-            var parentId = Onem2m.parentId(node);
-            if (id) {
-                cacheNodesById[id] = node;
-            }
-            if (parentId && id) {
-                cacheLinksBySourceId[id] = {
-                    source: id,
-                    target: parentId
-                };
+            var nodes = Onem2mDataAdaptor(node);
+
+            nodes.forEach(function(node) {
+                var id = Onem2m.id(node);
+                var parentId = Onem2m.parentId(node);
+
+                if (id) {
+                    cacheNodesById[id] = node;
+                }
+
+                if (parentId && id) {
+                    cacheLinksBySourceId[id] = {
+                        source: id,
+                        target: parentId
+                    };
+                }
+            })
+        };
+
+        function updateNode(node){
+          var nodes=Onem2mDataAdaptor(node);
+          nodes.forEach(function(node) {
+              var id = Onem2m.id(node);
+              if (id) {
+                  var old=cacheNodesById[id];
+                  for(var key in node.value){
+                    old.value[key]=node.value[key];
+                  }
+              }
+          })
+        }
+
+        function removeNode(node) {
+            node = Onem2mDataAdaptor(node)[0];
+            var id=Onem2m.id(node);
+            node=cacheNodesById[id];
+            var array=[node];
+            while(array.length>0){
+              var node=array.pop();
+              var id = Onem2m.id(node);
+              if (cacheNodesById[id]) {
+                  delete cacheNodesById[id];
+              }
+              if (cacheLinksBySourceId[id]) {
+                  delete cacheLinksBySourceId[id];
+              }
+              if(node.children){
+                array=array.concat(array,node.children);
+              }
             }
         };
 
-        function removeNode(node) {
-            node=Onem2mDataAdaptor(node);
-            var id = Onem2m.id(node);
-            if (cacheNodesById[id]) {
-                delete cacheNodesById[id];
-            }
-            if (cacheLinksBySourceId[id]) {
-                delete cacheLinksBySourceId[id];
-            }
-        };
 
         function retrieveNode(id) {
             return cacheNodesById[id];
@@ -66,13 +95,11 @@
         }
 
         function syncAllData(host, port, cseName) {
-            var cacheNodesById = {};
-            var cacheLinksBySourceId = {};
-            var selectNode = {};
+            cacheNodesById = {};
+            cacheLinksBySourceId = {};
+            selectNode = {};
             return CRUD.discovery(host, port, cseName).then(function(onem2mDatas) {
-                onem2mDatas.forEach(function(onem2mData) {
-                    addNode(onem2mData);
-                });
+                addNode(onem2mDatas);
             });
         }
 

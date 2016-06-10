@@ -1,6 +1,7 @@
 (function(app) {
     var selectNodeListeners = [];
     var unSelectNodeListeners = [];
+    var doubleClickListeners=[];
 
     function TopologyService(nx, DataStore, Onem2m) {
 
@@ -25,8 +26,7 @@
                 }
             },
             showIcon: true,
-            identityKey: Onem2m.id(),
-            dataProcessor: 'force'
+            identityKey: Onem2m.id()
         });
 
         nx.define('onem2m.Tree', nx.ui.Application, {

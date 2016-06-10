@@ -856,286 +856,441 @@
         }
     }
     var accessControlPolicy = {
-        1: {
-            resourceName: null,
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            "privileges": {
-                accessControlRule: [{
-                    accessControlOriginators: [null],
-                    accessControlOperations: null,
-                    accessControlContexts: [{
-                        accessControlWindow: [null],
-                        accessControlIpAddresses: {
-                            ipv4Addresses: [null],
-                            ipv6Addresses: [null]
+        "1": {
+            "rn": null,
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "pv": {
+                "acr": [{
+                    "acor": [
+                        null
+                    ],
+                    "acop": null,
+                    "acco": [{
+                        "actw": [
+                            null
+                        ],
+                        "acip": {
+                            "ipv4": [
+                                null
+                            ],
+                            "ipv6": [
+                                null
+                            ]
                         },
-                        accessControlLocationRegion: {
-                            countryCode: [null],
-                            circRegion: [null]
+                        "aclr": {
+                            "accc": [
+                                null
+                            ],
+                            "accr": [
+                                null
+                            ]
                         }
                     }]
                 }]
             },
-            "selfPrivileges": {
-                accessControlRule: [{
-                    accessControlOriginators: [null],
-                    accessControlOperations: null,
-                    accessControlContexts: [{
-                        accessControlWindow: [null],
-                        accessControlIpAddresses: {
-                            ipv4Addresses: [null],
-                            ipv6Addresses: [null]
+            "pvs": {
+                "acr": [{
+                    "acor": [
+                        null
+                    ],
+                    "acop": null,
+                    "acco": [{
+                        "actw": [
+                            null
+                        ],
+                        "acip": {
+                            "ipv4": [
+                                null
+                            ],
+                            "ipv6": [
+                                null
+                            ]
                         },
-                        accessControlLocationRegion: {
-                            countryCode: [null],
-                            circRegion: [null]
+                        "aclr": {
+                            "accc": [
+                                null
+                            ],
+                            "accr": [
+                                null
+                            ]
                         }
                     }]
                 }]
             }
         },
-        3: {
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            privileges: {
-                accessControlRule: [{
-                    accessControlOriginators: [null],
-                    accessControlOperations: null,
-                    accessControlContexts: [{
-                        accessControlWindow: [null],
-                        accessControlIpAddresses: {
-                            ipv4Addresses: [null],
-                            ipv6Addresses: [null]
+        "3": {
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "pv": {
+                "acr": [{
+                    "acor": [
+                        null
+                    ],
+                    "acop": null,
+                    "acco": [{
+                        "actw": [
+                            null
+                        ],
+                        "acip": {
+                            "ipv4": [
+                                null
+                            ],
+                            "ipv6": [
+                                null
+                            ]
                         },
-                        accessControlLocationRegion: {
-                            countryCode: [null],
-                            circRegion: [null]
+                        "aclr": {
+                            "accc": [
+                                null
+                            ],
+                            "accr": [
+                                null
+                            ]
                         }
                     }]
                 }]
             },
-            selfPrivileges: {
-                accessControlRule: [{
-                    accessControlOriginators: [null],
-                    accessControlOperations: null,
-                    accessControlContexts: [{
-                        accessControlWindow: [null],
-                        accessControlIpAddresses: {
-                            ipv4Addresses: [null],
-                            ipv6Addresses: [null]
+            "pvs": {
+                "acr": [{
+                    "acor": [
+                        null
+                    ],
+                    "acop": null,
+                    "acco": [{
+                        "actw": [
+                            null
+                        ],
+                        "acip": {
+                            "ipv4": [
+                                null
+                            ],
+                            "ipv6": [
+                                null
+                            ]
                         },
-                        accessControlLocationRegion: {
-                            countryCode: [null],
-                            circRegion: [null]
+                        "aclr": {
+                            "accc": [
+                                null
+                            ],
+                            "accr": [
+                                null
+                            ]
                         }
                     }]
                 }]
             }
         }
-    }
-    var AE = {
-        1: {
-            rn: null,
-            acp: [null],
-            et: null,
-            lbl: [null],
-            at: [null],
-            aa: [null],
-            apn: null,
-            api: null,
-            poa: [null],
-            or: null,
-            rr: null
+    };
+    
+    var AE={
+        "1": {
+            "rn": null,
+            "acp": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "apn": null,
+            "api": null,
+            "poa": [
+                null
+            ],
+            "or": null,
+            "rr": null
         },
-        3: {
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            appName: null,
-            pointOfAccess: [null],
-            ontologyRef: null
+        "3": {
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "apn": null,
+            "poa": [
+                null
+            ],
+            "or": null
         }
-    }
+    };
+
     var container = {
-        1: {
-            resourceName: null,
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            creator: null,
-            maxNrOfInstances: null,
-            maxByteSize: null,
-            maxInstanceAge: null,
-            locationID: null,
-            ontologyRef: null
+        "1": {
+            "rn": null,
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "cr": null,
+            "mni": null,
+            "mbs": null,
+            "mia": null,
+            "li": null,
+            "or": null
         },
-        3: {
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            maxNrOfInstances: null,
-            maxByteSize: null,
-            maxInstanceAge: null,
-            locationID: null,
-            ontologyRef: null
+        "3": {
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "mni": null,
+            "mbs": null,
+            "mia": null,
+            "li": null,
+            "or": null
         }
     }
     var contentInstance = {
-        1: {
-            resourceName: null,
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            creator: null,
-            contentInfo: null,
-            contentSize: null,
-            ontologyRef: null,
-            "content": null
+        "1": {
+            "rn": null,
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "cr": null,
+            "cnf": null,
+            "cs": null,
+            "or": null,
+            "con": null
         }
     }
     var node = {
-        1: {
-            resourceName: null,
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            "nodeID": null,
-            hostedCSELink: null
+        "1": {
+            "rn": null,
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "ni": null,
+            "hcl": null
         },
-        3: {
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            nodeID: null
+        "3": {
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "ni": null
         }
     }
     var group = {
-        1: {
-            resourceName: null,
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            creator: null,
-            memberType: null,
-            "maxNrOfMembers": null,
-            "memberIDs": [null],
-            membersAccessControlPolicyIDs: [null],
-            consistencyStrategy: null,
-            groupName: null
+        "1": {
+            "rn": null,
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "cr": null,
+            "mt": null,
+            "mnm": null,
+            "mid": [
+                null
+            ],
+            "macp": [
+                null
+            ],
+            "csy": null,
+            "gn": null
         },
-        3: {
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            announceTo: [null],
-            announcedAttribute: [null],
-            maxNrOfMembers: null,
-            memberIDs: [null],
-            membersAccessControlPolicyIDs: [null],
-            groupName: null
+        "3": {
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "at": [
+                null
+            ],
+            "aa": [
+                null
+            ],
+            "mnm": null,
+            "mid": [
+                null
+            ],
+            "macp": [
+                null
+            ],
+            "gn": null
         }
     }
     var subscription = {
-        1: {
-            resourceName: null,
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            eventNotificationCriteria: {
-                createdBefore: null,
-                createdAfter: null,
-                modifiedSince: null,
-                unmodifiedSince: null,
-                stateTagSmaller: null,
-                stateTagBigger: null,
-                expireBefore: null,
-                expireAfter: null,
-                sizeAbove: null,
-                sizeBelow: null,
-                operationMonitor: [null],
-                attribute: [{
-                    name: null,
-                    value: null
+        "1": {
+            "rn": null,
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "enc": {
+                "crb": null,
+                "cra": null,
+                "ms": null,
+                "us": null,
+                "sts": null,
+                "stb": null,
+                "exb": null,
+                "exa": null,
+                "sza": null,
+                "szb": null,
+                "om": [
+                    null
+                ],
+                "atr": [{
+                    "name": null,
+                    "val": null
                 }],
-                notificationEventType: [null]
+                "net": [
+                    null
+                ]
             },
-            expirationCounter: null,
-            "notificationURI": [null],
-            groupID: null,
-            notificationForwardingURI: null,
-            batchNotify: {
-                name: null,
-                duration: null
+            "exc": null,
+            "nu": [
+                null
+            ],
+            "gpi": null,
+            "nfu": null,
+            "bn": {
+                "name": null,
+                "dur": null
             },
-            rateLimit: {
-                maxNrOfNotify: null,
-                timeWindow: null
+            "rl": {
+                "mnn": null,
+                "tww": null
             },
-            preSubscriptionNotify: null,
-            pendingNotification: null,
-            notificationStoragePriority: null,
-            latestNotify: null,
-            notificationContentType: null,
-            notificationEventCat: null,
-            creator: null,
-            subscriberURI: null
+            "psn": null,
+            "pn": null,
+            "nsp": null,
+            "ln": null,
+            "nct": null,
+            "nec": null,
+            "cr": null,
+            "su": null
         },
-        3: {
-            accessControlPolicyIDs: [null],
-            expirationTime: null,
-            labels: [null],
-            eventNotificationCriteria: {
-                createdBefore: null,
-                createdAfter: null,
-                modifiedSince: null,
-                unmodifiedSince: null,
-                stateTagSmaller: null,
-                stateTagBigger: null,
-                expireBefore: null,
-                expireAfter: null,
-                sizeAbove: null,
-                sizeBelow: null,
-                operationMonitor: [null],
-                attribute: [{
-                    name: null,
-                    value: null
+        "3": {
+            "acpi": [
+                null
+            ],
+            "et": null,
+            "lbl": [
+                null
+            ],
+            "enc": {
+                "crb": null,
+                "cra": null,
+                "ms": null,
+                "us": null,
+                "sts": null,
+                "stb": null,
+                "exb": null,
+                "exa": null,
+                "sza": null,
+                "szb": null,
+                "om": [
+                    null
+                ],
+                "atr": [{
+                    "name": null,
+                    "val": null
                 }],
-                notificationEventType: [null]
+                "net": [
+                    null
+                ]
             },
-            expirationCounter: null,
-            notificationURI: [null],
-            groupID: null,
-            notificationForwardingURI: null,
-            batchNotify: {
-                name: null,
-                duration: null
+            "exc": null,
+            "nu": [
+                null
+            ],
+            "gpi": null,
+            "nfu": null,
+            "bn": {
+                "name": null,
+                "dur": null
             },
-            rateLimit: {
-                maxNrOfNotify: null,
-                timeWindow: null
+            "rl": {
+                "mnn": null,
+                "tww": null
             },
-            pendingNotification: null,
-            notificationStoragePriority: null,
-            latestNotify: null,
-            notificationContentType: null,
-            notificationEventCat: null
+            "pn": null,
+            "nsp": null,
+            "ln": null,
+            "nct": null,
+            "nec": null
         }
     }
-
 
     var resourceTypeReverse = reverse(resourceType);
     var cseTypeIDReverse = reverse(cseTypeID);
@@ -1205,6 +1360,7 @@
         this.assignFrom = assignFrom;
         this.assignRequestIdentifier = assignRequestIdentifierHelper();
         this.getResourceByResourceTypeAndOperation = getResourceByResourceTypeAndOperation;
+        this.readResourceType = readResourceType;
 
         function children(node) {
             return node.value.ch;
@@ -1239,6 +1395,10 @@
             return node;
         }
 
+        function readResourceType(node) {
+            return node.value.ty;
+        }
+
         function isMandatory(name) {
             return name.contains(MANDOTRY);
         };
@@ -1270,16 +1430,16 @@
         function toOnem2mJson(json) {
 
             function handleArray(json) {
-              if (angular.isArray(json)) {
-                  json.shift();
-                  json.forEach(function(j){
-                    handleArray(j);
-                  })
-              }else if(angular.isObject(json)){
-                for(var key in json){
-                  handleArray(json[key]);
+                if (angular.isArray(json)) {
+                    json.shift();
+                    json.forEach(function(j) {
+                        handleArray(j);
+                    })
+                } else if (angular.isObject(json)) {
+                    for (var key in json) {
+                        handleArray(json[key]);
+                    }
                 }
-              }
             }
 
             function stringToValue(json) {
@@ -1300,7 +1460,7 @@
                     })
                 }
             }
-            json=angular.copy(json);
+            json = angular.copy(json);
             handleArray(json);
             stringToValue(json);
             return json;

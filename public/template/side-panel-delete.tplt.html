@@ -1,6 +1,7 @@
 <div ng-controller="SidePanelDeleteCtrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
         <h3 class="title" flex>{{yourName()|shortToLong}}</h3>
+        <md-switch ng-model="advancedMode"></md-switch>
         <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
             <span class="material-icons">chevron_left</span>
         </div>

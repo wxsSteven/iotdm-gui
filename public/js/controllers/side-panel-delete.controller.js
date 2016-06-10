@@ -1,76 +1,96 @@
-(function(app){
-  var ROOT_KEY = "Request Primitive";
-  var TREE = {};
-  function SidePanelDeleteCtrl($scope,Topology,DataStore,Onem2m,CRUD) {
-    $scope.hide = false;
-    $scope.path = [];
-    $scope.request = {};
+(function(app) {
+    var ROOT_KEY = "Request Primitive";
+    var TREE = {};
 
-    Topology.addSelectNodeListener(function(selectNode) {
-        TREE = {};
+    function SidePanelDeleteCtrl($scope, Topology, DataStore, Onem2m, CRUD) {
+        $scope.hide = false;
         $scope.path = [];
+        $scope.request = {};
+        $scope.advancedMode = false;
 
-        $scope.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.delete);
-        $scope.request.from=Onem2m.assignFrom();
-        $scope.request.requestIdentifier=Onem2m.assignRequestIdentifier();
-        $scope.request.to = Onem2m.id(selectNode);
+        Topology.addSelectNodeListener(function(selectNode) {
 
-        TREE[ROOT_KEY] = $scope.request;
-        $scope.path.push(ROOT_KEY);
-        $scope.$apply();
-    })
+            $scope.advancedMode = false;
+            $scope.request.operation = Onem2m.operation.delete;
+            $scope.request.from = Onem2m.assignFrom();
+            $scope.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+            $scope.request.to = Onem2m.id(selectNode);
 
-    $scope.ancestor = ancestor;
-    $scope.children = children;
-    $scope.parent = parent;
-    $scope.yourName = yourName;
-    $scope.yourself = yourself;
-    $scope.isValue = isValue;
-    $scope.isRoot = isRoot;
-    $scope.submit=submit;
+            TREE = {};
+            $scope.path = [];
+            TREE[ROOT_KEY] = $scope.request;
+            $scope.path.push(ROOT_KEY);
+            $scope.$apply();
+        })
 
-    function ancestor(index) {
-        $scope.path.splice(index + 1);
-    };
+        $scope.$watch('advancedMode', function(advancedMode) {
+          var request={};
+            if (advancedMode) {
+              request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.delete);
+            } else {
+              request.operation = Onem2m.operation.delete;
+            }
+            request.from = $scope.request.from;
+            request.requestIdentifier = $scope.request.requestIdentifier;
+            request.to = $scope.request.to;
+            $scope.request=request;
+            TREE = {};
+            $scope.path = [];
+            TREE[ROOT_KEY] = $scope.request;
+            $scope.path.push(ROOT_KEY);
+        })
 
-    function children(name) {
-        $scope.path.push(name);
-    };
+        $scope.ancestor = ancestor;
+        $scope.children = children;
+        $scope.parent = parent;
+        $scope.yourName = yourName;
+        $scope.yourself = yourself;
+        $scope.isValue = isValue;
+        $scope.isRoot = isRoot;
+        $scope.submit = submit;
 
-    function parent() {
-        $scope.path.pop();
-    };
+        function ancestor(index) {
+            $scope.path.splice(index + 1);
+        };
 
-    function yourName() {
-        return $scope.path.slice(-1)[0];
-    };
+        function children(name) {
+            $scope.path.push(name);
+        };
 
-    function yourself() {
-        var place = TREE;
-        $scope.path.forEach(function(p) {
-            place = place[p];
-        });
-        return place;
-    };
+        function parent() {
+            $scope.path.pop();
+        };
 
-    function isValue(value) {
-        return !(angular.isObject(value));
-    };
+        function yourName() {
+            return $scope.path.slice(-1)[0];
+        };
 
-    function isRoot() {
-        return $scope.path.length == 1;
-    };
+        function yourself() {
+            var place = TREE;
+            $scope.path.forEach(function(p) {
+                place = place[p];
+            });
+            return place;
+        };
 
-    function submit(request){
-        request=Onem2m.toOnem2mJson(request);
-        CRUD.CRUD(request).then(function(data){
-            DataStore.removeNode(data);
-            Topology.update();
-            $scope.$emit("closeSidePanel");
-        });
-    };
-  }
+        function isValue(value) {
+            return !(angular.isObject(value));
+        };
 
-  SidePanelDeleteCtrl.$inject = ['$scope','TopologyService','DataStoreService','Onem2mHelperService','Onem2mCRUDService'];
-  app.controller('SidePanelDeleteCtrl', SidePanelDeleteCtrl);
+        function isRoot() {
+            return $scope.path.length == 1;
+        };
+
+        function submit(request) {
+            request = Onem2m.toOnem2mJson(request);
+            CRUD.CRUD(request).then(function(data) {
+                DataStore.removeNode(data);
+                Topology.update();
+                $scope.$emit("closeSidePanel");
+            });
+        };
+    }
+
+    SidePanelDeleteCtrl.$inject = ['$scope', 'TopologyService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
+    app.controller('SidePanelDeleteCtrl', SidePanelDeleteCtrl);
 })(app);

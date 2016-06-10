@@ -33,7 +33,9 @@
         }
 
         function init(){
+          var treeLayout=TreeLayout.init(50,50);
           Topology.initTopology('topology');
+          Topology.layout(treeLayout);
           Topology.setDataStoreAccessKey(DataStore.getAccessKey());
         }
         init();

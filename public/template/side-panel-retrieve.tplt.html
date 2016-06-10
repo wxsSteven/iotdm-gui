@@ -1,16 +1,18 @@
 <div ng-controller="SidePanelRetrieveCtrl" class="h100" layout="column">
-    <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
-        <span class="material-icons">chevron_left</span>
-    </div>
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <h3>Retrieve</h3>
+        <div flex="30"></div>
+        <div flex="40" class="title" layout="column">
+            <h3 class="title">{{yourName()|shortToLong}}</h3>
+            <span class="subtitle">{{modes[selectedMode]}}</span>
+        </div>
+        <md-slider flex="30" min="0" max="2" step="1" ng-model="selectedMode"></md-slider>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in yourself()">
+        <div ng-repeat="(name,value) in yourself() as you">
             <md-input-container class="md-block">
                 <label>{{name|shortToLong}}</label>
                 <div class="input">
-                    <input ng-if="isValue(value)" ng-model="value">
+                    <input ng-if="isValue(value)" ng-model="you[name]" ng-disabled="inputDisabled">
 
                     <div ng-if="!isValue(value)">
                         <input disabled>
@@ -25,8 +27,6 @@
                 </div>
             </md-input-container>
         </div>
-    </div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
-        <a ng-repeat="value in path" ng-click="ancestor($index)">{{value|shortToLong}}</a>
+        <md-button ng-click="submit(request)"class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
     </div>
 </div>

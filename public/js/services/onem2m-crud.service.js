@@ -78,11 +78,13 @@
         function _update(request) {
             var httpRequest = parseRequest(request);
             var attrsSent = httpRequest.payload;
+            var ri=request.to;
             return $http.put(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
-                var attrsReceived = parseHttpResponse(httpResponse);
-                var data = combineAttrs(attrsSent, attrsReceived);
+                var data = parseHttpResponse(httpResponse);
+                var key =getWrapper(data);
+                data[key].ri=ri;
                 return data;
             });
         };
