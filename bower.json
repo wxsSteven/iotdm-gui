@@ -12,7 +12,6 @@
     "angular-mocks": "~1.4.0",
     "d3": "^3.5.17",
     "next-bower": "NeXt#^0.9.1",
-    "angular-material": "^1.0.9",
-    "material-design-icons": "^2.2.3"
+    "angular-material": "^1.0.9"
   }
 }

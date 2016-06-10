@@ -1,4 +1,4 @@
-var app = angular.module('iotdmApp', ['ngMaterial', 'restangular']);
+var app = angular.module('iotdmApp', ['ngMaterial']);
 app.config(
     function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
