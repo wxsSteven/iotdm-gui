@@ -1,20 +1,19 @@
-<div ng-controller="SidePanelInfoCtrl" class="h100" layout="column">
-
+<div ng-controller="SidePanelInfoCtrl as ctrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
+        <div class="nav-tag icon-container" ng-click="parent()" ng-hide="ctrl.isRoot()">
             <span class="material-icons">chevron_left</span>
         </div>
-        <h3 class="title" flex>{{yourName()|shortToLong}}</h3>
+        <h3 class="title" flex>{{ctrl.yourName()|shortToLong}}</h3>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in yourself()">
+        <div ng-repeat="(name,value) in ctrl.yourself()">
             <md-input-container class="md-block">
                 <label>{{name|shortToLong}}</label>
                 <div class="input">
-                    <input ng-if="isValue(value)" class="edited" ng-model="value" disabled>
-                    <div ng-if="!isValue(value)">
+                    <input ng-if="ctrl.isValue(value)" class="edited" ng-model="value" disabled>
+                    <div ng-if="!ctrl.isValue(value)">
                         <input disabled>
-                        <span class="material-icons right" ng-click="children(name)">chevron_right</span>
+                        <span class="material-icons right" ng-click="ctrl.children(name)">chevron_right</span>
                     </div>
                 </div>
                 <div class="content">
@@ -27,6 +26,6 @@
         </div>
     </div>
     <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
-        <a ng-repeat="value in path" ng-click="ancestor($index)">{{value|shortToLong}}</a>
+        <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
     </div>
 </div>

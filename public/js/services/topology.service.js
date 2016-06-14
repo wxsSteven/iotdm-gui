@@ -1,44 +1,64 @@
 (function(app) {
-    var selectNodeListeners = [];
-    var unSelectNodeListeners = [];
-    var doubleClickListeners=[];
+    'use strict';
 
-    function TopologyService(nx, DataStore, Onem2m) {
 
-        var _layout = function(data) {
-            return data;
-        };
-
-        var _dataStoreAccessKey = {
-            getData: function() {
-                return null;
-            }
-        }
-
-        var _topo = new nx.graphic.Topology({
-            adaptive: true,
-            nodeConfig: {
-                iconType: function(vertex) {
-                    return Onem2m.icon(vertex.getData());
-                },
-                label: function(vertex) {
-                    return Onem2m.label(vertex.getData());
-                }
-            },
-            showIcon: true,
-            identityKey: Onem2m.id()
-        });
-
-        nx.define('onem2m.Tree', nx.ui.Application, {
-            methods: {
-                start: function() {
-                    _topo.attach(this);
-                }
-            }
-        });
+    function TopologyService(nx, Onem2m) {
+        var _layout = null;
+        var _dataStoreAccessKey = null;
+        var _selectNodeListeners = null;
+        var _unSelectNodeListeners = null;
+        var _topo = null;
+        var _selectedNodeId = null;
 
         //todo: isSelectNodeAction is stopPropagation Flag since Event.stopPropagation not work. Need to ask
-        this.initTopology = function(htmlElementId) {
+        this.initTopology = initTopology;
+        this.layout = layout;
+        this.setDataStoreAccessKey = setDataStoreAccessKey;
+        this.update = update;
+        this.getSelectedNodeId = getSelectedNodeId;
+        this.addSelectNodeListener = addSelectNodeListener();
+        this.addUnSelectNodeListener = addUnSelectNodeListener();
+        this.removeSelectNodeListener = removeSelectNodeListener;
+        this.removeUnSelectNodeListener = removeUnSelectNodeListener;
+
+        init();
+
+        function init() {
+            _layout = function(data) {};
+
+            _dataStoreAccessKey = {
+                getData: function() {
+                    return null;
+                }
+            };
+
+            _selectNodeListeners = {};
+            _unSelectNodeListeners = {};
+
+            _topo = new nx.graphic.Topology({
+                adaptive: true,
+                nodeConfig: {
+                    iconType: function(vertex) {
+                        return Onem2m.icon(vertex.getData());
+                    },
+                    label: function(vertex) {
+                        return Onem2m.label(vertex.getData());
+                    }
+                },
+                showIcon: true,
+                identityKey: Onem2m.id()
+            });
+
+            nx.define('onem2m.Tree', nx.ui.Application, {
+                methods: {
+                    start: function() {
+                        _topo.attach(this);
+                    }
+                }
+            });
+        }
+
+        function initTopology(htmlElementId) {
             var application = new onem2m.Tree();
             var isSelectNodeAction = false;
             application.container(document.getElementById(htmlElementId));
@@ -58,49 +78,68 @@
                 }
                 isSelectNodeAction = false;
             });
-        };
+        }
 
-        this.layout = function(layout) {
+        function addSelectNodeListener() {
+            var counter = 0;
+            return function(listener) {
+                _selectNodeListeners[counter++]=listener;
+                return counter;
+            };
+        }
+
+        function addUnSelectNodeListener() {
+            var counter=0;
+            return function(listener){
+              _unSelectNodeListeners[counter++]=listener;
+              return counter;
+            };
+        }
+
+        function removeSelectNodeListener(key) {
+            delete _selectNodeListeners[key];
+        }
+
+        function removeUnSelectNodeListener(key) {
+            delete _unSelectNodeListeners[key];
+        }
+
+        function layout(layout) {
             _layout = layout;
-        };
+        }
 
-        this.setDataStoreAccessKey = function(dataStoreAccessKey) {
+        function setDataStoreAccessKey(dataStoreAccessKey) {
             _dataStoreAccessKey = dataStoreAccessKey;
         }
 
-        this.update = function() {
-            var data = _dataStoreAccessKey.getData();
-            data = _layout(data);
-            _topo.data(data);
-        };
-
-        this.addSelectNodeListener = addSelectNodeListener;
-        this.addUnSelectNodeListener = addUnSelectNodeListener;
-
-        function addSelectNodeListener(listener) {
-            selectNodeListeners.push(listener);
-        };
-
-        function addUnSelectNodeListener(listener) {
-            unSelectNodeListeners.push(listener);
-        };
-
         function selectNode(id) {
-            var selectNode = DataStore.retrieveNode(id);
-            notifyListeners(selectNodeListeners, selectNode);
-        };
+            _selectedNodeId = id;
+            notifyListeners(_selectNodeListeners, _selectedNodeId);
+        }
 
         function unSelectNode() {
-            notifyListeners(unSelectNodeListeners);
-        };
+            _selectedNodeId = null;
+            notifyListeners(_unSelectNodeListeners);
+        }
 
         function notifyListeners(listeners, notification) {
-            listeners.forEach(function(listener) {
-                listener(notification);
-            })
+            for(var key in listeners){
+              listeners[key](notification);
+            }
+        }
+
+        function update() {
+            var root = _dataStoreAccessKey.getRoot();
+            _layout(root);
+            var data = _dataStoreAccessKey.getData();
+            _topo.data(data);
+        }
+
+        function getSelectedNodeId() {
+            return _selectedNodeId;
         }
     }
 
-    TopologyService.$inject = ['NxService', 'DataStoreService', 'Onem2mHelperService'];
-    app.service('TopologyService', TopologyService)
+    TopologyService.$inject = ['NxService', 'Onem2mHelperService'];
+    app.service('TopologyService', TopologyService);
 })(app);

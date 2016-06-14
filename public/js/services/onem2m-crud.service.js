@@ -1,4 +1,5 @@
 (function(app) {
+  'use strict';
     var MIME = "application/json";
     var HOST = 'localhost';
     var PORT = '8181';

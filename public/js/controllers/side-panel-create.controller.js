@@ -1,90 +1,99 @@
 (function(app) {
+    'use strict';
     var ROOT_KEY = "Request Primitive";
-    var TREE = {};
 
-    function SidePanelCreateCtrl($scope, DataStore, Topology,Onem2m,CRUD) {
-        $scope.hide = false;
-        $scope.path = [];
-        $scope.request = {};
+    function SidePanelCreateCtrl($scope, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
+        var _this = this;
 
-        $scope.$watch('request.resourceType',function(resourceType,oldValue){
-            if(resourceType&&resourceType!=oldValue){
-              var resource=Onem2m.getResourceByResourceTypeAndOperation(resourceType,Onem2m.operation.create);
-              $scope.request.primitiveContent=resource;
-              $scope.path.push("primitiveContent");
-              Object.keys(resource).forEach(function(key){
-                $scope.path.push(key);
-              });
-            }else{
-              $scope.request.primitveContent=null;
-            }
-        });
+        _this.hide = false;
+        _this.path = [];
+        _this.tree = {};
+        _this.request = {};
+        _this.ancestor = ancestor;
+        _this.children = children;
+        _this.parent = parent;
+        _this.yourName = yourName;
+        _this.yourself = yourself;
+        _this.isValue = isValue;
+        _this.isRoot = isRoot;
+        _this.submit = submit;
 
-        Topology.addSelectNodeListener(function(selectNode) {
-            TREE = {};
-            $scope.path = [];
+        init();
 
-            $scope.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.create);
-            $scope.request.from=Onem2m.assignFrom();
-            $scope.request.requestIdentifier=Onem2m.assignRequestIdentifier();
-            $scope.request.to = Onem2m.id(selectNode);
+        function init() {
+            $scope.$watch(function() {
+                    return _this.request.resourceType;
+                },
+                function(newValue, oldValue) {
+                    if (newValue && newValue != oldValue) {
+                        var resource = Onem2m.getResourceByResourceTypeAndOperation(newValue, Onem2m.operation.create);
+                        _this.request.primitiveContent = resource;
+                        _this.request.resourceType = newValue;
+                        _this.path.push("primitiveContent");
+                        Object.keys(resource).forEach(function(key) {
+                            _this.path.push(key);
+                        });
+                    } else {
+                        _this.request.primitveContent = null;
+                    }
+                });
+            reset();
+        }
 
-            TREE[ROOT_KEY] = $scope.request;
-            $scope.path.push(ROOT_KEY);
-            $scope.$apply();
-        })
-
-        $scope.ancestor = ancestor;
-        $scope.children = children;
-        $scope.parent = parent;
-        $scope.yourName = yourName;
-        $scope.yourself = yourself;
-        $scope.isValue = isValue;
-        $scope.isRoot = isRoot;
-        $scope.submit=submit;
+        function reset() {
+            var node = TopologyHelper.getSelectedNode();
+            _this.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.create);
+            _this.request.from = Onem2m.assignFrom();
+            _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+            _this.request.to = Onem2m.id(node);
+            _this.tree = {};
+            _this.path = [];
+            _this.tree[ROOT_KEY] = _this.request;
+            _this.path.push(ROOT_KEY);
+        }
 
         function ancestor(index) {
-            $scope.path.splice(index + 1);
-        };
+            _this.path.splice(index + 1);
+        }
 
         function children(name) {
-            $scope.path.push(name);
-        };
+            _this.path.push(name);
+        }
 
         function parent() {
-            $scope.path.pop();
-        };
+            _this.path.pop();
+        }
 
         function yourName() {
-            return $scope.path.slice(-1)[0];
-        };
+            return _this.path.slice(-1)[0];
+        }
 
         function yourself() {
-            var place = TREE;
-            $scope.path.forEach(function(p) {
+            var place = _this.tree;
+            _this.path.forEach(function(p) {
                 place = place[p];
             });
             return place;
-        };
+        }
 
         function isValue(value) {
             return !(angular.isObject(value));
-        };
+        }
 
         function isRoot() {
-            return $scope.path.length == 1;
-        };
+            return _this.path.length == 1;
+        }
 
-        function submit(request){
-            request=Onem2m.toOnem2mJson(request);
-            CRUD.CRUD(request).then(function(data){
+        function submit(request) {
+            request = Onem2m.toOnem2mJson(request);
+            CRUD.CRUD(request).then(function(data) {
                 DataStore.addNode(data);
                 Topology.update();
                 $scope.$emit("closeSidePanel");
             });
-        };
+        }
     }
 
-    SidePanelCreateCtrl.$inject = ['$scope', 'DataStoreService','TopologyService','Onem2mHelperService','Onem2mCRUDService'];
+    SidePanelCreateCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
     app.controller('SidePanelCreateCtrl', SidePanelCreateCtrl);
 })(app);

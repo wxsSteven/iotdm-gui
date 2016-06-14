@@ -1,94 +1,93 @@
 (function(app) {
+    'use strict';
     var ROOT_KEY = "Request Primitive";
-    var TREE = {};
-    var COPY_TREE = {};
-    var COPY_REQUEST = {};
 
-    function SidePanelUpdateCtrl($scope, Topology, DataStore, Onem2m, CRUD) {
-        $scope.hide = false;
-        $scope.path = [];
-        $scope.request = {};
+    function SidePanelUpdateCtrl($scope, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
+        var _this = this;
 
+        _this.path = [];
+        _this.root = {};
+        _this.root_copy = {};
+        _this.request = {};
+        _this.request_copy = {};
 
-        Topology.addSelectNodeListener(function(selectNode) {
-            $scope.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.update);
-            $scope.request.from = Onem2m.assignFrom();
-            $scope.request.requestIdentifier = Onem2m.assignRequestIdentifier();
-            $scope.request.to = Onem2m.id(selectNode);
+        _this.ancestor = ancestor;
+        _this.children = children;
+        _this.parent = parent;
+        _this.yourName = yourName;
+        _this.yourself = yourself;
+        _this.copyYourself = copyYourself;
+        _this.isValue = isValue;
+        _this.isRoot = isRoot;
+        _this.submit = submit;
+        _this.isEdited = isEdited;
 
-            var resourceType = Onem2m.readResourceType(selectNode);
+        init();
+
+        function init() {
+            var node = TopologyHelper.getSelectedNode();
+            _this.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.update);
+            _this.request.from = Onem2m.assignFrom();
+            _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+            _this.request.to = Onem2m.id(node);
+
+            var resourceType = Onem2m.readResourceType(node);
             var template = Onem2m.getResourceByResourceTypeAndOperation(resourceType, Onem2m.operation.update);
 
             if (template) {
-                var key = selectNode.key;
-                readDataToTemplate(template[key], selectNode.value);
-                $scope.request.primitiveContent = template;
+                var key = node.key;
+                readDataToTemplate(template[key], node.value);
+                _this.request.primitiveContent = template;
 
-                TREE = {};
-                $scope.path = [];
-                TREE[ROOT_KEY] = $scope.request;
+                _this.root = {};
+                _this.path = [];
+                _this.root[ROOT_KEY] = _this.request;
 
-                COPY_TREE = angular.copy(TREE);
-                COPY_REQUEST = COPY_TREE[ROOT_KEY];
-                $scope.path.push(ROOT_KEY, "primitiveContent", key);
-                $scope.$apply();
+                _this.root_copy = angular.copy(_this.root);
+                _this.request_copy = _this.root_copy[ROOT_KEY];
+                _this.path.push(ROOT_KEY, "primitiveContent", key);
             }
-        })
-
-        $scope.ancestor = ancestor;
-        $scope.children = children;
-        $scope.parent = parent;
-        $scope.yourName = yourName;
-        $scope.yourself = yourself;
-        $scope.copyYourself = copyYourself;
-        $scope.isValue = isValue;
-        $scope.isRoot = isRoot;
-        $scope.submit = submit;
-        $scope.isEdited = isEdited;
-
-        function initTree(request) {
-
-        };
+        }
 
         function ancestor(index) {
-            $scope.path.splice(index + 1);
-        };
+            _this.path.splice(index + 1);
+        }
 
         function children(name) {
-            $scope.path.push(name);
-        };
+            _this.path.push(name);
+        }
 
         function parent() {
-            $scope.path.pop();
-        };
+            _this.path.pop();
+        }
 
         function yourName() {
-            return $scope.path.slice(-1)[0];
-        };
+            return _this.path.slice(-1)[0];
+        }
 
         function yourself() {
-            var place = TREE;
-            $scope.path.forEach(function(p) {
+            var place = _this.root;
+            _this.path.forEach(function(p) {
                 place = place[p];
             });
             return place;
-        };
+        }
 
         function copyYourself() {
-            var place = COPY_TREE;
-            $scope.path.forEach(function(p) {
+            var place = _this.root_copy;
+            _this.path.forEach(function(p) {
                 place = place[p];
             });
             return place;
-        };
+        }
 
         function isValue(value) {
             return !(angular.isObject(value));
-        };
+        }
 
         function isRoot() {
-            return $scope.path.length == 1;
-        };
+            return _this.path.length == 1;
+        }
 
         function readDataToTemplate(targetObject, srcObject) {
             for (var key in targetObject) {
@@ -97,21 +96,21 @@
         }
 
         function submit(request) {
-            request.primitiveContent = diff(request.primitiveContent, COPY_REQUEST.primitiveContent);
+            request.primitiveContent = diff(request.primitiveContent, _this.request_copy.primitiveContent);
             request = Onem2m.toOnem2mJson(request);
             CRUD.CRUD(request).then(function(data) {
                 DataStore.updateNode(data);
                 Topology.update();
                 $scope.$emit("closeSidePanel");
             });
-        };
+        }
 
         function diff(object, copy) {
             var key = Object.keys(object)[0];
             var difference = {};
             difference[key] = {};
             for (var k in object[key]) {
-                if (!angular.equals(copy[key][k],object[key][k])) {
+                if (!angular.equals(copy[key][k], object[key][k])) {
                     difference[key][k] = object[key][k];
                 }
             }
@@ -125,6 +124,6 @@
         }
     }
 
-    SidePanelUpdateCtrl.$inject = ['$scope', 'TopologyService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
+    SidePanelUpdateCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
     app.controller('SidePanelUpdateCtrl', SidePanelUpdateCtrl);
 })(app);

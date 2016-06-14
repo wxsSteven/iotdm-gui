@@ -1,5 +1,5 @@
 (function(app) {
-
+  'use strict';
     function reverse(map) {
         var reverse = {};
         for (var key in map) {
@@ -998,7 +998,7 @@
             }
         }
     };
-    
+
     var AE={
         "1": {
             "rn": null,

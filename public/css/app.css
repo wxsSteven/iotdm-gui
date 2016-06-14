@@ -3,41 +3,43 @@
 
 @font-face {
   font-family: 'Material Icons';
-  font-style: normal;
   font-weight: 400;
+  font-style: normal;
+
   src: local('Material Icons'), local('MaterialIcons-Regular'),url(/font/MaterialIcons-Regular.woff2) format('woff2')
 }
 .material-icons {
+  display: inline-block;
+
+  white-space: nowrap;
+  letter-spacing: normal;
+  text-transform: none;
+  word-wrap: normal;
+
   font-family: 'Material Icons';
+  font-size: 24px;  /* Preferred icon size */
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
   line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
 
+  direction: ltr;
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
   /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
   /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
 
 html, body{
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
     overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .toolbar-main {
@@ -49,13 +51,15 @@ html, body{
 }
 
 .title{
-  text-align: center;
-  padding: 0;
   margin: 0;
+  padding: 0;
+
+  text-align: center;
 }
 
 .subtitle{
   text-align:center;
+
   font-size:8pt;
 }
 .h100{
@@ -67,9 +71,10 @@ html, body{
 }
 
 .container{
-    height: 100%;
-    width: 100%;
     overflow: hidden;
+
+    width: 100%;
+    height: 100%;
 }
 
 [ng-click],
@@ -80,13 +85,17 @@ html, body{
 
 .side-panel {
     position:relative;
+
     width:20%;
-    background:white;
+
     -webkit-transition: all 1s;
+
+    background:white;
 }
 
 .md-button.animate-hide{
   -webkit-transition: all 0.5s;
+
   opacity:1;
 }
 
@@ -95,31 +104,38 @@ html, body{
 }
 
 .side-panel .show-tag {
-    background: white;
     position: absolute;
+    left: -25px;
+
     width: 25px;
     height: 50px;
-    left: -25px;
+
+    background: white;
 }
 .side-panel-top .nav-tag {
     position: absolute;
+    left: 0px;
+
     width: 25px;
     height: 50px;
-    left: 0px;
 }
 
 .side-panel-top{
-    background: #F3F3F3;
-    height:50px;
+    overflow: hidden;
+
     width:100%;
+    height:50px;
+
+    background: #F3F3F3;
+
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .side-panel-content {
-    flex: 1;
     overflow: auto;
+
+    flex: 1;
 }
 .side-panel-bottom{
     height:100px;
@@ -129,27 +145,33 @@ html, body{
     width:0;
 }
 .submit{
+    width:100%;
     margin:0;
     padding:0;
-    opacity: 1;
-    width:100%;
+
     -webkit-transition: all 1s;
+
+    opacity: 1;
 }
 
 .submit.ng-hide{
-  opacity:0;
   -webkit-transition: all 1s;
+
+  opacity:0;
 }
 
 .icon-container{
     display:flex;
+
     align-items:center;
 }
 
 .breadcrumb > a+a:before{
     padding: 0 5px;
-    color: #ccc;
+
     content: "/\00a0";
+
+    color: #ccc;
 }
 
 .breadcrumb a{
@@ -157,8 +179,9 @@ html, body{
 }
 
 .breadcrumb a:last-child{
-    color: #C0C0C0;
     cursor:default;
+
+    color: #C0C0C0;
 }
 
 .breadcrumb a:not(:last-child):hover{
@@ -166,13 +189,14 @@ html, body{
 }
 
 .material-icons.right{
-    right:0;
     position:absolute;
+    right:0;
 }
 
 .content{
-    width: 100%;
     clear:both;
+
+    width: 100%;
 }
 
 .onem2m-block{

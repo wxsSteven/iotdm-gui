@@ -121,7 +121,7 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
         name.name = array.shift();
         name.description = array.shift();
         array.forEach(function (key) {
-            name[key] = optionAttr.indexOf(key) > -1
+            name[key] = optionAttr.indexOf(key) > -1;
         });
         return name;
     }
@@ -303,4 +303,3 @@ app.controller("ctrl", function ($scope,Onem2mDataStore) {
         }
     };
 });
-

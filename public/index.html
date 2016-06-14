@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Iotdm Gui</title>
@@ -10,41 +8,33 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 
-<body ng-controller="IotdmGuiCtrl">
+<body ng-controller="IotdmGuiCtrl as mainCtrl">
 
     <div layout="column" class="container">
         <md-toolbar class="md-whiteframe-1dp toolbar-main">
             <div class="md-toolbar-tools toolbar-main">
                 <span class="logo">Iotdm</span>
                 <span flex></span>
-                <!-- <md-button md-no-ink class="md-raised">Expand All</md-button>
-                <md-autocomplete md-selected-item="" md-items="" placeholder="Search">
-                </md-autocomplete> -->
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('retrieve cse')" ng-hide="isSelect">Retrieve CSE</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('create')" ng-show="isSelect">Create</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('retrieve')" ng-show="isSelect">Retrieve</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('update')" ng-show="isSelect">Update</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="openSidePanel('delete')" ng-show="isSelect">Delete</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('retrieve-cse')" ng-hide="mainCtrl.isSelect">Retrieve CSE</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('create')" ng-show="mainCtrl.isSelect">Create</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('retrieve')" ng-show="mainCtrl.isSelect">Retrieve</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('update')" ng-show="mainCtrl.isSelect">Update</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('delete')" ng-show="mainCtrl.isSelect">Delete</md-button>
             </div>
         </md-toolbar>
 
         <section layout="row" flex>
             <div id="topology" flex></div>
-            <section class="side-panel md-whiteframe-1dp" ng-class="{'side-panel-hide':sidePanel.hide}" class="h100 w100">
-                <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="sidePanel.hide" ng-click="closeSidePanel()">
+            <section class="side-panel md-whiteframe-1dp h100 w100" ng-class="{'side-panel-hide':mainCtrl.sidePanel.hide}">
+                <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="mainCtrl.sidePanel.hide" ng-click="mainCtrl.closeSidePanel()">
                     <span class="material-icons">chevron_right</span>
                 </div>
-                <div ng-show="sidePanel.mode=='info'" ng-include="'template/side-panel-info.tplt.html'" class="h100 w100"></div>
-                <div ng-show="sidePanel.mode=='retrieve cse'" ng-include="'template/side-panel-retrieve-cse.tplt.html'" class="h100 w100"></div>
-                <div ng-show="sidePanel.mode=='create'" ng-include="'template/side-panel-create.tplt.html'" class="h100 w100"></div>
-                <div ng-show="sidePanel.mode=='retrieve'" ng-include="'template/side-panel-retrieve.tplt.html'" class="h100 w100"></div>
-                <div ng-show="sidePanel.mode=='update'" ng-include="'template/side-panel-update.tplt.html'" class="h100 w100"></div>
-                <div ng-show="sidePanel.mode=='delete'" ng-include="'template/side-panel-delete.tplt.html'" class="h100 w100"></div>
+                <div ng-include="mainCtrl.sidePanel.template" class="h100 w100"></div>
             </section>
         </section>
     </div>
 
-    //vendors
+    <!-- vendors -->
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/next-bower/js/next.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -53,10 +43,10 @@
     <script src="bower_components/angular-messages/angular-messages.min.js"></script>
     <script src="bower_components/angular-material/angular-material.min.js"></script>
 
-    //modules
+    <!-- modules -->
     <script src="js/app.module.js"></script>
 
-    //services
+    <!-- services -->
     <script src="js/services/onem2m-crud.service.js"></script>
     <script src="js/services/onem2m-helper.service.js"></script>
     <script src="js/services/datastore-onem2m-data-adaptor.service.js"></script>
@@ -65,11 +55,15 @@
     <script src="js/services/onem2m-crud.service.js"></script>
     <script src="js/services/datastore.service.js"></script>
     <script src="js/services/topology.service.js"></script>
+    <script src="js/services/topology-helper.service.js"></script>
 
-    //filters
+    <!-- filters -->
     <script src="js/filter/short-to-long.filter.js"></script>
 
-    //ctrls
+    <!--directives-->
+    <script src="js/directives/slider.directive.js"></script>
+
+    <!-- ctrls -->
     <script src="js/controllers/iotdm-gui.controller.js"></script>
     <script src="js/controllers/side-panel-info.controller.js"></script>
     <script src="js/controllers/side-panel-create.controller.js"></script>

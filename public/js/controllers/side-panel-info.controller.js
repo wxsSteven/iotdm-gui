@@ -1,51 +1,75 @@
 (function(app) {
-    function SidePanelInfoCtrl($scope, DataStore, Topology, Onem2m) {
-        $scope.hide = false;
-        $scope.path = [];
-        var tree = {};
+    'use strict';
 
-        $scope.ancestor = function(index) {
-            $scope.path.splice(index + 1);
-        };
+    function SidePanelInfoCtrl($scope, Topology, TopologyHelper, Onem2m) {
+        var _this = this;
 
-        $scope.children = function(name) {
-            $scope.path.push(name);
-        };
+        _this.root = {};
+        _this.path = [];
 
-        $scope.parent = function() {
-            $scope.path.pop();
-        };
+        _this.ancestor = ancestor;
+        _this.children = children;
+        _this.parent = parent;
+        _this.yourName = yourName;
+        _this.yourself = yourself;
+        _this.isValue = isValue;
+        _this.isRoot = isRoot;
 
-        $scope.yourName = function() {
-            return $scope.path.slice(-1)[0];
-        };
+        init();
 
-        $scope.yourself = function() {
-            var place = tree;
-            $scope.path.forEach(function(p) {
+        function init() {
+            var key = Topology.addSelectNodeListener(function() {
+                reset(TopologyHelper.getSelectedNode());
+                $scope.$apply();
+            });
+
+            $scope.$on("$destory", function() {
+                Topology.removeSelectNodeListener(key);
+            });
+
+            reset(TopologyHelper.getSelectedNode());
+        }
+
+        function reset(node) {
+            _this.root = {};
+            _this.path = [];
+            _this.root[node.key] = node.value;
+            _this.path.push(node.key);
+        }
+
+        function ancestor(index) {
+            _this.path.splice(index + 1);
+        }
+
+        function children(name) {
+            _this.path.push(name);
+        }
+
+        function parent() {
+            _this.path.pop();
+        }
+
+        function yourName() {
+            return _this.path.slice(-1)[0];
+        }
+
+        function yourself() {
+            var place = _this.root;
+            _this.path.forEach(function(p) {
                 place = place[p];
             });
             return place;
-        };
+        }
 
-        $scope.isValue = function(value) {
+        function isValue(value) {
             return !angular.isObject(value);
-        };
+        }
 
-        $scope.isRoot = function() {
-            return $scope.path.length == 1;
-        };
-
-        Topology.addSelectNodeListener(function(selectNode){
-          tree = {};
-          $scope.path = [];
-          var node = selectNode;
-          tree[node.key] = node.value;
-          $scope.path.push(node.key);
-          $scope.$apply();
-        })
+        function isRoot() {
+            return _this.path.length == 1;
+        }
     }
 
-    SidePanelInfoCtrl.$inject = ['$scope', 'DataStoreService', 'TopologyService', 'Onem2mHelperService'];
+    SidePanelInfoCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'Onem2mHelperService'];
     app.controller('SidePanelInfoCtrl', SidePanelInfoCtrl);
 })(app);

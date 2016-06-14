@@ -1,20 +1,24 @@
 (function(app) {
-    function SidePanelRetrieveCSECtrl($scope, DataStore,Topology) {
-        $scope.submit = submit;
-        $scope.host="localhost";
-        $scope.port="8282";
-        $scope.CSEName="InCSE1";
-        $scope.allDescendant=false;
+    'use strict';
 
-        function submit(host,port,cseBase) {
-            var retrieveFn=$scope.allDescendant?DataStore.syncAllData:DataStore.rebuild;
-            retrieveFn(host,port,cseBase).then(function(){
-              Topology.update();
-              $scope.$emit("closeSidePanel");
+    function SidePanelRetrieveCSECtrl($scope, DataStore, Topology) {
+        var _this=this;
+        
+        _this.submit = submit;
+        _this.host = "localhost";
+        _this.port = "8282";
+        _this.CSEName = "InCSE1";
+        _this.allDescendant = false;
+
+        function submit(host, port, cseBase) {
+            var retrieveFn = _this.allDescendant ? DataStore.syncAllData : DataStore.rebuild;
+            retrieveFn(host, port, cseBase).then(function() {
+                Topology.update();
+                $scope.$emit("closeSidePanel");
             });
         }
     }
 
-    SidePanelRetrieveCSECtrl.$inject = ['$scope', 'DataStoreService','TopologyService'];
+    SidePanelRetrieveCSECtrl.$inject = ['$scope', 'DataStoreService', 'TopologyService'];
     app.controller('SidePanelRetrieveCSECtrl', SidePanelRetrieveCSECtrl);
-})(app)
+  })(app);

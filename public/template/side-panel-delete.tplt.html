@@ -1,21 +1,21 @@
-<div ng-controller="SidePanelDeleteCtrl" class="h100" layout="column">
+<div ng-controller="SidePanelDeleteCtrl as ctrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <h3 class="title" flex>{{yourName()|shortToLong}}</h3>
-        <md-switch ng-model="advancedMode"></md-switch>
-        <div class="nav-tag icon-container" ng-click="parent()" ng-hide="isRoot()">
+        <h3 class="title" flex>{{ctrl.yourName()|shortToLong}}</h3>
+        <md-switch ng-model="ctrl.advancedMode"></md-switch>
+        <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
             <span class="material-icons">chevron_left</span>
         </div>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in yourself() as you">
+        <div ng-repeat="(name,value) in ctrl.yourself() as you">
             <md-input-container class="md-block">
                 <label>{{name|shortToLong}}</label>
                 <div class="input">
-                    <input ng-if="isValue(value)" ng-model="you[name]">
+                    <input ng-if="ctrl.isValue(value)" ng-model="you[name]">
 
-                    <div ng-if="!isValue(value)">
+                    <div ng-if="!ctrl.isValue(value)">
                         <input disabled>
-                        <span class="material-icons right" ng-click="children(name)">chevron_right</span>
+                        <span class="material-icons right" ng-click="ctrl.children(name)">chevron_right</span>
                     </div>
                 </div>
                 <div class="content">
@@ -26,9 +26,9 @@
                 </div>
             </md-input-container>
         </div>
-        <md-button ng-click="submit(request)"class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
+        <md-button ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
     </div>
     <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
-        <a ng-repeat="value in path" ng-click="ancestor($index)">{{value|shortToLong}}</a>
+        <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
     </div>
 </div>

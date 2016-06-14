@@ -1,4 +1,5 @@
 (function(app,nx){
+  'use strict';
     function NxService(){
         if(!nx)
             throw "No nx exist";
