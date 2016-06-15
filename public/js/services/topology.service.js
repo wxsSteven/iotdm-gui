@@ -20,6 +20,7 @@
         this.addUnSelectNodeListener = addUnSelectNodeListener();
         this.removeSelectNodeListener = removeSelectNodeListener;
         this.removeUnSelectNodeListener = removeUnSelectNodeListener;
+        this.adaptToContainer=adaptToContainer;
 
         init();
 
@@ -133,6 +134,10 @@
             _layout(root);
             var data = _dataStoreAccessKey.getData();
             _topo.data(data);
+        }
+
+        function adaptToContainer(){
+          _topo.adaptToContainer();
         }
 
         function getSelectedNodeId() {
