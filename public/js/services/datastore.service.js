@@ -40,10 +40,10 @@
                 var parentNode = retrieveNode(parentId);
 
                 if (id) {
-                    if(cacheNodesById[id]){
-                      cacheNodesById[id].value = node.value;
-                    }else{
-                      cacheNodesById[id] = node;
+                    if (cacheNodesById[id]) {
+                        cacheNodesById[id].value = node.value;
+                    } else {
+                        cacheNodesById[id] = node;
                     }
                 }
 
@@ -59,10 +59,10 @@
                 }
 
                 if (!parentId) {
-                    if(root){
-                      root.value=node.value;
-                    }else{
-                      root = node;
+                    if (root) {
+                        root.value = node.value;
+                    } else {
+                        root = node;
                     }
                 }
             });
@@ -101,12 +101,12 @@
             }
 
             var parent = node.parent;
-            if(parent){
-              var index = parent.children.indexOf(node);
-              parent.children.splice(index, 1);
-              if (parent.children.length === 0) {
-                  delete parent.children;
-              }
+            if (parent) {
+                var index = parent.children.indexOf(node);
+                parent.children.splice(index, 1);
+                if (parent.children.length === 0) {
+                    delete parent.children;
+                }
             }
         }
 
@@ -116,19 +116,25 @@
         }
 
         function rebuild(host, port, cseName) {
-            cacheNodesById = {};
-            cacheLinksBySourceId = {};
+            reset();
             return CRUD.retrieveCSE(host, port, cseName).then(function(onem2mData) {
                 addNode(onem2mData);
             });
         }
 
         function syncAllData(host, port, cseName) {
-            cacheNodesById = {};
-            cacheLinksBySourceId = {};
+            reset();
             return CRUD.discovery(host, port, cseName).then(function(onem2mDatas) {
                 addNode(onem2mDatas);
             });
+        }
+
+        function reset() {
+            cacheNodesById = {};
+            cacheLinksBySourceId = {};
+            root = null;
+            selectNodeListeners = [];
+            unSelectNodeListeners = [];
         }
 
         function values(object) {
