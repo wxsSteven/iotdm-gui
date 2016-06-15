@@ -101,10 +101,12 @@
             }
 
             var parent = node.parent;
-            var index = parent.children.indexOf(node);
-            parent.children.splice(index, 1);
-            if (parent.children.length === 0) {
-                delete parent.children;
+            if(parent){
+              var index = parent.children.indexOf(node);
+              parent.children.splice(index, 1);
+              if (parent.children.length === 0) {
+                  delete parent.children;
+              }
             }
         }
 
