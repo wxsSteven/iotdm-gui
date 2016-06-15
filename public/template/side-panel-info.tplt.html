@@ -1,6 +1,6 @@
 <div ng-controller="SidePanelInfoCtrl as ctrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <div class="nav-tag icon-container" ng-click="parent()" ng-hide="ctrl.isRoot()">
+        <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
             <span class="material-icons">chevron_left</span>
         </div>
         <h3 class="title" flex>{{ctrl.yourName()|shortToLong}}</h3>

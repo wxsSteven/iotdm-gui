@@ -1,6 +1,11 @@
 <div ng-controller="SidePanelRetrieveCtrl as ctrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <div flex="30"></div>
+        <div flex="30" class="h100" layout="row">
+          <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
+              <span class="material-icons">chevron_left</span>
+          </div>
+          <div flex></div>
+        </div>
         <div flex="40" class="title" layout="column">
             <h3 class="title">{{ctrl.yourName()|shortToLong}}</h3>
             <span class="subtitle">{{ctrl.mode}}</span>
@@ -28,5 +33,8 @@
             </md-input-container>
         </div>
         <md-button ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary submit" md-no-ink="true" md-ripple-size="full">Submit</md-button>
+    </div>
+    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
+        <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
     </div>
 </div>

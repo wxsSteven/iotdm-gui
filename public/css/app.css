@@ -127,6 +127,7 @@ html, body{
     height:50px;
 
     background: #F3F3F3;
+    position:relative;
 
     align-items: center;
     justify-content: center;
@@ -162,7 +163,6 @@ html, body{
 
 .icon-container{
     display:flex;
-
     align-items:center;
 }
 
