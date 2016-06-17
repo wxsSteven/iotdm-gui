@@ -25,6 +25,10 @@
         _this.submit = submit;
         _this.inputDisabled = false;
 
+        _this.isArray=isArray;
+        _this.addOneItem=addOneItem;
+        _this.removeOneItem=removeOneItem;
+
         init();
 
         function init() {
@@ -34,7 +38,7 @@
             }, function(newMode) {
                 if (newMode) {
                     _this.inputDisabled = true;
-                    _this.request = {};
+                    _this.request = newMode === _this.modes[2]?Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.retrieve):{};
                     _this.request.operation = Onem2m.operation.retrieve;
                     _this.request.from = Onem2m.assignFrom();
                     _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
@@ -44,9 +48,6 @@
                     } else if (newMode === _this.modes[1]) {
                         _this.request.filterCriteria = {};
                         _this.request.filterCriteria.filterUsage = Onem2m.filterUsage["Discovery Criteria"];
-                    } else if (newMode === _this.modes[2]) {
-                        _this.inputDisabled = false;
-                        _this.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.retrieve);
                     }
                     reset();
                 }
@@ -99,6 +100,21 @@
                 Topology.update();
                 $scope.$emit("closeSidePanel");
             });
+        }
+
+        function isArray(value){
+          return angular.isArray (value);
+        }
+
+        function addOneItem(){
+          var place=yourself();
+          var last=place[place.length-1];
+          place.unshift(angular.copy(last));
+        }
+
+        function removeOneItem(index){
+          var place=yourself();
+          place.splice(index,1);
         }
 
     }

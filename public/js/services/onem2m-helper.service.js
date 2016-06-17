@@ -854,7 +854,7 @@
                 limit: null
             }
         }
-    }
+    };
     var accessControlPolicy = {
         "1": {
             "rn": null,
@@ -1088,7 +1088,7 @@
             "li": null,
             "or": null
         }
-    }
+    };
     var contentInstance = {
         "1": {
             "rn": null,
@@ -1108,7 +1108,7 @@
             "or": null,
             "con": null
         }
-    }
+    };
     var node = {
         "1": {
             "rn": null,
@@ -1132,7 +1132,7 @@
             ],
             "ni": null
         }
-    }
+    };
     var group = {
         "1": {
             "rn": null,
@@ -1184,7 +1184,7 @@
             ],
             "gn": null
         }
-    }
+    };
     var subscription = {
         "1": {
             "rn": null,
@@ -1290,7 +1290,7 @@
             "nct": null,
             "nec": null
         }
-    }
+    };
 
     var resourceTypeReverse = reverse(resourceType);
     var cseTypeIDReverse = reverse(cseTypeID);
@@ -1300,7 +1300,6 @@
     var responseTypeReverse = reverse(responseType);
     var resultContentReverse = reverse(resultContent);
     var discResTypeReverse = reverse(discResType);
-    var responseTypeReverse = reverse(responseType);
     var shortToLongDictionary = reverse(longToShortDictionary);
     var resources = {
         accessControlPolicy: accessControlPolicy,
@@ -1401,11 +1400,11 @@
 
         function isMandatory(name) {
             return name.contains(MANDOTRY);
-        };
+        }
 
         function isDisabled(name) {
             return name.contains(Disabled);
-        };
+        }
 
         function toShort(long) {
             if (long) {
@@ -1416,7 +1415,7 @@
         }
 
         function toLong(short) {
-            if (short != null || short != undefined) {
+            if (short !== null && short !== undefined) {
                 short = short.toString();
                 short = short.startsWith(PREFIX) ? short.slice(PREFIX.length) : short;
                 return shortToLongDictionary[short] ? shortToLongDictionary[short] : short;
@@ -1424,17 +1423,17 @@
         }
 
         function getRequestPrimitiveByOperation(operation) {
-            return angular.copy(requestPrimitive[operation])
+            return angular.copy(requestPrimitive[operation]);
         }
 
         function toOnem2mJson(json) {
 
             function handleArray(json) {
                 if (angular.isArray(json)) {
-                    json.shift();
+                    json.pop();
                     json.forEach(function(j) {
                         handleArray(j);
-                    })
+                    });
                 } else if (angular.isObject(json)) {
                     for (var key in json) {
                         handleArray(json[key]);
@@ -1446,7 +1445,7 @@
                 if (angular.isObject(json)) {
                     Object.keys(json).forEach(function(key) {
                         var value = json[key];
-                        if (value == null || value == undefined || value == "" || (angular.isArray(value) && value.length == 0))
+                        if (value === null || value === undefined || value === "" || (angular.isArray(value) && value.length === 0))
                             delete json[key];
                         else if (value == "true" || value == "false") {
                             json[key] = value == "true";
@@ -1457,7 +1456,7 @@
                         } else {
                             stringToValue(value);
                         }
-                    })
+                    });
                 }
             }
             json = angular.copy(json);

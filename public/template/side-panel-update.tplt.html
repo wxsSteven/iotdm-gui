@@ -6,28 +6,40 @@
         </div>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in ctrl.yourself() as you">
-            <md-input-container class="md-block">
-                <label>{{name|shortToLong}}</label>
-                <md-icon ng-hide="ctrl.isEdited(name)"><i class="material-icons">change_history</i></md-icon>
-                <div class="input">
-                    <input ng-if="ctrl.isValue(value)"  ng-model="you[name]">
-                    <div ng-if="!ctrl.isValue(value)">
-                        <input disabled>
-                        <span class="material-icons right" ng-click="ctrl.children(name)">chevron_right</span>
-                    </div>
-                </div>
-                <div class="content">
-
-                </div>
-                <div class="error" ng-messages>
-                    <div ng-message="required">This is Mandatory!</div>
-                </div>
-            </md-input-container>
-        </div>
-        <md-button ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
+      <div ng-if="ctrl.isArray(ctrl.yourself())">
+          <div ng-repeat="(name,value) in ctrl.yourself() as you track by $index">
+              <md-input-container class="md-block" ng-if="!$last">
+                  <label>{{name|shortToLong}}</label>
+                  <md-icon ng-hide="ctrl.isEdited(name)"><i class="material-icons">change_history</i></md-icon>
+                  <div class="input">
+                      <input ng-disabled="!ctrl.isValue(value)" ng-model="you[name]" filter-complex-type-input>
+                      <span class="icons-right">
+                        <span class="material-icons" ng-click="ctrl.removeOneItem($index)">remove_circle_outline</span>
+                      <span class="material-icons" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                      </span>
+                  </div>
+              </md-input-container>
+          </div>
+          <section layout="row">
+              <md-button flex ng-click="ctrl.addOneItem()" class="md-raised" md-no-ink="true" md-ripple-size="full">+</md-button>
+              <md-button flex ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary" md-no-ink="true" md-ripple-size="full">Submit</md-button>
+          </section>
+      </div>
+      <div ng-if="!ctrl.isArray(ctrl.yourself())">
+          <div ng-repeat="(name,value) in ctrl.yourself() as you">
+              <md-input-container class="md-block">
+                  <label>{{name|shortToLong}}</label>
+                  <md-icon ng-hide="ctrl.isEdited(name)"><i class="material-icons">change_history</i></md-icon>
+                  <div class="input">
+                      <input ng-disabled="!ctrl.isValue(value)" ng-model="you[name]" filter-complex-type-input>
+                      <span class="material-icons icons-right" ng-show="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                  </div>
+              </md-input-container>
+          </div>
+          <section layout="row">
+              <md-button flex ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary" md-no-ink="true" md-ripple-size="full">Submit</md-button>
+          </section>
+      </div>
     </div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
-        <a ng-repeat="value in path" ng-click="ancestor($index)">{{value|shortToLong}}</a>
-    </div>
+    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb" ng-include="'template/side-panel-bottom.tplt.html'"></div>
 </div>

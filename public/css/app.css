@@ -188,7 +188,12 @@ html, body{
     color:#C0C0C0;
 }
 
-.material-icons.right{
+.right{
+    position:absolute;
+    right:0;
+}
+
+.icons-right{
     position:absolute;
     right:0;
 }

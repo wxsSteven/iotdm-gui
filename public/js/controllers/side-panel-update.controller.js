@@ -22,6 +22,10 @@
         _this.submit = submit;
         _this.isEdited = isEdited;
 
+        _this.isArray=isArray;
+        _this.addOneItem=addOneItem;
+        _this.removeOneItem=removeOneItem;
+
         init();
 
         function init() {
@@ -121,6 +125,21 @@
             var you = yourself();
             var copy = copyYourself();
             return angular.equals(you[name], copy[name]);
+        }
+
+        function isArray(value){
+          return angular.isArray (value);
+        }
+
+        function addOneItem(){
+          var place=yourself();
+          var last=place[place.length-1];
+          place.unshift(angular.copy(last));
+        }
+
+        function removeOneItem(index){
+          var place=yourself();
+          place.splice(index,1);
         }
     }
 

@@ -6,29 +6,6 @@
             <span class="material-icons">chevron_left</span>
         </div>
     </div>
-    <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in ctrl.yourself() as you">
-            <md-input-container class="md-block">
-                <label>{{name|shortToLong}}</label>
-                <div class="input">
-                    <input ng-if="ctrl.isValue(value)" ng-model="you[name]">
-
-                    <div ng-if="!ctrl.isValue(value)">
-                        <input disabled>
-                        <span class="material-icons right" ng-click="ctrl.children(name)">chevron_right</span>
-                    </div>
-                </div>
-                <div class="content">
-
-                </div>
-                <div class="error" ng-messages>
-                    <div ng-message="required">This is Mandatory!</div>
-                </div>
-            </md-input-container>
-        </div>
-        <md-button ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary submit" aria-label="description" md-no-ink="true" md-ripple-size="full">Submit</md-button>
-    </div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
-        <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
-    </div>
+    <div class="side-panel-content md-whiteframe-1dp" ng-include="'template/side-panel-content.tplt.html'"></div>
+    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb" ng-include="'template/side-panel-bottom.tplt.html'"></div>
 </div>
