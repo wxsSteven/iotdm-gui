@@ -1,17 +1,1 @@
-<div ng-controller="SidePanelRetrieveCtrl as ctrl" class="h100" layout="column">
-    <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <div flex="30" class="h100" layout="row">
-            <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
-                <span class="material-icons">chevron_left</span>
-            </div>
-            <div flex></div>
-        </div>
-        <div flex="40" class="title" layout="column">
-            <h3 class="title">{{ctrl.yourName()|shortToLong}}</h3>
-            <span class="subtitle">{{ctrl.mode}}</span>
-        </div>
-        <slider modes="ctrl.modes" mode="ctrl.mode" flex="30" min="ctrl.min" max="ctrl.max"></slider>
-    </div>
-    <div class="side-panel-content md-whiteframe-1dp" ng-include="'template/side-panel-content.tplt.html'"></div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb" ng-include="'template/side-panel-bottom.tplt.html'"></div>
-</div>
+<onem2m-side-panel operation="2"></onem2m-side-panel>

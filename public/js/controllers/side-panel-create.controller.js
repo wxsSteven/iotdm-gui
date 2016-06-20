@@ -5,10 +5,10 @@
     function SidePanelCreateCtrl($scope, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
         var _this = this;
 
-        _this.hide = false;
         _this.path = [];
-        _this.tree = {};
+        _this.root = {};
         _this.request = {};
+
         _this.ancestor = ancestor;
         _this.children = children;
         _this.parent = parent;
@@ -50,9 +50,9 @@
             _this.request.from = Onem2m.assignFrom();
             _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
             _this.request.to = Onem2m.id(node);
-            _this.tree = {};
+            _this.root = {};
             _this.path = [];
-            _this.tree[ROOT_KEY] = _this.request;
+            _this.root[ROOT_KEY] = _this.request;
             _this.path.push(ROOT_KEY);
         }
 
@@ -73,7 +73,7 @@
         }
 
         function yourself() {
-            var place = _this.tree;
+            var place = _this.root;
             _this.path.forEach(function(p) {
                 place = place[p];
             });

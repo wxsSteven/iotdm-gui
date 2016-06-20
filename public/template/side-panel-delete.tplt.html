@@ -1,11 +1,1 @@
-<div ng-controller="SidePanelDeleteCtrl as ctrl" class="h100" layout="column">
-    <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <h3 class="title" flex>{{ctrl.yourName()|shortToLong}}</h3>
-        <md-switch ng-model="ctrl.advancedMode"></md-switch>
-        <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
-            <span class="material-icons">chevron_left</span>
-        </div>
-    </div>
-    <div class="side-panel-content md-whiteframe-1dp" ng-include="'template/side-panel-content.tplt.html'"></div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb" ng-include="'template/side-panel-bottom.tplt.html'"></div>
-</div>
+<onem2m-side-panel operation="4"></onem2m-side-panel>

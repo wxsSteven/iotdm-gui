@@ -3,7 +3,7 @@
 
     function SidePanelRetrieveCSECtrl($scope, DataStore, Topology) {
         var _this=this;
-        
+
         _this.submit = submit;
         _this.host = "localhost";
         _this.port = "8282";

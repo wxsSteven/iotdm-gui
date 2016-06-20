@@ -4,10 +4,11 @@
 
     function SidePanelDeleteCtrl($scope, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
         var _this = this;
-        _this.hide = false;
+
         _this.root = {};
         _this.path = [];
         _this.request = {};
+        
         _this.advancedMode = false;
         _this.ancestor = ancestor;
         _this.children = children;
