@@ -11,10 +11,10 @@
                     return angular.isObject(value) ? null : value;
                 });
 
-                //format text from the user (view to model)
-                // ngModel.$parsers.push(function(value) {
-                //     return value.toLowerCase();
-                // });
+                // format text from the user (view to model)
+                ngModel.$parsers.push(function(value) {
+                  return value===''||value===undefined?null:value;
+                });
             }
         };
     });

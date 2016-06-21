@@ -1,15 +1,15 @@
 (function(app) {
     'use strict';
 
-    function onem2mSidePanel() {
+    function sidePanelCrud() {
         return {
             restrict: "E",
             scope: {
                 operation: "="
             },
-            templateUrl: "template/onem2m-side-panel.tplt.html"
+            templateUrl: "template/side-panel-crud.tplt.html"
         };
     }
 
-    app.directive("onem2mSidePanel", onem2mSidePanel);
+    app.directive("sidePanelCrud", sidePanelCrud);
 })(app);

@@ -8,28 +8,28 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 
-<body ng-controller="IotdmGuiCtrl as mainCtrl">
+<body ng-controller="IotdmGuiCtrl as ctrl">
 
     <div layout="column" class="container">
         <md-toolbar class="md-whiteframe-1dp toolbar-main">
             <div class="md-toolbar-tools toolbar-main">
                 <span class="logo">Iotdm</span>
                 <span flex></span>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('retrieve-cse')" ng-hide="mainCtrl.isSelect">Retrieve CSE</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('create')" ng-show="mainCtrl.isSelect">Create</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('retrieve')" ng-show="mainCtrl.isSelect">Retrieve</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('update')" ng-show="mainCtrl.isSelect">Update</md-button>
-                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="mainCtrl.openSidePanel('delete')" ng-show="mainCtrl.isSelect">Delete</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="ctrl.openSidePanel('retrieve-cse')" ng-hide="ctrl.isSelect">Retrieve CSE</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="ctrl.openSidePanel('create')" ng-show="ctrl.isSelect">Create</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="ctrl.openSidePanel('retrieve')" ng-show="ctrl.isSelect">Retrieve</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="ctrl.openSidePanel('update')" ng-show="ctrl.isSelect">Update</md-button>
+                <md-button class="animate-hide" aria-label="description" md-ripple-size="full" ng-click="ctrl.openSidePanel('delete')" ng-show="ctrl.isSelect">Delete</md-button>
             </div>
         </md-toolbar>
 
         <section layout="row" flex>
             <div id="topology" flex></div>
-            <section class="side-panel md-whiteframe-1dp h100 w100" ng-class="{'side-panel-hide':mainCtrl.sidePanel.hide}">
-                <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="mainCtrl.sidePanel.hide" ng-click="mainCtrl.closeSidePanel()">
+            <section class="side-panel md-whiteframe-1dp h100 w100" ng-class="{'side-panel-hide':ctrl.sidePanel.hide}">
+                <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="ctrl.sidePanel.hide" ng-click="ctrl.closeSidePanel()">
                     <span class="material-icons">chevron_right</span>
                 </div>
-                <div ng-include="mainCtrl.sidePanel.template" class="h100 w100"></div>
+                <div ng-include="ctrl.sidePanel.template" class="h100 w100"></div>
             </section>
         </section>
     </div>
@@ -63,15 +63,11 @@
     <!--directives-->
     <script src="js/directives/slider.directive.js"></script>
     <script src="js/directives/filter-complex-type-input.directive.js"></script>
-    <script src="js/directives/onem2m-side-panel.directive.js"></script>
+    <script src="js/directives/side-panel-crud.directive.js"></script>
 
     <!-- ctrls -->
     <script src="js/controllers/iotdm-gui.controller.js"></script>
     <script src="js/controllers/side-panel-info.controller.js"></script>
-    <script src="js/controllers/side-panel-create.controller.js"></script>
-    <script src="js/controllers/side-panel-retrieve.controller.js"></script>
-    <script src="js/controllers/side-panel-update.controller.js"></script>
-    <script src="js/controllers/side-panel-delete.controller.js"></script>
     <script src="js/controllers/side-panel-retrieve-cse.controller.js"></script>
     <script src="js/controllers/side-panel-crud.controller.js"></script>
     <script src="js/bootstrap.js"></script>

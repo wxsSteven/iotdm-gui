@@ -13,6 +13,7 @@
         _this.root_copy = {};
         _this.request = {};
         _this.request_copy = {};
+        _this.showChange=false;
 
         _this.ancestor = ancestor;
         _this.children = children;
@@ -151,6 +152,23 @@
         }
 
 
+        function submit(request) {
+            if (_this.operation === Onem2m.operation.update) {
+                request.primitiveContent = diff(request.primitiveContent, _this.request_copy.primitiveContent);
+            }
+            request = Onem2m.toOnem2mJson(request);
+            CRUD.CRUD(request).then(function(data) {
+                if (_this.operation === Onem2m.operation.delete) {
+                    DataStore.removeNode(data);
+                } else if (_this.operation === Onem2m.operation.update) {
+                    DataStore.updateNode(data);
+                } else {
+                    DataStore.addNode(data);
+                }
+                Topology.update();
+                $scope.$emit("closeSidePanel");
+            });
+        }
 
         function ancestor(index) {
             _this.path.splice(index + 1);
@@ -197,9 +215,11 @@
         }
 
         function isEdited(name) {
-            var you = yourself();
-            var copy = copyYourself();
-            return angular.equals(you[name], copy[name]);
+            if(_this.showChange){
+              var you = yourself();
+              var copy = copyYourself();
+              return !angular.equals(you[name], copy[name]);
+            }
         }
 
         function readDataToTemplate(targetObject, srcObject) {
@@ -244,22 +264,6 @@
 
         function isRoot() {
             return _this.path.length == 1;
-        }
-
-        function submit(request) {
-            if(_this.operation===Onem2m.operation.update){
-              request.primitiveContent = diff(request.primitiveContent, _this.request_copy.primitiveContent);
-            }
-            request = Onem2m.toOnem2mJson(request);
-            CRUD.CRUD(request).then(function(data) {
-                if (_this.operation === Onem2m.operation.delete) {
-                    DataStore.removeNode(data);
-                } else {
-                    DataStore.addNode(data);
-                }
-                Topology.update();
-                $scope.$emit("closeSidePanel");
-            });
         }
 
         function isArray(value) {
