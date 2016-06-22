@@ -3,69 +3,67 @@
     var MIME = "application/json";
     var HOST = 'localhost';
     var PORT = '8181';
-    var CSE_NAME = "";
+    var CSE_BASE = "";
 
-    function Onem2mCRUDService($http, Onem2m) {
+    function Onem2mCRUDService($http, $q,Onem2m) {
         this.CRUD = CRUD;
         this.setBaseDir = setBaseDir;
         this.retrieveCSE = retrieveCSE;
         this.discovery = discovery;
 
-        function setBaseDir(host, port, cseName) {
+        function setBaseDir(host, port, cseBase) {
             HOST = host;
             PORT = port;
-            CSE_NAME = cseName;
+            CSE_BASE = cseBase;
         }
 
-        function retrieveCSE(host, port, cseName) {
-            setBaseDir(host, port, cseName);
+        function retrieveCSE(host, port, cseBase) {
             var request = {
                 to: "",
                 operation: Onem2m.operation.retrieve,
-                requestIdentifier: "id",
-                from: "//localhost",
-            }
-            return CRUD(request);
+                requestIdentifier: Onem2m.assignRequestIdentifier(),
+                from: Onem2m.assignFrom(),
+            };
+            return CRUD(request,host, port, cseBase);
         }
 
-        function discovery(host, port, cseName) {
-            setBaseDir(host, port, cseName);
+        function discovery(host, port, cseBase) {
             var request = {
                 to: "",
                 operation: Onem2m.operation.retrieve,
-                requestIdentifier: "id",
-                from: "//localhost",
+                requestIdentifier: Onem2m.assignRequestIdentifier(),
+                from: Onem2m.assignFrom(),
                 filterCriteria: {
                     filterUsage: Onem2m.filterUsage["Discovery Criteria"]
                 }
-            }
-            return CRUD(request);
+            };
+            return CRUD(request,host, port, cseBase);
         }
 
-        function CRUD(request) {
+        function CRUD(request,host,port,cseBase) {
             switch (request.operation) {
                 case Onem2m.operation.create:
-                    return _create(request);
+                    return _create(request,host,port,cseBase);
                 case Onem2m.operation.retrieve:
-                    return _retrieve(request);
+                    return _retrieve(request,host,port,cseBase);
                 case Onem2m.operation.update:
-                    return _update(request);
+                    return _update(request,host,port,cseBase);
                 case Onem2m.operation.delete:
-                    return _delete(request);
+                    return _delete(request,host,port,cseBase);
             }
-        };
+        }
 
-        function _retrieve(request) {
-            var httpRequest = parseRequest(request);
+        function _retrieve(request,host,port,cseBase) {
+            var httpRequest = parseRequest(request,host,port,cseBase);
             return $http.get(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
                 return parseHttpResponse(httpResponse);
-            });
-        };
+            },handleResponseError);
+        }
 
-        function _create(request) {
-            var httpRequest = parseRequest(request);
+        function _create(request,host,port,cseBase) {
+            var httpRequest = parseRequest(request,host,port,cseBase);
             var attrsSent = httpRequest.payload;
             return $http.post(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
@@ -73,11 +71,11 @@
                 var attrsReceived = parseHttpResponse(httpResponse);
                 var data = combineAttrs(attrsSent, attrsReceived);
                 return data;
-            });
-        };
+            },handleResponseError);
+        }
 
-        function _update(request) {
-            var httpRequest = parseRequest(request);
+        function _update(request,host,port,cseBase) {
+            var httpRequest = parseRequest(request,host,port,cseBase);
             var attrsSent = httpRequest.payload;
             var ri=request.to;
             return $http.put(httpRequest.url, httpRequest.payload, {
@@ -87,20 +85,28 @@
                 var key =getWrapper(data);
                 data[key].ri=ri;
                 return data;
-            });
-        };
+            },handleResponseError);
+        }
 
-        function _delete(request) {
-            var httpRequest = parseRequest(request);
+        function _delete(request,host,port,cseBase) {
+            var httpRequest = parseRequest(request,host,port,cseBase);
             return $http.delete(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
                 return parseHttpResponse(httpResponse);
-            });
-        };
+            },handleResponseError);
+        }
 
-        function parseRequest(request) {
-            var url = "http://" + HOST + ":" + PORT + "/" + CSE_NAME + "/" + request.to;
+        function handleResponseError(error){
+          var result=error.data?JSON.stringify(error.data):JSON.stringify(error);
+          return $q.reject(result);
+        }
+
+        function parseRequest(request,host,port,cseBase) {
+            host=host?host:HOST;
+            port=port?port:PORT;
+            cseBase=cseBase?cseBase:CSE_BASE;
+            var url = "http://" + host + ":" + port + "/" + cseBase + "/" + request.to;
             var query = {};
             query.rt = request.responseType && request.responseType.responseTypeValue;
             query.rp = request.resultPersistence;
@@ -132,7 +138,7 @@
                 if (fc.attribute) {
                     fc.attribute.forEach(function(d) {
                         query[d.nm] = d.val;
-                    })
+                    });
                 }
                 query.fu = fc.filterUsage;
             }
@@ -217,6 +223,6 @@
         }
     }
 
-    Onem2mCRUDService.$inject = ['$http', 'Onem2mHelperService'];
+    Onem2mCRUDService.$inject = ['$http', '$q','Onem2mHelperService'];
     app.service('Onem2mCRUDService', Onem2mCRUDService);
 })(app);

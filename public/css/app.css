@@ -212,3 +212,11 @@ html, body{
 md-input-container .md-errors-spacer{
     min-height:12px;
 }
+
+md-toast.md-success-theme .md-toast-content{
+    background-color: rgb(33,150,243);
+}
+
+md-toast.md-warn-theme .md-toast-content {
+    background-color: rgb(223, 55, 111);
+}

@@ -1,8 +1,8 @@
 (function(app) {
     'use strict';
 
-    function SidePanelRetrieveCSECtrl($scope, DataStore, Topology) {
-        var _this=this;
+    function SidePanelRetrieveCSECtrl($scope, DataStore, Topology, CRUD, Alert) {
+        var _this = this;
 
         _this.submit = submit;
         _this.host = "localhost";
@@ -11,14 +11,29 @@
         _this.allDescendant = false;
 
         function submit(host, port, cseBase) {
-            var retrieveFn = _this.allDescendant ? DataStore.syncAllData : DataStore.rebuild;
-            retrieveFn(host, port, cseBase).then(function() {
+            var retrieveFn = _this.allDescendant ? getCSEAndDescendant : getCSE;
+
+            retrieveFn(host, port, cseBase).then(function(data) {
+                CRUD.setBaseDir(host, port, cseBase);
+                DataStore.reset();
+                DataStore.addNode(data);
                 Topology.update();
                 $scope.$emit("closeSidePanel");
+                Alert("Retrieve CSE Successfully", 'success');
+            }, function(error) {
+                Alert(error);
             });
+        }
+
+        function getCSE(host, port, cseBase) {
+            return CRUD.retrieveCSE(host, port, cseBase);
+        }
+
+        function getCSEAndDescendant(host, port, cseBase) {
+            return CRUD.discovery(host, port, cseBase);
         }
     }
 
-    SidePanelRetrieveCSECtrl.$inject = ['$scope', 'DataStoreService', 'TopologyService'];
+    SidePanelRetrieveCSECtrl.$inject = ['$scope', 'DataStoreService', 'TopologyService', 'Onem2mCRUDService', 'AlertService'];
     app.controller('SidePanelRetrieveCSECtrl', SidePanelRetrieveCSECtrl);
-  })(app);
+})(app);

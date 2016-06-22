@@ -10,7 +10,7 @@
             <md-input-container class="md-block">
                 <label>{{name|shortToLong}}</label>
                 <div class="input">
-                  <input ng-model="you[name]" filter-complex-type-input disabled>
+                  <input ng-model="you[name]" onem2m-input onem2m-input-name="name" onem2m-input-value="value" disabled>
                   <span class="material-icons icons-right" ng-show="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
                 </div>
             </md-input-container>

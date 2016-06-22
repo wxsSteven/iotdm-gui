@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Iotdm Gui</title>
@@ -33,6 +34,7 @@
             </section>
         </section>
     </div>
+    <div layout-fill id="toast-container"></div>
 
     <!-- vendors -->
     <script src="bower_components/d3/d3.js"></script>
@@ -56,13 +58,14 @@
     <script src="js/services/datastore.service.js"></script>
     <script src="js/services/topology.service.js"></script>
     <script src="js/services/topology-helper.service.js"></script>
+    <script src="js/services/alert.service.js"></script>
 
     <!-- filters -->
     <script src="js/filter/short-to-long.filter.js"></script>
 
     <!--directives-->
     <script src="js/directives/slider.directive.js"></script>
-    <script src="js/directives/filter-complex-type-input.directive.js"></script>
+    <script src="js/directives/onem2m-input.directive.js"></script>
     <script src="js/directives/side-panel-crud.directive.js"></script>
 
     <!-- ctrls -->

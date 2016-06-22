@@ -3,7 +3,7 @@
 
     var ROOT_KEY = "Request Primitive";
 
-    function SidePanelCRUDCtrl($scope, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
+    function SidePanelCRUDCtrl($scope, Alert,Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
         var _this = this;
 
         _this.operation = $scope.operation;
@@ -13,7 +13,7 @@
         _this.root_copy = {};
         _this.request = {};
         _this.request_copy = {};
-        _this.showChange=false;
+        _this.showChange = false;
 
         _this.ancestor = ancestor;
         _this.children = children;
@@ -167,6 +167,9 @@
                 }
                 Topology.update();
                 $scope.$emit("closeSidePanel");
+                Alert("Request Successfully",'success');
+            }, function(error) {
+                Alert(error);
             });
         }
 
@@ -215,10 +218,10 @@
         }
 
         function isEdited(name) {
-            if(_this.showChange){
-              var you = yourself();
-              var copy = copyYourself();
-              return !angular.equals(you[name], copy[name]);
+            if (_this.showChange) {
+                var you = yourself();
+                var copy = copyYourself();
+                return !angular.equals(you[name], copy[name]);
             }
         }
 
@@ -281,6 +284,6 @@
             place.splice(index, 1);
         }
     }
-    SidePanelCRUDCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
+    SidePanelCRUDCtrl.$inject = ['$scope', 'AlertService', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService'];
     app.controller("SidePanelCRUDCtrl", SidePanelCRUDCtrl);
 })(app);

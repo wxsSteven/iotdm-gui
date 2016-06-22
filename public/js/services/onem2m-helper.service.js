@@ -1,5 +1,6 @@
 (function(app) {
-  'use strict';
+    'use strict';
+
     function reverse(map) {
         var reverse = {};
         for (var key in map) {
@@ -999,7 +1000,7 @@
         }
     };
 
-    var AE={
+    var AE = {
         "1": {
             "rn": null,
             "acp": [
@@ -1441,6 +1442,19 @@
                 }
             }
 
+            function handleEmptyObject(object) {
+                for (var k in object) {
+                    var value = object[k];
+                    if (angular.isObject(value)) {
+                        if (Object.keys(value).length === 0) {
+                            delete object[k];
+                        } else {
+                          handleEmptyObject(value);
+                        }
+                    }
+                }
+            }
+
             function stringToValue(json) {
                 if (angular.isObject(json)) {
                     Object.keys(json).forEach(function(key) {
@@ -1462,6 +1476,7 @@
             json = angular.copy(json);
             handleArray(json);
             stringToValue(json);
+            handleEmptyObject(json);
             return json;
         }
 
@@ -1473,7 +1488,7 @@
             var count = 1;
             return function() {
                 return count++;
-            }
+            };
         }
 
         function getResourceByResourceTypeAndOperation(resourceType, operation) {

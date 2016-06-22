@@ -14,8 +14,7 @@
         this.updateNode = updateNode;
         this.removeNode = removeNode;
         this.retrieveNode = retrieveNode;
-        this.rebuild = rebuild;
-        this.syncAllData = syncAllData;
+        this.reset=reset;
 
         function getAccessKey() {
             return {
@@ -115,19 +114,7 @@
             return cacheNodesById[id];
         }
 
-        function rebuild(host, port, cseName) {
-            reset();
-            return CRUD.retrieveCSE(host, port, cseName).then(function(onem2mData) {
-                addNode(onem2mData);
-            });
-        }
 
-        function syncAllData(host, port, cseName) {
-            reset();
-            return CRUD.discovery(host, port, cseName).then(function(onem2mDatas) {
-                addNode(onem2mDatas);
-            });
-        }
 
         function reset() {
             cacheNodesById = {};
