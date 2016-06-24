@@ -1,11 +1,11 @@
 (function(app) {
-  'use strict';
+    'use strict';
     var MIME = "application/json";
     var HOST = 'localhost';
     var PORT = '8181';
     var CSE_BASE = "";
 
-    function Onem2mCRUDService($http, $q,Onem2m) {
+    function Onem2mCRUDService($http, $q, Onem2m) {
         this.CRUD = CRUD;
         this.setBaseDir = setBaseDir;
         this.retrieveCSE = retrieveCSE;
@@ -24,7 +24,7 @@
                 requestIdentifier: Onem2m.assignRequestIdentifier(),
                 from: Onem2m.assignFrom(),
             };
-            return CRUD(request,host, port, cseBase);
+            return CRUD(request, host, port, cseBase);
         }
 
         function discovery(host, port, cseBase) {
@@ -37,33 +37,33 @@
                     filterUsage: Onem2m.filterUsage["Discovery Criteria"]
                 }
             };
-            return CRUD(request,host, port, cseBase);
+            return CRUD(request, host, port, cseBase);
         }
 
-        function CRUD(request,host,port,cseBase) {
+        function CRUD(request, host, port, cseBase) {
             switch (request.operation) {
                 case Onem2m.operation.create:
-                    return _create(request,host,port,cseBase);
+                    return _create(request, host, port, cseBase);
                 case Onem2m.operation.retrieve:
-                    return _retrieve(request,host,port,cseBase);
+                    return _retrieve(request, host, port, cseBase);
                 case Onem2m.operation.update:
-                    return _update(request,host,port,cseBase);
+                    return _update(request, host, port, cseBase);
                 case Onem2m.operation.delete:
-                    return _delete(request,host,port,cseBase);
+                    return _delete(request, host, port, cseBase);
             }
         }
 
-        function _retrieve(request,host,port,cseBase) {
-            var httpRequest = parseRequest(request,host,port,cseBase);
+        function _retrieve(request, host, port, cseBase) {
+            var httpRequest = parseRequest(request, host, port, cseBase);
             return $http.get(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
                 return parseHttpResponse(httpResponse);
-            },handleResponseError);
+            }, handleResponseError);
         }
 
-        function _create(request,host,port,cseBase) {
-            var httpRequest = parseRequest(request,host,port,cseBase);
+        function _create(request, host, port, cseBase) {
+            var httpRequest = parseRequest(request, host, port, cseBase);
             var attrsSent = httpRequest.payload;
             return $http.post(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
@@ -71,41 +71,52 @@
                 var attrsReceived = parseHttpResponse(httpResponse);
                 var data = combineAttrs(attrsSent, attrsReceived);
                 return data;
-            },handleResponseError);
+            }, handleResponseError);
         }
 
-        function _update(request,host,port,cseBase) {
-            var httpRequest = parseRequest(request,host,port,cseBase);
+        function _update(request, host, port, cseBase) {
+            var httpRequest = parseRequest(request, host, port, cseBase);
             var attrsSent = httpRequest.payload;
-            var ri=request.to;
+            var ri = request.to;
             return $http.put(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
                 var data = parseHttpResponse(httpResponse);
-                var key =getWrapper(data);
-                data[key].ri=ri;
+                var key = getWrapper(data);
+                data[key].ri = ri;
                 return data;
-            },handleResponseError);
+            }, handleResponseError);
         }
 
-        function _delete(request,host,port,cseBase) {
-            var httpRequest = parseRequest(request,host,port,cseBase);
+        function _delete(request, host, port, cseBase) {
+            var httpRequest = parseRequest(request, host, port, cseBase);
             return $http.delete(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
                 return parseHttpResponse(httpResponse);
-            },handleResponseError);
+            }, handleResponseError);
         }
 
-        function handleResponseError(error){
-          var result=error.data?JSON.stringify(error.data):JSON.stringify(error);
-          return $q.reject(result);
+        function handleResponseError(error) {
+            var result = chain(error, 'data', 'error');
+            return $q.reject("Error:" + result);
         }
 
-        function parseRequest(request,host,port,cseBase) {
-            host=host?host:HOST;
-            port=port?port:PORT;
-            cseBase=cseBase?cseBase:CSE_BASE;
+        function chain(root) {
+            var pointer = root;
+            for (var i = 1; i < arguments.length; i++) {
+                var arg = arguments[i];
+                if (pointer[arg] === undefined||pointer[arg]===null)
+                    break;
+                pointer=pointer[arg];
+            }
+            return angular.toJson(pointer);
+        }
+
+        function parseRequest(request, host, port, cseBase) {
+            host = host ? host : HOST;
+            port = port ? port : PORT;
+            cseBase = cseBase ? cseBase : CSE_BASE;
             var url = "http://" + host + ":" + port + "/" + cseBase + "/" + request.to;
             var query = {};
             query.rt = request.responseType && request.responseType.responseTypeValue;
@@ -223,6 +234,6 @@
         }
     }
 
-    Onem2mCRUDService.$inject = ['$http', '$q','Onem2mHelperService'];
+    Onem2mCRUDService.$inject = ['$http', '$q', 'Onem2mHelperService'];
     app.service('Onem2mCRUDService', Onem2mCRUDService);
 })(app);

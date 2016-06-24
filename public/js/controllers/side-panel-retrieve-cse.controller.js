@@ -21,7 +21,7 @@
                 $scope.$emit("closeSidePanel");
                 Alert("Retrieve CSE Successfully", 'success');
             }, function(error) {
-                Alert(error);
+                Alert(error,'warn');
             });
         }
 

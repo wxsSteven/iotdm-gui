@@ -169,7 +169,7 @@
                 $scope.$emit("closeSidePanel");
                 Alert("Request Successfully",'success');
             }, function(error) {
-                Alert(error);
+                Alert(error,'warn');
             });
         }
 
