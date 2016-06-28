@@ -14,6 +14,7 @@
         _this.yourself = yourself;
         _this.isValue = isValue;
         _this.isRoot = isRoot;
+        _this.isArray=isArray;
 
         init();
 
@@ -67,6 +68,10 @@
 
         function isRoot() {
             return _this.path.length == 1;
+        }
+
+        function isArray(array){
+          return angular.isArray(array);
         }
     }
 

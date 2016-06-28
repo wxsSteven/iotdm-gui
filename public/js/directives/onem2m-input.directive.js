@@ -7,10 +7,11 @@
             return angular.isObject(value) ? null : value;
         }
 
-        function enumValueToEnumName(name){
-          return function(value){
-
-          };
+        function toView(name, isArrayItem) {
+            var toViewHandler = Onem2m.attributeViewHandler(name, isArrayItem);
+            return function(value) {
+                return toViewHandler(value);
+            };
         }
 
         // format text from the user (view to model)
@@ -18,33 +19,29 @@
             return value === '' || value === undefined ? null : value;
         }
 
-        function enumNameToEnumValue(name){
-          return function(value){
-
-          };
+        function toModel(name, isArrayItem) {
+            var toModelHandler = Onem2m.attributeModelHandler(name, isArrayItem);
+            return function(value) {
+                return toModelHandler(value);
+            };
         }
 
-        function stringToOnem2mType(name){
-          return function(value){
-
-          };
-        }
 
         return {
             restrict: 'A',
             scope: {
-                name: "=onem2mInputName",
-                value: "=onem2mInputValue"
+                name: "=onem2mInput"
             },
             require: 'ngModel',
             link: function(scope, element, attrs, ngModel) {
                 var name = scope.name;
-                var value = scope.value;
+                var isArrayItem = attrs.arrayItem !== undefined;
                 //format text going to user (model to view)
                 ngModel.$formatters.push(filterComplexType);
-                ngModel.$formatters.push(filterComplexType);
+                ngModel.$formatters.push(toView(name, isArrayItem));
                 // format text from the user (view to model)
                 ngModel.$parsers.push(emptyStringAsNull);
+                ngModel.$parsers.push(toModel(name,isArrayItem));
             }
         };
     }

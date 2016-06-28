@@ -1,19 +1,38 @@
 <div ng-controller="SidePanelInfoCtrl as ctrl" class="h100" layout="column">
     <div class="side-panel-top md-whiteframe-1dp" layout="row">
-        <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
-            <span class="material-icons">chevron_left</span>
+        <div flex="30" class="h100" layout="row">
+            <div class="nav-tag icon-container" ng-click="ctrl.parent()" ng-hide="ctrl.isRoot()">
+                <span class="material-icons">chevron_left</span>
+            </div>
+            <div flex></div>
         </div>
-        <h3 class="title" flex>{{ctrl.yourName()|shortToLong}}</h3>
+        <div flex="40" class="title" layout="column">
+            <span class="title">{{ctrl.yourName()|shortToLong}}</span>
+        </div>
+        <div flex="30"></div>
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
-        <div ng-repeat="(name,value) in ctrl.yourself() as you">
-            <md-input-container class="md-block">
-                <label>{{name|shortToLong}}</label>
-                <div class="input">
-                  <input ng-model="you[name]" onem2m-input onem2m-input-name="name" onem2m-input-value="value" disabled>
-                  <span class="material-icons icons-right" ng-show="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
-                </div>
-            </md-input-container>
+        <div ng-if="ctrl.isArray(ctrl.yourself())">
+            <div ng-repeat="(name,value) in ctrl.yourself() as you track by $index">
+                <md-input-container class="md-block">
+                    <label>{{name|shortToLong}}</label>
+                    <div class="input">
+                        <input disabled ng-model="you[name]" onem2m-input="ctrl.yourName()" array-item>
+                        <span class="material-icons icons-right" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                    </div>
+                </md-input-container>
+            </div>
+        </div>
+        <div ng-if="!ctrl.isArray(ctrl.yourself())">
+            <div ng-repeat="(name,value) in ctrl.yourself() as you">
+                <md-input-container class="md-block">
+                    <label>{{name|shortToLong}}</label>
+                    <div class="input">
+                        <input disabled ng-model="you[name]" onem2m-input="name">
+                        <span class="material-icons icons-right" ng-show="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                    </div>
+                </md-input-container>
+            </div>
         </div>
     </div>
     <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">

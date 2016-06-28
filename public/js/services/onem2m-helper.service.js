@@ -13,6 +13,15 @@
     var Disabled = 'disabled';
     var PREFIX = 'm2m:';
 
+    var ENUM = 'enum';
+    var TIME = 'time';
+    var BOOLEAN = "boolean";
+    var NUMBER = 'number';
+    var STRING = 'string';
+    var OBJECT = 'object';
+    var ARRAY = 'array';
+    var ANY = 'any';
+
     var resourceType = {
         accessControlPolicy: 1,
         AE: 2,
@@ -707,6 +716,165 @@
         "contentSerialization": "csz"
     };
 
+
+    var attributes = {};
+
+    function initAttributes() {
+        var defaultHandler = {};
+
+        function put(name, type, handler, itemHandler) {
+            handler = handler ? handler : defaultHandler[type];
+            handler = handler ? handler : handleElse();
+            itemHandler = itemHandler ? itemHandler : handleElse();
+            attributes[name] = {
+                type: type,
+                handler: handler,
+                itemHandler: itemHandler
+            };
+        }
+
+        defaultHandler[TIME] = handleTime();
+        defaultHandler[BOOLEAN] = handleBoolean();
+        defaultHandler[NUMBER] = handleNumber();
+        defaultHandler[STRING] = handleString();
+        defaultHandler[OBJECT] = handleObject();
+        defaultHandler[ARRAY] = handleArray();
+        defaultHandler[ANY] = handleAny();
+
+        put("op", ENUM, handleEnum(operation));
+        put("to", STRING);
+        put("fr", STRING);
+        put("rqi", STRING);
+        put("ty", ENUM, handleEnum(resourceType));
+        put("pc", ANY);
+        put("rol", STRING);
+        put("rset", TIME);
+        put("oet", TIME);
+        put("rt", OBJECT);
+        put("rtv", ENUM, handleEnum(responseType));
+        put("nu", ARRAY, null, handleString());
+        put("rp", TIME);
+        put("rcn", ENUM, handleEnum(resultContent));
+        put("ec", ENUM, handleEnum(stdEventCats));
+        put("da", BOOLEAN);
+        put("gid", STRING);
+        put("fc", OBJECT);
+        put("crb", TIME);
+        put("cra", TIME);
+        put("ms", TIME);
+        put("us", TIME);
+        put("sts", NUMBER);
+        put("stb", NUMBER);
+        put("exb", TIME);
+        put("exA", TIME);
+        put("lbl", ARRAY, null, handleString());
+        put("sza", NUMBER);
+        put("szb", NUMBER);
+        put("cty", ARRAY, null, handleString());
+        put("atr", ARRAY, null, handleObject());
+        put("name", STRING);
+        put("val", ANY);
+        put("fu", ENUM, handleEnum(filterUsage));
+        put("lim", NUMBER);
+        put("drt", ENUM, handleEnum(discResType));
+        put("ct", TIME);
+        put("srt", ARRAY, null, handleEnum(resourceType));
+        put("cst", STRING);
+        put("csi", STRING);
+        put("ri", STRING);
+        put("lt", TIME);
+        put("rn", STRING);
+        put("pi", STRING);
+        put("ri", STRING);
+        put("acpi", ARRAY, null, handleString());
+        put("et", TIME);
+        put("at", ARRAY, null, handleString());
+        put("aa", ARRAY, null, handleString());
+        put("apn", STRING);
+        put("api", STRING);
+        put("aei", STRING);
+        put("poa", ARRAY, null, handleString());
+        put("or", STRING);
+        put("rr", BOOLEAN);
+        put("st", NUMBER);
+        put("cr", STRING);
+        put("mni", NUMBER);
+        put("mbs", NUMBER);
+        put("mia", NUMBER);
+        put("cni", NUMBER);
+        put("cbs", NUMBER);
+        put("li", STRING);
+        put("disr", BOOLEAN);
+        put("la", STRING);
+        put("ol", STRING);
+        put("cnf", STRING);
+        put("cs", NUMBER);
+        put("con", ANY);
+        put("pv", OBJECT);
+        put("pvs", OBJECT);
+        put("acr", ARRAY, null, handleObject());
+        put("acor", ARRAY, null, handleString());
+        put("acop", ENUM, function() {
+            return {
+                toView: function(value) {
+                    var bits = value.toString(2);
+                    var rst = [];
+                    var toView = handleEnum(accessControlOperations).toView;
+
+                    for (var i = bits.length-1; i >=0; i--) {
+                        var length = bits.length - i-1;
+                        if (bits[i] === '1') {
+                            var name = toView(Math.pow(2, length));
+                            rst.push(name);
+                        }
+                    }
+                    return rst.length > 0 ? rst.join(',') : value;
+                },
+                toModel: function(value) {
+                  return value;
+                }
+            };
+        }());
+        put("acco", ARRAY, null, handleObject());
+        put("actv", ARRAY, null, handleString());
+        put("acip", OBJECT);
+        put("aclr", OBJECT);
+        put("ipv4", ARRAY, null, handleString());
+        put("ipv6", ARRAY, null, handleString());
+        put("accc", ARRAY, null, handleString());
+        put("accr", ARRAY, null, handleNumber());
+        put("enc", OBJECT);
+        put("om", ARRAY, null, handleEnum(resourceType));
+        put("net", ARRAY, null, handleEnum(notificationEventType));
+        put("exc", NUMBER);
+        put("gpi", STRING);
+        put("nfu", STRING);
+        put("bn", OBJECT);
+        put("num", NUMBER);
+        put("dur", STRING);
+        put("rl", OBJECT);
+        put("mnn", NUMBER);
+        put("tww", STRING);
+        put("psn", NUMBER);
+        put("pn", ENUM, handleEnum(pendingNotification));
+        put("nsp", NUMBER);
+        put("ln", BOOLEAN);
+        put("nct", ENUM, handleEnum(notificationContentType));
+        put("nec", NUMBER);
+        put("su", STRING);
+        put("mt", ENUM, handleEnum(memberType));
+        put("cnm", NUMBER);
+        put("mnm", NUMBER);
+        put("mid", ARRAY, null, handleString());
+        put("macp", ARRAY, null, handleString());
+        put("csy", ENUM, handleEnum(consistencyStrategy));
+        put("gn", STRING);
+        put("ni", STRING);
+        put("hcl", STRING);
+    }
+
+    initAttributes();
+
     var requestPrimitive = {
         1: {
             "operation": 1,
@@ -1293,6 +1461,7 @@
         }
     };
 
+
     var resourceTypeReverse = reverse(resourceType);
     var cseTypeIDReverse = reverse(cseTypeID);
     var locationSourceReverse = reverse(locationSource);
@@ -1312,7 +1481,102 @@
         subscription: subscription
     };
 
-    function Onem2mHelperService($http) {
+    function handleNothing(value) {
+        return value;
+    }
+
+    function handleBoolean() {
+        return {
+            toView: function(value) {
+                return value.toString();
+            },
+            toModel: function(str) {
+                return str.toString() === "true";
+            }
+        };
+    }
+
+    function handleNumber() {
+        return {
+            toView: function(num) {
+                return num.toString();
+            },
+            toModel: function(str) {
+                return angular.isNumber(num) ? Number(num) : num;
+            }
+        };
+    }
+
+    function handleString() {
+        var handler = function(str) {
+            return str.toString();
+        };
+        return {
+            toView: handler,
+            toModel: handler
+        };
+    }
+
+    function handleTime() {
+        var handler = function(time) {
+            return time;
+        };
+        return {
+            toView: handler,
+            toModel: handler
+        };
+    }
+
+    function handleEnum(collection) {
+        return {
+            toView: function(value) {
+                for (var key in collection) {
+                    if (value === collection[key])
+                        return key;
+                }
+                return value;
+            },
+            toModel: function(key) {
+                if (key in collection)
+                    return collection[key];
+                return key;
+            }
+        };
+    }
+
+    function handleObject() {
+        return {
+            toView: handleNothing,
+            toModel: handleNothing
+        };
+    }
+
+    function handleArray() {
+        return {
+            toView: handleNothing,
+            toModel: handleNothing
+        };
+    }
+
+    function handleAny() {
+        return {
+            toView: function(value) {
+                return angular.toJson(value);
+            },
+            toModel: function(str) {
+                return angular.fromJson(str);
+            }
+        };
+    }
+
+    function handleElse() {
+        return {
+            toView: handleNothing,
+            toModel: handleNothing
+        };
+    }
+
+    function Onem2mHelperService($log) {
         this.NULL = Math.random();
 
         this.resourceType = resourceType;
@@ -1361,6 +1625,8 @@
         this.assignRequestIdentifier = assignRequestIdentifierHelper();
         this.getResourceByResourceTypeAndOperation = getResourceByResourceTypeAndOperation;
         this.readResourceType = readResourceType;
+        this.attributeViewHandler = attributeViewHandler;
+        this.attributeModelHandler = attributeModelHandler;
 
         function children(node) {
             return node.value.ch;
@@ -1449,7 +1715,7 @@
                         if (Object.keys(value).length === 0) {
                             delete object[k];
                         } else {
-                          handleEmptyObject(value);
+                            handleEmptyObject(value);
                         }
                     }
                 }
@@ -1500,8 +1766,24 @@
                 return angular.copy(result);
             }
         }
+
+        function attributeViewHandler(name, isArrayItem) {
+            if (attributes[name] === undefined) {
+                $log.warn("Use general hanlder since no specific " + name + " hanlder avaiable");
+                return handleElse().toView;
+            }
+            return isArrayItem ? attributes[name].itemHandler.toView : attributes[name].handler.toView;
+        }
+
+        function attributeModelHandler(name, isArrayItem) {
+            if (attributes[name] === undefined) {
+                $log.warn("Use general hanlder since no specific " + name + " hanlder avaiable");
+                return handleElse().toModel;
+            }
+            return isArrayItem ? attributes[name].itemHandler.toModel : attributes[name].handler.toModel;
+        }
     }
 
-    Onem2mHelperService.$inject = [];
+    Onem2mHelperService.$inject = ['$log'];
     app.service('Onem2mHelperService', Onem2mHelperService);
 })(app);
