@@ -832,7 +832,8 @@
                 },
                 toModel: function(value) {
                   return value;
-                }
+                },
+                options:accessControlOperations
             };
         }());
         put("acco", ARRAY, null, handleObject());
@@ -1540,7 +1541,8 @@
                 if (key in collection)
                     return collection[key];
                 return key;
-            }
+            },
+            options:collection
         };
     }
 
@@ -1627,6 +1629,7 @@
         this.readResourceType = readResourceType;
         this.attributeViewHandler = attributeViewHandler;
         this.attributeModelHandler = attributeModelHandler;
+        this.attribute=attribute;
 
         function children(node) {
             return node.value.ch;
@@ -1781,6 +1784,10 @@
                 return handleElse().toModel;
             }
             return isArrayItem ? attributes[name].itemHandler.toModel : attributes[name].handler.toModel;
+        }
+
+        function attribute(name){
+          return attributes[name];
         }
     }
 

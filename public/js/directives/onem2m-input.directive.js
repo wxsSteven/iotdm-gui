@@ -1,7 +1,7 @@
 (function(app) {
     'use strict';
 
-    function onem2mInput(Onem2m) {
+    function onem2mInput($compile, Onem2m) {
         //format text going to user (model to view)
         function filterComplexType(value) {
             return angular.isObject(value) ? null : value;
@@ -26,25 +26,69 @@
             };
         }
 
+        var inputTemplate = '<md-input-container class="md-block">' +
+            '<label>{{name|shortToLong}}</label>' +
+            '<input ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '<div class="input">' +
+            '<span class="material-icons icons-right" ng-hide="isValue(value)" ng-click="children(name)">chevron_right</span>' +
+            '</div>' +
+            '</md-input-container>';
+
+        // var textareaTemplate = '<textarea ng-disabled="{{!isEditable}}" ng-model="value"></textarea>';
+        var optionTemplate = '<md-input-container class="md-block">' +
+            '<label>{{name|shortToLong}}</label>' +
+            '<md-select ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '<md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
+            '</md-select>' +
+            '<div class="input">' +
+            '<span class="material-icons icons-right" ng-hide="isValue(value)" ng-click="children(name)">chevron_right</span>' +
+            '</div>' +
+            '</md-input-container>';
+
+
+        var booleanTemplate = '<md-switch ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">{{value}}</md-switch>';
+        var timeTemplate = '<md-datepicker ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">{{value}}></md-datepicker>';
 
         return {
-            restrict: 'A',
+            restrict: 'E',
             scope: {
-                name: "=onem2mInput"
+                name: "=",
+                value: "=",
+                children: "="
             },
-            require: 'ngModel',
-            link: function(scope, element, attrs, ngModel) {
-                var name = scope.name;
-                var isArrayItem = attrs.arrayItem !== undefined;
-                //format text going to user (model to view)
-                ngModel.$formatters.push(filterComplexType);
-                ngModel.$formatters.push(toView(name, isArrayItem));
-                // format text from the user (view to model)
-                ngModel.$parsers.push(emptyStringAsNull);
-                ngModel.$parsers.push(toModel(name,isArrayItem));
+            link: function(scope, element, attrs) {
+                scope.isDisabled = attrs.disabled !== undefined;
+                scope.arrayName = attrs.arrayName;
+
+                var attrName = attrs.arrayName ? attrs.arrayName : scope.name;
+
+                var attr = Onem2m.attribute(attrName);
+
+                if (scope.isDisabled) {
+                    element.append($compile(inputTemplate)(scope));
+                } else {
+                    if (attr.type === 'enum') {
+                        scope.options = attr.handler.options;
+                        element.append($compile(optionTemplate)(scope));
+                    } else if (attr.type === 'boolean') {
+                        element.append($compile(booleanTemplate)(scope));
+                    } else if (attr.type === 'time') {
+                        element.append($compile(timeTemplate)(scope));
+                    } else {
+                        element.append($compile(inputTemplate)(scope));
+                    }
+                }
+
+                scope.isValue = function(value) {
+                    return !angular.isObject(value);
+                };
+
+                scope.clear = function() {
+                    scope.value = null;
+                };
             }
         };
     }
-    onem2mInput.$inject = ['Onem2mHelperService'];
+    onem2mInput.$inject = ['$compile', 'Onem2mHelperService'];
     app.directive('onem2mInput', onem2mInput);
 })(app);
