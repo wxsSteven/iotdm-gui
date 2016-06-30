@@ -1,7 +1,7 @@
 (function(app) {
     'use strict';
 
-    var ROOT_KEY = "Request Primitive";
+    var ROOT_KEY = "requestPrimitive";
 
     function SidePanelCRUDCtrl($scope, Alert,Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
         var _this = this;
@@ -38,8 +38,8 @@
                 reset = function() {
                     var node = TopologyHelper.getSelectedNode();
                     _this.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.create);
-                    _this.request.from = Onem2m.assignFrom();
-                    _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+                    _this.request.fr = Onem2m.assignFrom();
+                    _this.request.rqi = Onem2m.assignRequestIdentifier();
                     _this.request.to = Onem2m.id(node);
                     _this.root = {};
                     _this.path = [];
@@ -47,19 +47,19 @@
                     _this.path.push(ROOT_KEY);
                 };
                 $scope.$watch(function() {
-                        return _this.request.resourceType;
+                        return _this.request.ty;
                     },
                     function(newValue, oldValue) {
                         if (newValue && newValue != oldValue) {
                             var resource = Onem2m.getResourceByResourceTypeAndOperation(newValue, Onem2m.operation.create);
-                            _this.request.primitiveContent = resource;
-                            _this.request.resourceType = newValue;
-                            _this.path.push("primitiveContent");
+                            _this.request.pc = resource;
+                            _this.request.ty = newValue;
+                            _this.path.push("pc");
                             Object.keys(resource).forEach(function(key) {
                                 _this.path.push(key);
                             });
                         } else {
-                            _this.request.primitiveContent = null;
+                            _this.request.pc = null;
                         }
                     });
                 reset();
@@ -86,15 +86,15 @@
                     if (newMode) {
                         _this.inputDisabled = true;
                         _this.request = newMode === _this.modes[2] ? Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.retrieve) : {};
-                        _this.request.operation = Onem2m.operation.retrieve;
-                        _this.request.from = Onem2m.assignFrom();
-                        _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+                        _this.request.op = Onem2m.operation.retrieve;
+                        _this.request.fr = Onem2m.assignFrom();
+                        _this.request.rqi = Onem2m.assignRequestIdentifier();
                         _this.request.to = Onem2m.id(TopologyHelper.getSelectedNode());
                         if (newMode === _this.modes[0]) {
-                            _this.request.resultContent = Onem2m.resultContent["attributes and child resources"];
+                            _this.request.rcn = Onem2m.resultContent["attributes and child resources"];
                         } else if (newMode === _this.modes[1]) {
-                            _this.request.filterCriteria = {};
-                            _this.request.filterCriteria.filterUsage = Onem2m.filterUsage["Discovery Criteria"];
+                            _this.request.fc = {};
+                            _this.request.fc.fu = Onem2m.filterUsage["Discovery Criteria"];
                         }
                         reset();
                     }
@@ -103,17 +103,17 @@
                 _this.showChange = true;
                 var node = TopologyHelper.getSelectedNode();
                 _this.request = Onem2m.getRequestPrimitiveByOperation(Onem2m.operation.update);
-                _this.request.from = Onem2m.assignFrom();
-                _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+                _this.request.fr = Onem2m.assignFrom();
+                _this.request.rqi = Onem2m.assignRequestIdentifier();
                 _this.request.to = Onem2m.id(node);
 
-                var resourceType = Onem2m.readResourceType(node);
-                var template = Onem2m.getResourceByResourceTypeAndOperation(resourceType, Onem2m.operation.update);
+                var ty = Onem2m.readResourceType(node);
+                var template = Onem2m.getResourceByResourceTypeAndOperation(ty, Onem2m.operation.update);
 
                 if (template) {
                     var key = node.key;
                     readDataToTemplate(template[key], node.value);
-                    _this.request.primitiveContent = template;
+                    _this.request.pc = template;
 
                     _this.root = {};
                     _this.path = [];
@@ -121,14 +121,14 @@
 
                     _this.root_copy = angular.copy(_this.root);
                     _this.request_copy = _this.root_copy[ROOT_KEY];
-                    _this.path.push(ROOT_KEY, "primitiveContent", key);
+                    _this.path.push(ROOT_KEY, "pc", key);
                 }
             } else if (_this.operation === Onem2m.operation.delete) {
                 _this.hasTwoModes = true;
                 reset = function() {
-                    _this.request.operation = Onem2m.operation.delete;
-                    _this.request.from = Onem2m.assignFrom();
-                    _this.request.requestIdentifier = Onem2m.assignRequestIdentifier();
+                    _this.request.op = Onem2m.operation.delete;
+                    _this.request.fr = Onem2m.assignFrom();
+                    _this.request.rqi = Onem2m.assignRequestIdentifier();
                     _this.request.to = Onem2m.id(TopologyHelper.getSelectedNode());
 
                     _this.root = {};
@@ -154,7 +154,7 @@
 
         function submit(request) {
             if (_this.operation === Onem2m.operation.update) {
-                request.primitiveContent = diff(request.primitiveContent, _this.request_copy.primitiveContent);
+                request.pc = diff(request.pc, _this.request_copy.pc);
             }
             request = Onem2m.toOnem2mJson(request);
             CRUD.CRUD(request).then(function(data) {

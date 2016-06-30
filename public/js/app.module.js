@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('iotdmApp', ['ngMaterial']);
+var app = angular.module('iotdmApp', ['ngMaterial','ngMaterialDatePicker']);
 app.config(
     function($mdThemingProvider) {
         $mdThemingProvider.theme('default')

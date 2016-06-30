@@ -18,16 +18,7 @@
     <div class="side-panel-content md-whiteframe-1dp">
         <div ng-if="ctrl.isArray(ctrl.yourself())">
             <div ng-repeat="(name,value) in ctrl.yourself() as you track by $index">
-                <md-input-container class="md-block" ng-if="!$last">
-                    <label ng-style="{color:ctrl.isEdited(name)?'red':''}">{{name|shortToLong}}</label>
-                    <div class="input">
-                        <input ng-disabled="!ctrl.isValue(value)" ng-model="you[name]" onem2m-input="name">
-                        <span class="icons-right">
-                        <span class="material-icons" ng-click="ctrl.removeOneItem($index)">remove_circle_outline</span>
-                        <span class="material-icons" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
-                        </span>
-                    </div>
-                </md-input-container>
+                <onem2m-input  value="you[name]" children="ctrl.children" array-name="{{ctrl.yourName()}}" name="{{name}}"></onem2m-input>
             </div>
             <section layout="row">
                 <md-button flex ng-click="ctrl.addOneItem()" class="md-raised" md-no-ink="true" md-ripple-size="full">+</md-button>
@@ -36,13 +27,7 @@
         </div>
         <div ng-if="!ctrl.isArray(ctrl.yourself())">
             <div ng-repeat="(name,value) in ctrl.yourself() as you">
-                <md-input-container class="md-block">
-                    <label ng-style="{color:ctrl.isEdited(name)?'red':''}">{{name|shortToLong}}</label>
-                    <div class="input">
-                        <input ng-disabled="!ctrl.isValue(value)" ng-model="you[name]" onem2m-input="name">
-                        <span class="material-icons icons-right" ng-show="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
-                    </div>
-                </md-input-container>
+                <onem2m-input value="you[name]" children="ctrl.children" name="{{name}}"></onem2m-input>
             </div>
             <section layout="row">
                 <md-button flex ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary" md-no-ink="true" md-ripple-size="full">Submit</md-button>

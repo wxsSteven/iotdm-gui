@@ -14,12 +14,12 @@
     <div class="side-panel-content md-whiteframe-1dp">
         <div ng-if="ctrl.isArray(ctrl.yourself())">
             <div ng-repeat="(name,value) in ctrl.yourself() as you">
-              <onem2m-input name="name" value="you[name]" children="ctrl.children" array-name="{{ctrl.yourName()}}" disabled></onem2m-input>
+              <onem2m-input  value="you[name]" children="ctrl.children" name="{{name}}" array-name="{{ctrl.yourName()}}" disabled></onem2m-input>
             </div>
         </div>
         <div ng-if="!ctrl.isArray(ctrl.yourself())">
             <div ng-repeat="(name,value) in ctrl.yourself() as you">
-              <onem2m-input name="name" value="you[name]" children="ctrl.children" disabled></onem2m-input>
+              <onem2m-input value="you[name]" children="ctrl.children" name="{{name}}" disabled></onem2m-input>
             </div>
         </div>
     </div>

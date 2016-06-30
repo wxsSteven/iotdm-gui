@@ -220,3 +220,12 @@ md-toast.md-success-theme .md-toast-content{
 md-toast.md-warn-theme .md-toast-content {
     background-color: rgb(223, 55, 111);
 }
+
+onem2m-input{
+  display:block;
+}
+
+onem2m-input .icon{
+  right:0;
+  position:absolute;
+}

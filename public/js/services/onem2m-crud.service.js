@@ -20,9 +20,9 @@
         function retrieveCSE(host, port, cseBase) {
             var request = {
                 to: "",
-                operation: Onem2m.operation.retrieve,
-                requestIdentifier: Onem2m.assignRequestIdentifier(),
-                from: Onem2m.assignFrom(),
+                op: Onem2m.operation.retrieve,
+                rqi: Onem2m.assignRequestIdentifier(),
+                fr: Onem2m.assignFrom(),
             };
             return CRUD(request, host, port, cseBase);
         }
@@ -30,18 +30,18 @@
         function discovery(host, port, cseBase) {
             var request = {
                 to: "",
-                operation: Onem2m.operation.retrieve,
-                requestIdentifier: Onem2m.assignRequestIdentifier(),
-                from: Onem2m.assignFrom(),
-                filterCriteria: {
-                    filterUsage: Onem2m.filterUsage["Discovery Criteria"]
+                op: Onem2m.operation.retrieve,
+                rqi: Onem2m.assignRequestIdentifier(),
+                fr: Onem2m.assignFrom(),
+                fc: {
+                    fu: Onem2m.filterUsage["Discovery Criteria"]
                 }
             };
             return CRUD(request, host, port, cseBase);
         }
 
         function CRUD(request, host, port, cseBase) {
-            switch (request.operation) {
+            switch (request.op) {
                 case Onem2m.operation.create:
                     return _create(request, host, port, cseBase);
                 case Onem2m.operation.retrieve:
@@ -119,41 +119,41 @@
             cseBase = cseBase ? cseBase : CSE_BASE;
             var url = "http://" + host + ":" + port + "/" + cseBase + "/" + request.to;
             var query = {};
-            query.rt = request.responseType && request.responseType.responseTypeValue;
-            query.rp = request.resultPersistence;
-            query.rcn = request.resultContent;
-            query.da = request.deliveryAggregation;
-            if (request.filterCriteria) {
-                var fc = request.filterCriteria;
-                query.crb = fc.createdBefore;
-                query.cra = fc.createdAfter;
+            query.rt = request.rt && request.rt.rtv;
+            query.rp = request.rp;
+            query.rcn = request.rcn;
+            query.da = request.da;
+            if (request.fc) {
+                var fc = request.fc;
+                query.crb = fc.crb;
+                query.cra = fc.cra;
 
-                query.ms = fc.modifiedSince;
-                query.us = fc.unmodifiedSince;
+                query.ms = fc.ms;
+                query.us = fc.us;
 
-                query.sts = fc.stateTagSmaller;
-                query.stb = fc.stateTagBigger;
+                query.sts = fc.sts;
+                query.stb = fc.stb;
 
-                query.exb = fc.expireBefore;
-                query.exa = fc.expireAfter;
+                query.exb = fc.exb;
+                query.exa = fc.exa;
 
-                query.lbl = fc.labels && fc.labels.join("+");
-                query.ty = fc.resourceType;
+                query.lbl = fc.lbl && fc.lbl.join("+");
+                query.ty = fc.ty;
 
-                query.sza = fc.sizeAbove;
-                query.szb = fc.sizeBelow;
+                query.sza = fc.sza;
+                query.szb = fc.szb;
 
-                query.cty = fc.contentType && fc.contentType.join("+");
-                query.lim = fc.limit;
+                query.cty = fc.cty && fc.cty.join("+");
+                query.lim = fc.lim;
 
-                if (fc.attribute) {
-                    fc.attribute.forEach(function(d) {
+                if (fc.atr) {
+                    fc.atr.forEach(function(d) {
                         query[d.nm] = d.val;
                     });
                 }
-                query.fu = fc.filterUsage;
+                query.fu = fc.fu;
             }
-            query.drt = request.discoveryResultType;
+            query.drt = request.drt;
 
             var queryArray = [];
             for (var key in query) {
@@ -167,37 +167,37 @@
 
             var headers = {};
             headers["Accept"] = MIME;
-            if (request.operation)
-                headers["Content-Type"] = request.operation == 1 ? MIME + ";ty=" + request.resourceType : MIME;
+            if (request.op)
+                headers["Content-Type"] = request.op == 1 ? MIME + ";ty=" + request.ty : MIME;
 
-            if (request.from)
-                headers["X-M2M-Origin"] = request.from;
+            if (request.fr)
+                headers["X-M2M-Origin"] = request.fr;
 
-            if (request.requestIdentifier)
-                headers["X-M2M-RI"] = request.requestIdentifier;
+            if (request.rqi)
+                headers["X-M2M-RI"] = request.rqi;
 
-            if (request.groupRequestIdentifier)
-                headers["X-M2M-GID"] = request.groupRequestIdentifier;
+            if (request.gid)
+                headers["X-M2M-GID"] = request.gid;
 
-            if (request.responseType && request.responseType.notificationURI && request.responseType.notificationURI.length > 0)
-                headers["X-M2M-RTU"] = request.responseType.notificationURI.join("&");
+            if (request.rt && request.rt.nu && request.rt.nu.length > 0)
+                headers["X-M2M-RTU"] = request.rt.nu.join("&");
 
-            if (request.originatingTimestamp)
-                headers["X-M2M-OT"] = request.originatingTimestamp;
+            if (request.ot)
+                headers["X-M2M-OT"] = request.ot;
 
-            if (request.resultExpirationTimestamp)
-                headers["X-M2M-RST"] = request.resultExpirationTimestamp;
+            if (request.rst)
+                headers["X-M2M-RST"] = request.rst;
 
-            if (request.requestExpirationTimestamp)
-                headers["X-M2M-RET"] = request.requestExpirationTimestamp;
+            if (request.ret)
+                headers["X-M2M-RET"] = request.ret;
 
-            if (request.operationExecutionTime)
-                headers["X-M2M-OET"] = request.operationExecutionTime;
+            if (request.oet)
+                headers["X-M2M-OET"] = request.oet;
 
-            if (request.eventCategory)
-                headers["X-M2M-EC"] = request.eventCategory;
+            if (request.ec)
+                headers["X-M2M-EC"] = request.ec;
 
-            var payload = request.primitiveContent;
+            var payload = request.pc;
 
             var httpRequest = {
                 url: url,
@@ -211,14 +211,14 @@
             var response = {};
             var headers = httpResponse.headers();
 
-            response.responseStatusCode = headers["X-M2M-RSC".toLowerCase()];
-            response.requestIdentifier = headers["X-M2M-RI".toLowerCase()];
-            response.primitiveContent = httpResponse.data;
-            response.from = httpResponse["X-M2M-Origin".toLowerCase()];
-            response.originatingTimestamp = headers["X-M2M-OT".toLowerCase()];
-            response.originatingTimestamp = headers["X-M2M-RST".toLowerCase()];
-            response.eventCategory = headers["X-M2M-EC".toLowerCase()];
-            return response.primitiveContent;
+            response.rsc = headers["X-M2M-RSC".toLowerCase()];
+            response.rqi = headers["X-M2M-RI".toLowerCase()];
+            response.pc = httpResponse.data;
+            response.fr = httpResponse["X-M2M-Origin".toLowerCase()];
+            response.ot = headers["X-M2M-OT".toLowerCase()];
+            response.rst = headers["X-M2M-RST".toLowerCase()];
+            response.ec = headers["X-M2M-EC".toLowerCase()];
+            return response.pc;
         }
 
         function getWrapper(object) {
