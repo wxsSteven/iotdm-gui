@@ -3,85 +3,108 @@
 
     function onem2mInput($compile, Onem2m) {
 
+        var inputDisabledTemplate = '' +
+            '<md-input-container class="md-block">' +
+            '   <label>{{name|shortToLong}}</label>' +
+            '   <input disabled ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '</md-input-container>';
+
         var inputTemplate = '' +
             '<md-input-container class="md-block">' +
             '   <label>{{name|shortToLong}}</label>' +
-            '   <input ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
-            '   <div class="input">' +
-            '       <span class="material-icons icons-right" ng-hide="isValue(value)" ng-click="children(name)">chevron_right</span>' +
+            '   <input ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '   <div class="icons-right">' +
+            '       <span class="material-icons clear" ng-click="clear()">clear</span>' +
             '   </div>' +
+            '   <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
             '</md-input-container>';
-
         // var textareaTemplate = '<textarea ng-disabled="{{!isEditable}}" ng-model="value"></textarea>';
         var optionTemplate = '' +
             '<md-input-container class="md-block">' +
             '   <label>{{name|shortToLong}}</label>' +
-            '   <md-select ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '   <md-select ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
             '       <md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
             '   </md-select>' +
+            '   <div class="icons-right-top">' +
+            '       <span class="material-icons clear" ng-click="clear()">clear</span>' +
+            '   </div>' +
+            '   <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
             '</md-input-container>';
 
-        var booleanTemplate = '' +
-            '<div layout="column" layout-align="center center" flex>' +
-            '   <label>{{name|shortToLong}}</label>' +
-            '   <md-switch ng-disabled="isDisabled" ng-model="value" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">{{value}}</md-switch>' +
-            '</div>';
+        var booleanTemplate = optionTemplate;
 
         var timeTemplate = '' +
             '<md-input-container class="md-block">' +
-            '   <i class="icon material-icons">date_range</i>' +
+            '   <div class="icons-right">' +
+            '       <span class="material-icons clear" ng-click="clear()" >clear</span>' +
+            '       <span class="material-icons">date_range</span>' +
+            '   </div>' +
             '   <label>{{name|shortToLong}}</label>' +
-            '   <input ng-model="value" mdc-datetime-picker format="YYYYMMDDTHHmmss" date="true" time="true"   ng-disabled="isDisabled" onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '   <input ng-model="value" mdc-datetime-picker format="YYYYMMDDTHHmmss" date="true" time="true"  onem2m-view-model name="{{name}}" array-name="{{arrayName}}">' +
+            '   <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
             '</md-input-container>';
 
-        var complexTemplate = ''+
+        var complexTemplate = '' +
             '<md-input-container class="md-block">' +
             '   <label>{{name|shortToLong}}</label>' +
             '   <input disabled>' +
-            '   <div class="input">' +
-            '       <span class="material-icons icons-right" ng-click="children(name)">chevron_right</span>' +
-            '   </div>' +
             '</md-input-container>';
 
         return {
             restrict: 'E',
             scope: {
-                value: "=",
-                children: "="
+                value: "="
             },
             link: function(scope, element, attrs) {
-                scope.arrayName = attrs.arrayName;
                 scope.name = attrs.name;
-                scope.isDisabled = attrs.disabled !== undefined;
+                scope.arrayName=attrs.arrayName;
+                var isArrayItem = attrs.arrayName !== null && attrs.arrayName !== undefined;
+                var isDisabled = attrs.disabled !== undefined;
 
-                var attrName = scope.arrayName ? scope.arrayName : scope.name;
+                var _value = angular.copy(scope.value);
 
-                var attr = Onem2m.attribute(attrName);
-
-                if (scope.isDisabled) {
-                    element.append($compile(inputTemplate)(scope));
+                if (isDisabled) {
+                    element.append($compile(inputDisabledTemplate)(scope));
                 } else {
-                    if (attr.type === 'enum') {
+                    var name = null;
+                    var attr = null;
+                    var type = null;
+
+                    if (isArrayItem) {
+                        name = attrs.arrayName;
+                        attr = Onem2m.attribute(name);
+                        type = attr.itemType;
+                    } else {
+                        name = attrs.name;
+                        attr = Onem2m.attribute(name);
+                        type = attr.type;
+                    }
+
+                    if (type === 'enum') {
                         scope.options = attr.handler.options;
                         element.append($compile(optionTemplate)(scope));
-                    } else if (attr.type === 'boolean') {
+                    } else if (type === 'boolean') {
+                        scope.options = {
+                            "True": true,
+                            "False": false
+                        };
                         element.append($compile(booleanTemplate)(scope));
-                    } else if (attr.type === 'time') {
+                    } else if (type === 'time') {
                         element.append($compile(timeTemplate)(scope));
-                    } else if (attr.type === 'object' || attr.type === 'array') {
+                    } else if (type === 'object' || type === 'array') {
                         element.append($compile(complexTemplate)(scope));
-                    } else if (attr.type === "number" || attr.type === 'string') {
+                    } else if (type === "number" || type === 'string') {
                         element.append($compile(inputTemplate)(scope));
                     }
                 }
 
-                scope.isValue = function(value) {
-                    return !angular.isObject(value);
+                scope.clear = function() {
+                    scope.value = null;
                 };
 
-                scope.$watch('value',function(value){
-                  console.log(value);
-                })
+                scope.isEdited = function() {
+                    return !(scope.value === null && _value === undefined || scope.value === undefined && _value === null || angular.equals(scope.value, _value));
+                };
             }
         };
     }

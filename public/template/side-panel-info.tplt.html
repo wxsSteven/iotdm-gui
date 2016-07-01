@@ -13,13 +13,15 @@
     </div>
     <div class="side-panel-content md-whiteframe-1dp">
         <div ng-if="ctrl.isArray(ctrl.yourself())">
-            <div ng-repeat="(name,value) in ctrl.yourself() as you">
-              <onem2m-input  value="you[name]" children="ctrl.children" name="{{name}}" array-name="{{ctrl.yourName()}}" disabled></onem2m-input>
+            <div ng-repeat="(name,value) in ctrl.yourself() as you" class="onem2m-input-container">
+                <span class="material-icons icons-right" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                <onem2m-input value="you[name]" children="ctrl.children" name="{{name}}" array-name="{{ctrl.yourName()}}" disabled></onem2m-input>
             </div>
         </div>
         <div ng-if="!ctrl.isArray(ctrl.yourself())">
-            <div ng-repeat="(name,value) in ctrl.yourself() as you">
-              <onem2m-input value="you[name]" children="ctrl.children" name="{{name}}" disabled></onem2m-input>
+            <div ng-repeat="(name,value) in ctrl.yourself() as you" class="onem2m-input-container">
+                <span class="material-icons icons-right" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                <onem2m-input value="you[name]" children="ctrl.children" name="{{name}}" disabled></onem2m-input>
             </div>
         </div>
     </div>

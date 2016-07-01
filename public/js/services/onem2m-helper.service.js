@@ -1,7 +1,7 @@
 (function(app) {
     'use strict';
 
-    function Onem2mHelperService($log,$filter) {
+    function Onem2mHelperService($log, $filter) {
 
         var MANDOTRY = 'mandotry';
         var Disabled = 'disabled';
@@ -1393,15 +1393,29 @@
         function initAttributes() {
             var defaultHandler = {};
 
-            function put(name, type, handler, itemHandler) {
-                handler = handler ? handler : defaultHandler[type];
-                handler = handler ? handler : handleElse();
-                itemHandler = itemHandler ? itemHandler : handleElse();
-                attributes[name] = {
-                    type: type,
-                    handler: handler,
-                    itemHandler: itemHandler
-                };
+            function put() {
+                var name = arguments[0];
+                var type = arguments[1];
+                var handler = null;
+                if (type === ARRAY) {
+                    var itemType = arguments[2];
+                    handler = arguments[3];
+                    handler = handler ? handler : defaultHandler[itemType];
+                    handler = handler ? handler : handleElse();
+                    attributes[name] = {
+                        type: type,
+                        itemType: itemType,
+                        handler: handler
+                    };
+                } else {
+                    handler = arguments[2];
+                    handler = handler ? handler : defaultHandler[type];
+                    handler = handler ? handler : handleElse();
+                    attributes[name] = {
+                        type: type,
+                        handler: handler
+                    };
+                }
             }
 
             defaultHandler[TIME] = handleTime();
@@ -1441,7 +1455,7 @@
             put("rqet", TIME);
             put("rt", OBJECT);
             put("rtv", ENUM, handleEnum(responseType));
-            put("nu", ARRAY, null, handleString());
+            put("nu", ARRAY, STRING);
             put("rp", TIME);
             put("rcn", ENUM, handleEnum(resultContent));
             put("ec", ENUM, handleEnum(stdEventCats));
@@ -1456,18 +1470,18 @@
             put("stb", NUMBER);
             put("exb", TIME);
             put("exA", TIME);
-            put("lbl", ARRAY, null, handleString());
+            put("lbl", ARRAY, STRING);
             put("sza", NUMBER);
             put("szb", NUMBER);
-            put("cty", ARRAY, null, handleString());
-            put("atr", ARRAY, null, handleObject());
+            put("cty", ARRAY, STRING);
+            put("atr", ARRAY, OBJECT);
             put("name", STRING);
             put("val", ANY);
             put("fu", ENUM, handleEnum(filterUsage));
             put("lim", NUMBER);
             put("drt", ENUM, handleEnum(discResType));
             put("ct", TIME);
-            put("srt", ARRAY, null, handleEnum(resourceType));
+            put("srt", ARRAY, ENUM, handleEnum(resourceType));
             put("cst", STRING);
             put("csi", STRING);
             put("ri", STRING);
@@ -1476,14 +1490,14 @@
             put("rn", STRING);
             put("pi", STRING);
             put("ri", STRING);
-            put("acpi", ARRAY, null, handleString());
+            put("acpi", ARRAY, STRING);
             put("et", TIME);
-            put("at", ARRAY, null, handleString());
-            put("aa", ARRAY, null, handleString());
+            put("at", ARRAY, STRING);
+            put("aa", ARRAY, STRING);
             put("apn", STRING);
             put("api", STRING);
             put("aei", STRING);
-            put("poa", ARRAY, null, handleString());
+            put("poa", ARRAY, STRING);
             put("or", STRING);
             put("rr", BOOLEAN);
             put("st", NUMBER);
@@ -1502,8 +1516,8 @@
             put("con", ANY);
             put("pv", OBJECT);
             put("pvs", OBJECT);
-            put("acr", ARRAY, null, handleObject());
-            put("acor", ARRAY, null, handleString());
+            put("acr", ARRAY, OBJECT);
+            put("acor", ARRAY, STRING);
             put("acop", ENUM, function() {
                 return {
                     toView: function(value) {
@@ -1526,17 +1540,17 @@
                     options: accessControlOperations
                 };
             }());
-            put("acco", ARRAY, null, handleObject());
-            put("actv", ARRAY, null, handleString());
+            put("acco", ARRAY, OBJECT);
+            put("actv", ARRAY, STRING);
             put("acip", OBJECT);
             put("aclr", OBJECT);
-            put("ipv4", ARRAY, null, handleString());
-            put("ipv6", ARRAY, null, handleString());
-            put("accc", ARRAY, null, handleString());
-            put("accr", ARRAY, null, handleNumber());
+            put("ipv4", ARRAY, STRING);
+            put("ipv6", ARRAY, STRING);
+            put("accc", ARRAY, STRING);
+            put("accr", ARRAY, NUMBER);
             put("enc", OBJECT);
-            put("om", ARRAY, null, handleEnum(resourceType));
-            put("net", ARRAY, null, handleEnum(notificationEventType));
+            put("om", ARRAY, ENUM, handleEnum(resourceType));
+            put("net", ARRAY, ENUM, handleEnum(notificationEventType));
             put("exc", NUMBER);
             put("gpi", STRING);
             put("nfu", STRING);
@@ -1556,8 +1570,8 @@
             put("mt", ENUM, handleEnum(memberType));
             put("cnm", NUMBER);
             put("mnm", NUMBER);
-            put("mid", ARRAY, null, handleString());
-            put("macp", ARRAY, null, handleString());
+            put("mid", ARRAY, STRING);
+            put("macp", ARRAY, STRING);
             put("csy", ENUM, handleEnum(consistencyStrategy));
             put("gn", STRING);
             put("ni", STRING);
@@ -1685,7 +1699,8 @@
         function assignRequestIdentifierHelper() {
             var count = 1;
             return function() {
-                return count++;
+                count++;
+                return count.toString();
             };
         }
 
@@ -1700,19 +1715,21 @@
         }
 
         function attributeViewHandler(name, isArrayItem) {
-            if (attributes[name] === undefined) {
+            var attr = attributes[name];
+            if (attr === undefined) {
                 $log.warn("Use general hanlder since no specific " + name + " hanlder avaiable");
                 return handleElse().toView;
             }
-            return isArrayItem ? attributes[name].itemHandler.toView : attributes[name].handler.toView;
+            return attr.handler.toView;
         }
 
         function attributeModelHandler(name, isArrayItem) {
-            if (attributes[name] === undefined) {
+            var attr = attributes[name];
+            if (attr === undefined) {
                 $log.warn("Use general hanlder since no specific " + name + " hanlder avaiable");
                 return handleElse().toModel;
             }
-            return isArrayItem ? attributes[name].itemHandler.toModel : attributes[name].handler.toModel;
+            return attr.handler.toModel;
         }
 
         function attribute(name) {
@@ -1767,8 +1784,8 @@
         function handleTime() {
             return {
                 toView: function(tt) {
-                    var t=$filter('date')(tt,'yyyyMMddTHHmmss','UTC');
-                    return $filter('date')(t,'MMM d, y h:mm:ss a Z');
+                    var t = $filter('date')(tt, 'yyyyMMddTHHmmss', 'UTC');
+                    return $filter('date')(t, 'MMM d, y h:mm:ss a Z');
                 },
                 toModel: function(tt) {
                     var t = new Date(tt);
@@ -1844,6 +1861,6 @@
         }
     }
 
-    Onem2mHelperService.$inject = ['$log','$filter'];
+    Onem2mHelperService.$inject = ['$log', '$filter'];
     app.service('Onem2mHelperService', Onem2mHelperService);
 })(app);

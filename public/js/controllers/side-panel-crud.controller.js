@@ -3,7 +3,7 @@
 
     var ROOT_KEY = "requestPrimitive";
 
-    function SidePanelCRUDCtrl($scope, Alert,Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
+    function SidePanelCRUDCtrl($scope, Alert, Topology, TopologyHelper, DataStore, Onem2m, CRUD) {
         var _this = this;
 
         _this.operation = $scope.operation;
@@ -24,7 +24,6 @@
         _this.isValue = isValue;
         _this.isRoot = isRoot;
         _this.submit = submit;
-        _this.isEdited = isEdited;
 
         _this.isArray = isArray;
         _this.addOneItem = addOneItem;
@@ -118,9 +117,6 @@
                     _this.root = {};
                     _this.path = [];
                     _this.root[ROOT_KEY] = _this.request;
-
-                    _this.root_copy = angular.copy(_this.root);
-                    _this.request_copy = _this.root_copy[ROOT_KEY];
                     _this.path.push(ROOT_KEY, "pc", key);
                 }
             } else if (_this.operation === Onem2m.operation.delete) {
@@ -149,6 +145,9 @@
                 });
                 reset();
             }
+
+            _this.root_copy = angular.copy(_this.root);
+            _this.request_copy = _this.root_copy[ROOT_KEY];
         }
 
 
@@ -167,9 +166,9 @@
                 }
                 Topology.update();
                 $scope.$emit("closeSidePanel");
-                Alert("Request Successfully",'success');
+                Alert("Request Successfully", 'success');
             }, function(error) {
-                Alert(error,'warn');
+                Alert(error, 'warn');
             });
         }
 
@@ -215,14 +214,6 @@
                 }
             }
             return difference;
-        }
-
-        function isEdited(name) {
-            if (_this.showChange) {
-                var you = yourself();
-                var copy = copyYourself();
-                return !angular.equals(you[name], copy[name]);
-            }
         }
 
         function readDataToTemplate(targetObject, srcObject) {

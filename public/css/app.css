@@ -121,13 +121,14 @@ html, body{
 }
 
 .side-panel-top{
+    position:relative;
+
     overflow: hidden;
 
     width:100%;
     height:50px;
 
     background: #F3F3F3;
-    position:relative;
 
     align-items: center;
     justify-content: center;
@@ -163,6 +164,7 @@ html, body{
 
 .icon-container{
     display:flex;
+
     align-items:center;
 }
 
@@ -193,11 +195,6 @@ html, body{
     right:0;
 }
 
-.icons-right{
-    position:absolute;
-    right:0;
-}
-
 .content{
     clear:both;
 
@@ -209,9 +206,7 @@ html, body{
 }
 
 /*Override the error space setting in the md*/
-md-input-container .md-errors-spacer{
-    min-height:12px;
-}
+
 
 md-toast.md-success-theme .md-toast-content{
     background-color: rgb(33,150,243);
@@ -225,7 +220,33 @@ onem2m-input{
   display:block;
 }
 
-onem2m-input .icon{
-  right:0;
-  position:absolute;
+
+.icons-right-top{
+  position: absolute;
+  top:-18px;
+  right:4px;
+  z-index:50;
+}
+
+.icons-right{
+    position:absolute;
+    right:4px;
+    z-index:50;
+}
+
+.onem2m-input-container{
+  position: relative;
+}
+
+md-input-container .clear{
+  display:none;
+}
+
+md-input-container:hover .clear{
+  display:inline-block;
+}
+
+
+.edited-text{
+  font-style: italic;
 }
