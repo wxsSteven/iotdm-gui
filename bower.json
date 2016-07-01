@@ -12,6 +12,7 @@
     "angular-mocks": "~1.4.0",
     "d3": "^3.5.17",
     "next-bower": "NeXt#^0.9.1",
-    "angular-material": "^1.0.9"
+    "angular-material": "^1.0.9",
+    "moment": "momentjs#^2.13.0"
   }
 }
