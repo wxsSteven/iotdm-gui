@@ -347,6 +347,12 @@
 
         };
 
+        var boolean = {
+            True: true,
+            False: false
+
+        };
+
         var longToShortDictionary = {
             "operation": "op",
             "to": "to",
@@ -706,6 +712,7 @@
         var requestPrimitive = {
             "1": {
                 "op": 1,
+                "to":null,
                 "fr": null,
                 "rqi": null,
                 "ty": null,
@@ -729,6 +736,7 @@
             },
             "2": {
                 "op": 2,
+                "to":null,
                 "fr": null,
                 "rqi": null,
                 "rol": null,
@@ -776,6 +784,7 @@
             },
             "3": {
                 "op": 3,
+                "to":null,
                 "fr": null,
                 "rqi": null,
                 "pc": null,
@@ -823,6 +832,7 @@
             },
             "4": {
                 "op": 4,
+                "to":null,
                 "fr": null,
                 "rqi": null,
                 "rol": null,
@@ -1359,6 +1369,7 @@
         this.accessControlOperations = accessControlOperations;
         this.SRole_ID = SRole_ID;
         this.filterUsage = filterUsage;
+        this.boolean=boolean;
 
         this.getRequestPrimitiveByOperation = getRequestPrimitiveByOperation;
 

@@ -5,11 +5,10 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <input ng-model="value" onem2m-input-component-custom="{{name}}" ng-disabled="disabled">' +
+        '       <input ng-model="value" ng-disabled="disabled">' +
         '       <div class="icons-right">' +
         '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
         '       </div>' +
-        '       <sup class="edited-text" ng-show="edited">Edited</sup>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -17,11 +16,10 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <input ng-model="value" onem2m-input-component-custom="{{name}}">' +
+        '       <input ng-model="value">' +
         '       <div class="icons-right">' +
         '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
         '       </div>' +
-        '       <sup class="edited-text" ng-show="edited">Edited</sup>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -29,11 +27,10 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <textarea ng-model="value" onem2m-input-component-custom="{{name}}"></textarea>' +
+        '       <textarea ng-model="value"></textarea>' +
         '       <div class="icons-right">' +
         '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
         '       </div>' +
-        '       <sup class="edited-text" ng-show="edited">Edited</sup>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -41,13 +38,12 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <md-select ng-model="value" onem2m-input-component-custom="{{name}}">' +
+        '       <md-select ng-model="value">' +
         '           <md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
         '       </md-select>' +
-        '       <div class="icons-right-top">' +
+        '       <div class="icons-right-offset-2">' +
         '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
         '       </div>' +
-        '       <sup class="edited-text" ng-show="edited">Edited</sup>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -55,13 +51,12 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <md-select ng-model="value" multiple onem2m-input-component-custom="{{name}}">' +
+        '       <md-select ng-model="value" multiple>' +
         '           <md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
         '       </md-select>' +
-        '       <div class="icons-right-top">' +
+        '       <div class="icons-right-offset-2">' +
         '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
         '       </div>' +
-        '       <sup class="edited-text" ng-show="edited">Edited</sup>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -73,8 +68,7 @@
         '           <span class="material-icons">date_range</span>' +
         '       </div>' +
         '       <label>{{labelName|shortToLong}}</label>' +
-        '       <input ng-model="value" mdc-datetime-picker format="YYYYMMDDTHHmmss" date="true" time="true" onem2m-input-component-custom="{{name}}">' +
-        '       <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
+        '       <input ng-model="value" mdc-datetime-picker format="YYYYMMDDTHHmmss" date="true" time="true">' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -233,9 +227,13 @@
                 toModel: function(array) {
                     var sum = 0;
                     var toModel = handleEnum(Onem2m.accessControlOperations).toModel;
-                    array.forEach(function(v) {
-                        sum += toModel(v);
-                    });
+                    if(angular.isArray(array)){
+                      array.forEach(function(v) {
+                          sum += toModel(v);
+                      });
+                    }else{
+                      sum=toModel(array);
+                    }
                     return sum;
                 }
             };

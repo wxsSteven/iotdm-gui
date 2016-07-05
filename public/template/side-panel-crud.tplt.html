@@ -20,11 +20,11 @@
             <div ng-repeat="(name,value) in ctrl.yourself() as you track by $index" class="onem2m-input-container" ng-if="!$last">
                 <div class="icons-right-top" layout="column">
                     <span class="material-icons" ng-click="ctrl.removeOneItem(name)">remove</span>
-                    <span class="material-icons" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                    <span class="material-icons" ng-if="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
                 </div>
 
-                <onem2m-input value="you[name]" ng-show="ctrl.isValue(value)" label-name="{{$index}}" name="{{ctrl.yourName()}}"></onem2m-input>
-                <md-input-container ng-hide="ctrl.isValue(value)">
+                <onem2m-input ng-model="you[name]" ng-if="ctrl.isValue(value)" label-name="{{$index}}" name="{{ctrl.yourName()}}"></onem2m-input>
+                <md-input-container ng-if="!ctrl.isValue(value)" class="md-block">
                     <label>{{name|shortToLong}}</label>
                     <input disabled>
                 </md-input-container>
@@ -36,9 +36,9 @@
         </div>
         <div ng-if="!ctrl.isArray(ctrl.yourself())">
             <div ng-repeat="(name,value) in ctrl.yourself() as you" class="onem2m-input-container">
-                <span class="material-icons icons-right" ng-hide="ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
-                <onem2m-input value="you[name]" ng-show="ctrl.isValue(value)" label-name="{{name}}" name="{{name}}"></onem2m-input>
-                <md-input-container ng-hide="ctrl.isValue(value)">
+                <span class="material-icons icons-right" ng-if="!ctrl.isValue(value)" ng-click="ctrl.children(name)">chevron_right</span>
+                <onem2m-input ng-model="you[name]" ng-if="ctrl.isValue(value)" label-name="{{name}}" name="{{name}}"></onem2m-input>
+                <md-input-container ng-if="!ctrl.isValue(value)" class="md-block">
                     <label>{{name|shortToLong}}</label>
                     <input disabled>
                 </md-input-container>
