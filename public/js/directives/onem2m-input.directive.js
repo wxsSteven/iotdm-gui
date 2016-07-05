@@ -18,7 +18,15 @@
             '   </div>' +
             '   <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
             '</md-input-container>';
-        // var textareaTemplate = '<textarea ng-disabled="{{!isEditable}}" ng-model="value"></textarea>';
+        var textareaTemplate = '' +
+            '<md-input-container class="md-block">' +
+            '   <label>{{name|shortToLong}}</label>' +
+            '   <textarea ng-model="value" onem2m-view-model name="{{name}}"></textarea>' +
+            '   <div class="icons-right">' +
+            '       <span class="material-icons clear" ng-click="clear()">clear</span>' +
+            '   </div>' +
+            '   <sup class="edited-text" ng-show="isEdited()">Edited</sup>' +
+            '</md-input-container>';
         var optionTemplate = '' +
             '<md-input-container class="md-block">' +
             '   <label>{{name|shortToLong}}</label>' +
@@ -57,7 +65,7 @@
             },
             link: function(scope, element, attrs) {
                 scope.name = attrs.name;
-                scope.arrayName=attrs.arrayName;
+                scope.arrayName = attrs.arrayName;
                 var isArrayItem = attrs.arrayName !== null && attrs.arrayName !== undefined;
                 var isDisabled = attrs.disabled !== undefined;
 
@@ -95,6 +103,10 @@
                         element.append($compile(complexTemplate)(scope));
                     } else if (type === "number" || type === 'string') {
                         element.append($compile(inputTemplate)(scope));
+                    }else if(attrs.name==='con'){
+                        element.append($compile(textareaTemplate)(scope));
+                    }else{
+                      element.append($compile(inputTemplate)(scope));
                     }
                 }
 

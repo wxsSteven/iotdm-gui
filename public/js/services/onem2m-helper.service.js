@@ -1838,8 +1838,6 @@
                     return value;
                 },
                 toModel: function(value) {
-                    if (angular.isString(value))
-                        return angular.fromJson(value);
                     return value;
                 }
             };
