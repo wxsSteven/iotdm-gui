@@ -220,16 +220,16 @@ onem2m-input{
   display:block;
 }
 
-
-.icons-right-offset-2{
-  position: absolute;
-  top:5px;
-  right:24px;
-  z-index:50;
-}
-
 .icons-right{
     position:absolute;
+    top:5px;
+    right:4px;
+    z-index:50;
+}
+
+.icons-right-top{
+    position:absolute;
+    top:-15px;
     right:4px;
     z-index:50;
 }
@@ -238,11 +238,11 @@ onem2m-input{
   position: relative;
 }
 
-md-input-container .clear{
+.onem2m-input-container  .clear{
   display:none;
 }
 
-md-input-container:hover .clear{
+.onem2m-input-container:hover  .clear{
   display:inline-block;
 }
 

@@ -6,9 +6,6 @@
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
         '       <input ng-model="value" ng-disabled="disabled">' +
-        '       <div class="icons-right">' +
-        '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
-        '       </div>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -17,9 +14,6 @@
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
         '       <input ng-model="value">' +
-        '       <div class="icons-right">' +
-        '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
-        '       </div>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -28,9 +22,6 @@
         '   <ng-form name="form">' +
         '       <label>{{labelName|shortToLong}}</label>' +
         '       <textarea ng-model="value"></textarea>' +
-        '       <div class="icons-right">' +
-        '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
-        '       </div>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -41,9 +32,6 @@
         '       <md-select ng-model="value">' +
         '           <md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
         '       </md-select>' +
-        '       <div class="icons-right-offset-2">' +
-        '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
-        '       </div>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -54,9 +42,6 @@
         '       <md-select ng-model="value" multiple>' +
         '           <md-option ng-value="k" ng-repeat="(k,v) in options">{{k}}</md-option>' +
         '       </md-select>' +
-        '       <div class="icons-right-offset-2">' +
-        '           <span class="material-icons clear" ng-click="value=null">clear</span>' +
-        '       </div>' +
         '   </ng-form>' +
         '</md-input-container>';
 
@@ -64,7 +49,6 @@
         '<md-input-container class="md-block">' +
         '   <ng-form name="form">' +
         '       <div class="icons-right">' +
-        '           <span class="material-icons clear" ng-click="value=null" >clear</span>' +
         '           <span class="material-icons">date_range</span>' +
         '       </div>' +
         '       <label>{{labelName|shortToLong}}</label>' +
@@ -211,30 +195,36 @@
         register("acop", mulSelectTemplate, function() {
             return {
                 toView: function(value) {
-                    var bits = value.toString(2);
-                    var rst = [];
-                    var toView = handleEnum(Onem2m.accessControlOperations).toView;
+                    if (sanityCheck(value)) {
+                        var bits = value.toString(2);
+                        var rst = [];
+                        var toView = handleEnum(Onem2m.accessControlOperations).toView;
 
-                    for (var i = bits.length - 1; i >= 0; i--) {
-                        var length = bits.length - i - 1;
-                        if (bits[i] === '1') {
-                            var name = toView(Math.pow(2, length));
-                            rst.push(name);
+                        for (var i = bits.length - 1; i >= 0; i--) {
+                            var length = bits.length - i - 1;
+                            if (bits[i] === '1') {
+                                var name = toView(Math.pow(2, length));
+                                rst.push(name);
+                            }
                         }
+                        return rst.length > 0 ? rst.join(',') : value;
                     }
-                    return rst.length > 0 ? rst.join(',') : value;
+                    return value;
                 },
                 toModel: function(array) {
-                    var sum = 0;
-                    var toModel = handleEnum(Onem2m.accessControlOperations).toModel;
-                    if(angular.isArray(array)){
-                      array.forEach(function(v) {
-                          sum += toModel(v);
-                      });
-                    }else{
-                      sum=toModel(array);
+                    if (sanityCheck(array)) {
+                        var sum = 0;
+                        var toModel = handleEnum(Onem2m.accessControlOperations).toModel;
+                        if (angular.isArray(array)) {
+                            array.forEach(function(v) {
+                                sum += toModel(v);
+                            });
+                        } else {
+                            sum = toModel(array);
+                        }
+                        return sum;
                     }
-                    return sum;
+                    return null;
                 }
             };
         }(), {
