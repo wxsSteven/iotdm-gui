@@ -23,6 +23,9 @@
                     <label>{{$index}}</label>
                     <input disabled>
                 </md-input-container>
+                <md-tooltip md-direction="left" ng-if="ctrl.description(ctrl.yourself())">
+                    {{ctrl.description(ctrl.yourself())}}
+                </md-tooltip>
             </div>
         </div>
         <div ng-if="!ctrl.isArray(ctrl.yourself())">
@@ -31,15 +34,21 @@
                 <md-input-container ng-show="ctrl.isValue(value)" class="md-block">
                     <label>{{name|shortToLong}}</label>
                     <input ng-model="value" disabled onem2m-input-component-custom="{{name}}">
+                    <md-tooltip md-direction="left">
+                        {{ctrl.description(name)}}
+                    </md-tooltip>
                 </md-input-container>
                 <md-input-container ng-hide="ctrl.isValue(value)" class="md-block">
                     <label>{{name|shortToLong}}</label>
                     <input disabled>
                 </md-input-container>
+                <md-tooltip md-direction="left" ng-if="ctrl.description(name)">
+                    {{ctrl.description(name)}}
+                </md-tooltip>
             </div>
         </div>
     </div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
+    <div class="side-panel-left md-whiteframe-1dp breadcrumb">
         <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
     </div>
 </div>

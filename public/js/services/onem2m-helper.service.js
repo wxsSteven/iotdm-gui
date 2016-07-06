@@ -665,7 +665,7 @@
             "accessControlOriginators": "acor",
             "accessControlOperations": "acop",
             "accessControlContexts": "acco",
-            "accessControlWindow": "actw",
+            "accessControlWindow": "a",
             "accessControlIpAddresses": "acip",
             "ipv4Addresses": "ipv4",
             "ipv6Addresses": "ipv6",

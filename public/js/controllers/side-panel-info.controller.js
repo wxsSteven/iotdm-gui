@@ -1,8 +1,9 @@
 (function(app) {
     'use strict';
 
-    function SidePanelInfoCtrl($scope, Topology, TopologyHelper, Onem2m) {
+    function SidePanelInfoCtrl($scope, Topology, TopologyHelper, Onem2m,Onem2mDescription) {
         var _this = this;
+        var descriptions={};
 
         _this.root = {};
         _this.path = [];
@@ -15,6 +16,7 @@
         _this.isValue = isValue;
         _this.isRoot = isRoot;
         _this.isArray=isArray;
+        _this.description=description;
 
         init();
 
@@ -36,6 +38,9 @@
             _this.path = [];
             _this.root[node.key] = node.value;
             _this.path.push(node.key);
+
+            var resourceType=node.value.ty;
+            descriptions=Onem2mDescription.descriptionByResourceType(resourceType);
         }
 
         function ancestor(index) {
@@ -73,8 +78,12 @@
         function isArray(array){
           return angular.isArray(array);
         }
+
+        function description(name){
+          return descriptions[name];
+        }
     }
 
-    SidePanelInfoCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'Onem2mHelperService'];
+    SidePanelInfoCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'Onem2mHelperService','Onem2mDescriptionService'];
     app.controller('SidePanelInfoCtrl', SidePanelInfoCtrl);
 })(app);

@@ -32,6 +32,9 @@
                     <label>{{name|shortToLong}}</label>
                     <input disabled>
                 </md-input-container>
+                <md-tooltip  md-direction="left" ng-if="ctrl.description(name)">
+                  {{ctrl.description(yourName())}}
+                </md-tooltip>
             </div>
             <section layout="row">
                 <md-button flex ng-click="ctrl.addOneItem()" class="md-raised" md-no-ink="true" md-ripple-size="full">+</md-button>
@@ -51,13 +54,16 @@
                     <label>{{name|shortToLong}}</label>
                     <input disabled>
                 </md-input-container>
+                <md-tooltip  md-direction="left" ng-if="ctrl.description(name)">
+                  {{ctrl.description(name)}}
+                </md-tooltip>
             </div>
             <section layout="row">
                 <md-button flex ng-click="ctrl.submit(ctrl.request)" class="md-raised md-primary" md-no-ink="true" md-ripple-size="full">Submit</md-button>
             </section>
         </div>
     </div>
-    <div class="side-panel-bottom md-whiteframe-1dp breadcrumb">
+    <div class="side-panel-left md-whiteframe-1dp breadcrumb">
         <a ng-repeat="value in ctrl.path" ng-click="ctrl.ancestor($index)">{{value|shortToLong}}</a>
     </div>
 </div>
