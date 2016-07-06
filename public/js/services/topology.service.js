@@ -20,7 +20,7 @@
         this.addUnSelectNodeListener = addUnSelectNodeListener();
         this.removeSelectNodeListener = removeSelectNodeListener;
         this.removeUnSelectNodeListener = removeUnSelectNodeListener;
-        this.adaptToContainer=adaptToContainer;
+        this.adaptToContainer = adaptToContainer;
 
         init();
 
@@ -45,6 +45,10 @@
                     label: function(vertex) {
                         return Onem2m.label(vertex.getData());
                     }
+                },
+                tooltipManagerConfig: {
+                       showNodeTooltip: false,
+                       showLinkTooltip:false
                 },
                 showIcon: true,
                 identityKey: Onem2m.id()
@@ -84,16 +88,16 @@
         function addSelectNodeListener() {
             var counter = 0;
             return function(listener) {
-                _selectNodeListeners[counter++]=listener;
+                _selectNodeListeners[counter++] = listener;
                 return counter;
             };
         }
 
         function addUnSelectNodeListener() {
-            var counter=0;
-            return function(listener){
-              _unSelectNodeListeners[counter++]=listener;
-              return counter;
+            var counter = 0;
+            return function(listener) {
+                _unSelectNodeListeners[counter++] = listener;
+                return counter;
             };
         }
 
@@ -124,8 +128,8 @@
         }
 
         function notifyListeners(listeners, notification) {
-            for(var key in listeners){
-              listeners[key](notification);
+            for (var key in listeners) {
+                listeners[key](notification);
             }
         }
 
@@ -136,8 +140,8 @@
             _topo.data(data);
         }
 
-        function adaptToContainer(){
-          _topo.adaptToContainer();
+        function adaptToContainer() {
+            _topo.adaptToContainer();
         }
 
         function getSelectedNodeId() {
