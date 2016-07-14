@@ -4,15 +4,15 @@
 <head>
     <meta charset="utf-8">
     <title>Iotdm Gui</title>
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
-    <link rel="stylesheet" href="bower_components/next-bower/css/next.css" />
+    <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
+    <link rel="stylesheet" href="vendor/next-bower/css/next.css" />
     <link rel="stylesheet" href="css/material-datetimepicker.css" />
     <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body ng-controller="IotdmGuiCtrl as ctrl">
 
-    <div layout="column" class="container">
+    <div layout="column" class="iotdm-container">
         <md-toolbar class="md-whiteframe-1dp toolbar-main">
             <div class="md-toolbar-tools toolbar-main">
                 <span class="logo">Iotdm</span>
@@ -25,9 +25,9 @@
             </div>
         </md-toolbar>
 
-        <section layout="row" flex>
+        <section layout="row" flex class="iotdm-content">
             <div id="topology" flex></div>
-            <section class="side-panel md-whiteframe-1dp h100 w100" ng-class="{'side-panel-hide':ctrl.sidePanel.hide}">
+            <section class="side-panel md-whiteframe-1dp h100" ng-class="{'side-panel-hide':ctrl.sidePanel.hide}">
                 <div class="show-tag icon-container md-whiteframe-1dp" ng-hide="ctrl.sidePanel.hide" ng-click="ctrl.closeSidePanel()">
                     <span class="material-icons">chevron_right</span>
                 </div>
@@ -35,17 +35,16 @@
             </section>
         </section>
     </div>
-    <div layout-fill id="toast-container"></div>
 
     <!-- vendors -->
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/next-bower/js/next.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="vendor/moment/moment.js"></script>
+    <script src="vendor/d3/d3.js"></script>
+    <script src="vendor/next-bower/js/next.js"></script>
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-animate/angular-animate.js"></script>
+    <script src="vendor/angular-aria/angular-aria.min.js"></script>
+    <script src="vendor/angular-messages/angular-messages.min.js"></script>
+    <script src="vendor/angular-material/angular-material.min.js"></script>
     <script src="js/directives/angular-material-datetimepicker.js"></script>
 
 

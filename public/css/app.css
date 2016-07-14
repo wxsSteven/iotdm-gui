@@ -70,11 +70,16 @@ html, body{
   width:100%;
 }
 
-.container{
+.iotdm-container{
+    position: relative;
     overflow: hidden;
 
     width: 100%;
     height: 100%;
+}
+
+.iotdm-content{
+  position: relative;
 }
 
 [ng-click],
@@ -84,10 +89,10 @@ html, body{
 }
 
 .side-panel {
-    position:relative;
+    position:absolute;
 
     width:20%;
-
+    right:0;
     -webkit-transition: all 1s;
 
     background:white;

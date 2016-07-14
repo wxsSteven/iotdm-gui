@@ -31,14 +31,6 @@
                 closeSidePanel();
             });
 
-            $scope.$watch(function() {
-                return _this.sidePanel.hide;
-            }, function() {
-                $timeout(function() {
-                    Topology.adaptToContainer();
-                }, 1000, false);
-            });
-
             Topology.addSelectNodeListener(function() {
                 _this.isSelect = true;
                 openSidePanel('info');

@@ -3,7 +3,6 @@
     var MIME = "application/json";
     var HOST = 'localhost';
     var PORT = '8181';
-    var CSE_BASE = "";
 
     function Onem2mCRUDService($http, $q, Onem2m) {
         this.CRUD = CRUD;
@@ -11,20 +10,19 @@
         this.retrieveCSE = retrieveCSE;
         this.discovery = discovery;
 
-        function setBaseDir(host, port, cseBase) {
+        function setBaseDir(host, port) {
             HOST = host;
             PORT = port;
-            CSE_BASE = cseBase;
         }
 
         function retrieveCSE(host, port, cseBase) {
             var request = {
-                to: "",
+                to: cseBase,
                 op: Onem2m.operation.retrieve,
                 rqi: Onem2m.assignRequestIdentifier(),
                 fr: Onem2m.assignFrom(),
             };
-            return CRUD(request, host, port, cseBase);
+            return CRUD(request, host, port);
         }
 
         function discovery(host, port, cseBase) {
@@ -37,24 +35,24 @@
                     fu: Onem2m.filterUsage["Discovery Criteria"]
                 }
             };
-            return CRUD(request, host, port, cseBase);
+            return CRUD(request, host, port);
         }
 
-        function CRUD(request, host, port, cseBase) {
+        function CRUD(request, host, port) {
             switch (request.op) {
                 case Onem2m.operation.create:
-                    return _create(request, host, port, cseBase);
+                    return _create(request, host, port);
                 case Onem2m.operation.retrieve:
-                    return _retrieve(request, host, port, cseBase);
+                    return _retrieve(request, host, port);
                 case Onem2m.operation.update:
-                    return _update(request, host, port, cseBase);
+                    return _update(request, host, port);
                 case Onem2m.operation.delete:
-                    return _delete(request, host, port, cseBase);
+                    return _delete(request, host, port);
             }
         }
 
-        function _retrieve(request, host, port, cseBase) {
-            var httpRequest = parseRequest(request, host, port, cseBase);
+        function _retrieve(request, host, port) {
+            var httpRequest = parseRequest(request, host, port);
             return $http.get(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
@@ -62,8 +60,8 @@
             }, handleResponseError);
         }
 
-        function _create(request, host, port, cseBase) {
-            var httpRequest = parseRequest(request, host, port, cseBase);
+        function _create(request, host, port) {
+            var httpRequest = parseRequest(request, host, port);
             var attrsSent = httpRequest.payload;
             return $http.post(httpRequest.url, httpRequest.payload, {
                 headers: httpRequest.headers
@@ -74,8 +72,8 @@
             }, handleResponseError);
         }
 
-        function _update(request, host, port, cseBase) {
-            var httpRequest = parseRequest(request, host, port, cseBase);
+        function _update(request, host, port) {
+            var httpRequest = parseRequest(request, host, port);
             var attrsSent = httpRequest.payload;
             var ri = request.to;
             return $http.put(httpRequest.url, httpRequest.payload, {
@@ -88,8 +86,8 @@
             }, handleResponseError);
         }
 
-        function _delete(request, host, port, cseBase) {
-            var httpRequest = parseRequest(request, host, port, cseBase);
+        function _delete(request, host, port) {
+            var httpRequest = parseRequest(request, host, port);
             return $http.delete(httpRequest.url, {
                 headers: httpRequest.headers
             }).then(function(httpResponse) {
@@ -113,11 +111,10 @@
             return angular.toJson(pointer);
         }
 
-        function parseRequest(request, host, port, cseBase) {
+        function parseRequest(request, host, port) {
             host = host ? host : HOST;
             port = port ? port : PORT;
-            cseBase = cseBase ? cseBase : CSE_BASE;
-            var url = "http://" + host + ":" + port + "/" + cseBase + "/" + request.to;
+            var url = "http://" + host + ":" + port + "/"+ request.to;
             var query = {};
             query.rt = request.rt && request.rt.rtv;
             query.rp = request.rp;
