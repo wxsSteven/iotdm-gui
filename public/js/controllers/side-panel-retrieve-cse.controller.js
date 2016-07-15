@@ -1,6 +1,5 @@
-(function(app) {
+define(['js/controllers/iotdm-gui.controllers.module'], function(app) {
     'use strict';
-
     function SidePanelRetrieveCSECtrl($scope, DataStore, Topology, CRUD, Alert) {
         var _this = this;
 
@@ -36,4 +35,4 @@
 
     SidePanelRetrieveCSECtrl.$inject = ['$scope', 'DataStoreService', 'TopologyService', 'Onem2mCRUDService', 'AlertService'];
     app.controller('SidePanelRetrieveCSECtrl', SidePanelRetrieveCSECtrl);
-})(app);
+});

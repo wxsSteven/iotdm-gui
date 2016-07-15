@@ -1,7 +1,6 @@
-(function(app) {
+define(['js/controllers/iotdm-gui.controllers.module'], function(app) {
     'use strict';
-
-    function IotdmGuiCtrl($scope, $timeout, Topology, DataStore, TreeLayout) {
+    function IotdmGuiCtrl($scope, $timeout, Topology, DataStore, TreeLayout, Path) {
         var _this = this;
 
         _this.isSelect = false;
@@ -16,7 +15,7 @@
 
         function openSidePanel(mode) {
             _this.sidePanel.mode = mode;
-            _this.sidePanel.template = 'template/side-panel-{{0}}.tplt.html'.replace("{{0}}", mode);
+            _this.sidePanel.template = Path + 'template/side-panel-{{0}}.tplt.html'.replace("{{0}}", mode);
             _this.sidePanel.hide = false;
         }
 
@@ -51,6 +50,6 @@
         init();
     }
 
-    IotdmGuiCtrl.$inject = ['$scope', '$timeout', 'TopologyService', 'DataStoreService', 'TreeLayoutService'];
+    IotdmGuiCtrl.$inject = ['$scope', '$timeout', 'TopologyService', 'DataStoreService', 'TreeLayoutService', 'Path'];
     app.controller('IotdmGuiCtrl', IotdmGuiCtrl);
-})(app);
+});

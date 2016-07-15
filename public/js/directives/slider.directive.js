@@ -1,4 +1,4 @@
-(function(app) {
+define(['js/directives/iotdm-gui.directives.module'], function(app) {
     'use strict';
 
     function SiderDirectiveCtrl($scope) {
@@ -23,4 +23,4 @@
             template: '<md-slider min="{{min}}" max="{{max}}" step="1" ng-model="select"><md-slider>',
         };
     });
-})(app);
+});

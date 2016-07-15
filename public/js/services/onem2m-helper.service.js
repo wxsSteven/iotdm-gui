@@ -1,4 +1,4 @@
-(function(app) {
+define(['js/services/iotdm-gui.services.module'], function(app) {
     'use strict';
 
     function Onem2mHelperService($log, $filter) {
@@ -1529,4 +1529,4 @@
 
     Onem2mHelperService.$inject = ['$log', '$filter'];
     app.service('Onem2mHelperService', Onem2mHelperService);
-})(app);
+});

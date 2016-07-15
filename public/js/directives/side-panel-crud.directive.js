@@ -1,15 +1,15 @@
-(function(app) {
+define(['js/directives/iotdm-gui.directives.module'], function(app) {
     'use strict';
 
-    function sidePanelCrud() {
+    function sidePanelCrud(Path) {
         return {
             restrict: "E",
             scope: {
                 operation: "="
             },
-            templateUrl: "template/side-panel-crud.tplt.html"
+            templateUrl:Path+"template/side-panel-crud.tplt.html"
         };
     }
 
     app.directive("sidePanelCrud", sidePanelCrud);
-})(app);
+});

@@ -1,5 +1,5 @@
-(function(app) {
-  'use strict';
+define(['js/services/iotdm-gui.services.module'], function(app) {
+    'use strict';
     function DataStoreOnem2mDataAdaptorService(Onem2m) {
         function onem2mDataAdaptor(data) {
             var array = [];
@@ -41,4 +41,4 @@
 
     DataStoreOnem2mDataAdaptorService.$inject = ['Onem2mHelperService'];
     app.service('DataStoreOnem2mDataAdaptorService', DataStoreOnem2mDataAdaptorService);
-})(app);
+})

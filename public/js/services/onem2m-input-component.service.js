@@ -1,4 +1,4 @@
-(function(app) {
+define(['js/services/iotdm-gui.services.module'], function(app) {
     'use strict';
 
     var stringTemplate = '' +
@@ -346,4 +346,4 @@
 
     Onem2mInputComponentService.$inject = ['$log', '$filter', 'Onem2mHelperService'];
     app.service('Onem2mInputComponentService', Onem2mInputComponentService);
-})(app);
+});

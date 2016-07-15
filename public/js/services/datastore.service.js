@@ -1,4 +1,4 @@
-(function(app) {
+define(['js/services/iotdm-gui.services.module'], function(app) {
     'use strict';
     var cacheNodesById = {};
     var cacheLinksBySourceId = {};
@@ -135,4 +135,4 @@
 
     DataStoreService.$inject = ['Onem2mHelperService', 'DataStoreOnem2mDataAdaptorService', 'Onem2mCRUDService'];
     app.service('DataStoreService', DataStoreService);
-})(app);
+})

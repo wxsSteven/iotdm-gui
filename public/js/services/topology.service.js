@@ -1,8 +1,7 @@
-(function(app) {
+define(['js/services/iotdm-gui.services.module'], function(app) {
     'use strict';
 
-
-    function TopologyService(nx, Onem2m) {
+    function TopologyService(Nx, Onem2m) {
         var _layout = null;
         var _dataStoreAccessKey = null;
         var _selectNodeListeners = null;
@@ -36,7 +35,7 @@
             _selectNodeListeners = {};
             _unSelectNodeListeners = {};
 
-            _topo = new nx.graphic.Topology({
+            _topo = new Nx.graphic.Topology({
                 adaptive: true,
                 nodeConfig: {
                     iconType: function(vertex) {
@@ -54,7 +53,7 @@
                 identityKey: Onem2m.id()
             });
 
-            nx.define('onem2m.Tree', nx.ui.Application, {
+            Nx.define('onem2m.Tree', Nx.ui.Application, {
                 methods: {
                     start: function() {
                         _topo.attach(this);
@@ -75,7 +74,6 @@
                         isSelectNodeAction = true;
                     });
                 });
-                _topo.adaptToContainer();
             });
             _topo.on('clickStage', function(sender, event) {
                 if (!isSelectNodeAction) {
@@ -149,6 +147,6 @@
         }
     }
 
-    TopologyService.$inject = ['NxService', 'Onem2mHelperService'];
+    TopologyService.$inject = ['Nx', 'Onem2mHelperService'];
     app.service('TopologyService', TopologyService);
-})(app);
+});

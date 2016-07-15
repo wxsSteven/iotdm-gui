@@ -1,11 +1,10 @@
-(function(app) {
+define(['js/controllers/iotdm-gui.controllers.module'], function(app) {
     'use strict';
-
     var ROOT_KEY = "requestPrimitive";
 
-    function SidePanelCRUDCtrl($scope, Alert, Topology, TopologyHelper, DataStore, Onem2m, CRUD,Onem2mDescription) {
+    function SidePanelCRUDCtrl($scope, Alert, Topology, TopologyHelper, DataStore, Onem2m, CRUD, Onem2mDescription) {
         var _this = this;
-          var descriptions={};
+        var descriptions = {};
 
         _this.operation = $scope.operation;
 
@@ -29,13 +28,13 @@
         _this.isArray = isArray;
         _this.addOneItem = addOneItem;
         _this.removeOneItem = removeOneItem;
-        _this.description=description;
+        _this.description = description;
 
         init();
 
         function init() {
             var reset = null;
-            descriptions=Onem2mDescription.descriptionByResourceType();
+            descriptions = Onem2mDescription.descriptionByResourceType();
 
             if (_this.operation === Onem2m.operation.create) {
                 reset = function() {
@@ -49,15 +48,15 @@
                     _this.root[ROOT_KEY] = _this.request;
                     _this.path.push(ROOT_KEY);
 
-                    var resourceType=node.value.ty;
-                    descriptions=Onem2mDescription.descriptionByResourceType(resourceType);
+                    var resourceType = node.value.ty;
+                    descriptions = Onem2mDescription.descriptionByResourceType(resourceType);
                 };
                 $scope.$watch(function() {
                         return _this.request.ty;
                     },
                     function(newValue, oldValue) {
                         if (newValue && newValue != oldValue) {
-                            descriptions=Onem2mDescription.descriptionByResourceType(newValue);
+                            descriptions = Onem2mDescription.descriptionByResourceType(newValue);
                             var resource = Onem2m.getResourceByResourceTypeAndOperation(newValue, Onem2m.operation.create);
                             _this.request.pc = resource;
                             _this.request.ty = newValue;
@@ -115,7 +114,7 @@
                 _this.request.to = Onem2m.id(node);
 
                 var ty = Onem2m.readResourceType(node);
-                descriptions=Onem2mDescription.descriptionByResourceType(ty);
+                descriptions = Onem2mDescription.descriptionByResourceType(ty);
 
                 var template = Onem2m.getResourceByResourceTypeAndOperation(ty, Onem2m.operation.update);
 
@@ -285,10 +284,10 @@
             place.splice(index, 1);
         }
 
-        function description(name){
-          return descriptions[name];
+        function description(name) {
+            return descriptions[name];
         }
     }
-    SidePanelCRUDCtrl.$inject = ['$scope', 'AlertService', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService','Onem2mDescriptionService'];
+    SidePanelCRUDCtrl.$inject = ['$scope', 'AlertService', 'TopologyService', 'TopologyHelperService', 'DataStoreService', 'Onem2mHelperService', 'Onem2mCRUDService', 'Onem2mDescriptionService'];
     app.controller("SidePanelCRUDCtrl", SidePanelCRUDCtrl);
-})(app);
+});

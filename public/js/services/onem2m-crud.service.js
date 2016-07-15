@@ -1,4 +1,4 @@
-(function(app) {
+define(['js/services/iotdm-gui.services.module'], function(app) {
     'use strict';
     var MIME = "application/json";
     var HOST = 'localhost';
@@ -233,4 +233,4 @@
 
     Onem2mCRUDService.$inject = ['$http', '$q', 'Onem2mHelperService'];
     app.service('Onem2mCRUDService', Onem2mCRUDService);
-})(app);
+});

@@ -1,5 +1,5 @@
-(function(app){
-  'use strict';
+define(['js/services/iotdm-gui.services.module'], function(app) {
+    'use strict';
   function TopologyHelperService(DataStore,Topology){
     this.getSelectedNode=getSelectedNode;
 
@@ -10,4 +10,4 @@
   }
   TopologyHelperService.$inject=['DataStoreService','TopologyService'];
   app.service("TopologyHelperService",TopologyHelperService);
-})(app);
+});

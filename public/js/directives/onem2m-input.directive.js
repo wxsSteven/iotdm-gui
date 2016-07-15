@@ -1,6 +1,5 @@
-(function(app) {
+define(['js/directives/iotdm-gui.directives.module'], function(app) {
     'use strict';
-
     function onem2mInput($compile, $parse,Onem2mInputComponent) {
 
         return {
@@ -32,4 +31,4 @@
     }
     onem2mInput.$inject = ['$compile', '$parse','Onem2mInputComponentService'];
     app.directive('onem2mInput', onem2mInput);
-})(app);
+});
