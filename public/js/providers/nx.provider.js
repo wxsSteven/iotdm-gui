@@ -1,4 +1,4 @@
-define(['js/providers/iotdm-gui.providers.module', 'next'], function(app,next) {
+define(['iotdm-gui.providers.module', 'next'], function(app,next) {
     'use strict';
     app.provider('Nx', function() {
         this.icons = function(config) {

@@ -1,4 +1,4 @@
-define(['js/directives/iotdm-gui.directives.module'], function(app) {
+define(['iotdm-gui.directives.module'], function(app) {
     'use strict';
 
     function SiderDirectiveCtrl($scope) {

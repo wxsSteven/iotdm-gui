@@ -1,4 +1,4 @@
-define(['js/filters/iotdm-gui.filters.module'], function(app) {
+define(['iotdm-gui.filters.module'], function(app) {
     'use strict';
 
     function shortToLong(Onem2m) {

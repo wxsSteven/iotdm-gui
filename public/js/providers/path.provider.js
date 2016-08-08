@@ -1,4 +1,4 @@
-define(['js/providers/iotdm-gui.providers.module'], function(app) {
+define(['iotdm-gui.providers.module'], function(app) {
     'use strict';
     app.provider("Path", function() {
         var _base = "/";

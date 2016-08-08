@@ -1,4 +1,4 @@
-define(['js/services/iotdm-gui.services.module'], function(app) {
+define(['iotdm-gui.services.module'], function(app) {
     'use strict';
     function DataStoreOnem2mDataAdaptorService(Onem2m) {
         function onem2mDataAdaptor(data) {

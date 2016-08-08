@@ -1,4 +1,4 @@
-define(['js/services/iotdm-gui.services.module'], function(app) {
+define(['iotdm-gui.services.module'], function(app) {
     'use strict';
     var MIME = "application/json";
     var HOST = 'localhost';

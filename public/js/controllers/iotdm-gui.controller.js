@@ -1,4 +1,4 @@
-define(['js/controllers/iotdm-gui.controllers.module'], function(app) {
+define(['iotdm-gui.controllers.module'], function(app) {
     'use strict';
     function IotdmGuiCtrl($scope, $timeout, Topology, DataStore, TreeLayout, Path) {
         var _this = this;

@@ -1,4 +1,4 @@
-define(['js/services/iotdm-gui.services.module'], function(app) {
+define(['iotdm-gui.services.module'], function(app) {
     'use strict';
   function AlertService($mdToast){
     return function(message,style){

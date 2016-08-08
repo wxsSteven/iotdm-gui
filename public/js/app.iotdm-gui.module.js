@@ -1,5 +1,6 @@
 'use strict';
 var modules = [
+    'module',
     'angular',
     'ngRoute',
     'ngAnimate',
@@ -11,36 +12,37 @@ var modules = [
     'd3',
     'next',
 
-    'js/controllers/iotdm-gui.controller',
-    'js/controllers/side-panel-crud.controller',
-    'js/controllers/side-panel-info.controller',
-    'js/controllers/side-panel-retrieve-cse.controller',
+    'iotdm-gui.controller',
+    'side-panel-crud.controller',
+    'side-panel-info.controller',
+    'side-panel-retrieve-cse.controller',
 
-    'js/directives/onem2m-input-component-custom.directive',
-    'js/directives/onem2m-input.directive',
-    'js/directives/side-panel-crud.directive',
-    'js/directives/slider.directive',
+    'onem2m-input-component-custom.directive',
+    'onem2m-input.directive',
+    'side-panel-crud.directive',
+    'slider.directive',
 
-    'js/filters/short-to-long.filter',
+    'short-to-long.filter',
 
-    'js/providers/nx.provider',
-    'js/providers/path.provider',
+    'nx.provider',
+    'path.provider',
 
-    'js/services/alert.service',
-    'js/services/datastore-onem2m-data-adaptor.service',
-    'js/services/datastore.service',
-    'js/services/onem2m-crud.service',
-    'js/services/onem2m-description.service',
-    'js/services/onem2m-helper.service',
-    'js/services/onem2m-input-component.service',
-    'js/services/topology-helper.service',
-    'js/services/topology.service',
-    'js/services/tree-layout.service'
+    'alert.service',
+    'datastore-onem2m-data-adaptor.service',
+    'datastore.service',
+    'onem2m-crud.service',
+    'onem2m-description.service',
+    'onem2m-helper.service',
+    'onem2m-input-component.service',
+    'topology-helper.service',
+    'topology.service',
+    'tree-layout.service'
 ];
 
 
 
-define(modules, function(ng) {
+define(modules, function(module, ng) {
+    var baseUrl = module.config().baseUrl;
     var angular_modules = [
         'ngMaterialDatePicker',
         'ngMaterial',
@@ -56,7 +58,7 @@ define(modules, function(ng) {
 
     app.config(
         function($mdThemingProvider, $routeProvider, PathProvider, NxProvider) {
-            PathProvider.setBase("/");
+            PathProvider.setBase(baseUrl);
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('blue')
@@ -77,4 +79,8 @@ define(modules, function(ng) {
             });
         }
     );
+    ng.element(document).ready(function() {
+        ng.bootstrap(document, ['app.iotdm-gui']);
+    });
+
 });

@@ -1,4 +1,4 @@
-define(['js/controllers/iotdm-gui.controllers.module'], function(app) {
+define(['iotdm-gui.controllers.module'], function(app) {
     'use strict';
     var ROOT_KEY = "requestPrimitive";
 
