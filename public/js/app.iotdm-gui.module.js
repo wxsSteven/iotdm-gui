@@ -2,7 +2,7 @@
 var modules = [
     'module',
     'angular',
-    'ngRoute',
+    'ngUIRoute',
     'ngAnimate',
     'ngAria',
     'ngMessages',
@@ -46,7 +46,7 @@ define(modules, function(module, ng) {
     var angular_modules = [
         'ngMaterialDatePicker',
         'ngMaterial',
-        'ngRoute',
+        'ui.router',
         'app.iotdm-gui.controllers',
         'app.iotdm-gui.providers',
         'app.iotdm-gui.directives',
@@ -57,18 +57,22 @@ define(modules, function(module, ng) {
     var app = ng.module('app.iotdm-gui', angular_modules);
 
     app.config(
-        function($mdThemingProvider, $routeProvider, PathProvider, NxProvider) {
+        function($mdThemingProvider, PathProvider, NxProvider, $stateProvider, $urlRouterProvider) {
             PathProvider.setBase(baseUrl);
+
+            $urlRouterProvider.otherwise("/state1");
+
+            $stateProvider.state('state1', {
+                url: "/state1",
+                templateUrl: PathProvider.base() + 'template/iotdm-gui.tplt.html',
+                controller: 'IotdmGuiCtrl',
+                controllerAs: "ctrl"
+            });
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('blue')
                 .accentPalette('light-blue');
 
-            $routeProvider.when("/", {
-                templateUrl: PathProvider.base() + 'template/iotdm-gui.tplt.html',
-                controller: 'IotdmGuiCtrl',
-                controllerAs: "ctrl"
-            });
 
             NxProvider.icons({
                 icons: ["CSEBase", "AE", "container", "contentInstance", "group", "node", "accessControlPolicy", "observe", "unobserve", "subscription"],

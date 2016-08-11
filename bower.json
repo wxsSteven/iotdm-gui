@@ -11,6 +11,7 @@
     "d3": "^3.5.17",
     "next-bower": "NeXt#^0.9.1",
     "angular-material": "^1.0.9",
-    "moment": "momentjs#^2.13.0"
+    "moment": "momentjs#^2.13.0",
+    "angular-ui-router": "^0.3.1"
   }
 }

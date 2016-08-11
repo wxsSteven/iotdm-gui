@@ -13,6 +13,7 @@
             "next": dir("vendor/next-bower/js/next"),
             "angular": dir("vendor/angular/angular"),
             "ngRoute": dir("vendor/angular-route/angular-route"),
+            "ngUIRoute": dir("vendor/angular-ui-router/release/angular-ui-router"),
             "ngAnimate": dir("vendor/angular-animate/angular-animate"),
             "ngAria": dir("vendor/angular-aria/angular-aria"),
             "ngMessages": dir("vendor/angular-messages/angular-messages.min"),
@@ -66,6 +67,7 @@
                 exports: "moment"
             },
             "ngRoute": ['angular'],
+            "ngUIRoute": ['angular'],
             "ngAnimate": ['angular'],
             "ngAria": ['angular'],
             "ngMessages": ['angular'],
