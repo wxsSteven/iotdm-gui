@@ -1,27 +1,22 @@
 define(['iotdm-gui.controllers.module'], function(app) {
     'use strict';
-    function IotdmGuiCtrl($scope, $timeout, Topology, DataStore, TreeLayout, Path) {
+
+    function IotdmGuiCtrl($scope, $timeout, Topology, DataStore, TreeLayout, Path, $state, CRUD) {
         var _this = this;
 
         _this.isSelect = false;
         _this.sidePanel = {
-            hide: true,
-            mode: "",
-            template: ""
+            hide: true
         };
 
         _this.openSidePanel = openSidePanel;
         _this.closeSidePanel = closeSidePanel;
 
-        function openSidePanel(mode) {
-            _this.sidePanel.mode = mode;
-            _this.sidePanel.template = Path + 'template/side-panel-{{0}}.tplt.html'.replace("{{0}}", mode);
+        function openSidePanel() {
             _this.sidePanel.hide = false;
         }
 
         function closeSidePanel() {
-            _this.sidePanel.mode = "";
-            _this.sidePanel.template = "";
             _this.sidePanel.hide = true;
         }
 
@@ -30,10 +25,19 @@ define(['iotdm-gui.controllers.module'], function(app) {
                 closeSidePanel();
             });
 
+            $scope.$on('dblclick', function(event, args) {
+                var id = args;
+                var node = DataStore.retrieveNode(id);
+                CRUD.retrieveChildren(node).then(function(data) {
+                    DataStore.addNode(data);
+                    Topology.update();
+                });
+            });
+
             Topology.addSelectNodeListener(function() {
                 _this.isSelect = true;
-                openSidePanel('info');
-                $scope.$apply();
+                openSidePanel();
+                $state.go('iotdm.info');
             });
 
             Topology.addUnSelectNodeListener(function() {
@@ -50,6 +54,6 @@ define(['iotdm-gui.controllers.module'], function(app) {
         init();
     }
 
-    IotdmGuiCtrl.$inject = ['$scope', '$timeout', 'TopologyService', 'DataStoreService', 'TreeLayoutService', 'Path'];
+    IotdmGuiCtrl.$inject = ['$scope', '$timeout', 'TopologyService', 'DataStoreService', 'TreeLayoutService', 'Path', '$state', 'Onem2mCRUDService'];
     app.controller('IotdmGuiCtrl', IotdmGuiCtrl);
 });

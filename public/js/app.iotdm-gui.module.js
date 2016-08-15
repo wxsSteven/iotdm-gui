@@ -19,7 +19,6 @@ var modules = [
 
     'onem2m-input-component-custom.directive',
     'onem2m-input.directive',
-    'side-panel-crud.directive',
     'slider.directive',
 
     'short-to-long.filter',
@@ -60,14 +59,70 @@ define(modules, function(module, ng) {
         function($mdThemingProvider, PathProvider, NxProvider, $stateProvider, $urlRouterProvider) {
             PathProvider.setBase(baseUrl);
 
-            $urlRouterProvider.otherwise("/state1");
+            $urlRouterProvider.otherwise("/iotdm");
 
-            $stateProvider.state('state1', {
-                url: "/state1",
+            $stateProvider.state('iotdm', {
+                url: "/iotdm",
                 templateUrl: PathProvider.base() + 'template/iotdm-gui.tplt.html',
                 controller: 'IotdmGuiCtrl',
                 controllerAs: "ctrl"
             });
+
+            $stateProvider.state('iotdm.retrieve-cse', {
+                url: "/retrieve-cse",
+                templateUrl: PathProvider.base() + 'template/side-panel-retrieve-cse.tplt.html',
+                controller: 'SidePanelRetrieveCSECtrl',
+                controllerAs: "ctrl"
+            });
+
+            $stateProvider.state('iotdm.create', {
+                url: "/create/{operation:int}",
+                templateUrl: PathProvider.base() + 'template/side-panel-crud.tplt.html',
+                controller: 'SidePanelCRUDCtrl',
+                controllerAs: "ctrl"
+            });
+
+            $stateProvider.state('iotdm.retrieve', {
+                url: "/retrieve/{operation:int}",
+                templateUrl: PathProvider.base() + 'template/side-panel-crud.tplt.html',
+                controller: 'SidePanelCRUDCtrl',
+                controllerAs: "ctrl",
+            });
+
+            $stateProvider.state('iotdm.update', {
+                url: "/update/{operation:int}",
+                templateUrl: PathProvider.base() + 'template/side-panel-crud.tplt.html',
+                controller: 'SidePanelCRUDCtrl',
+                controllerAs: "ctrl",
+            });
+
+            $stateProvider.state('iotdm.delete', {
+                url: "/delete/{operation:int}",
+                templateUrl: PathProvider.base() + 'template/side-panel-crud.tplt.html',
+                controller: 'SidePanelCRUDCtrl',
+                controllerAs: "ctrl",
+            });
+
+            $stateProvider.state('iotdm.info', {
+                url: "/info",
+                templateUrl: PathProvider.base() + 'template/side-panel-info.tplt.html',
+                controller: 'SidePanelInfoCtrl',
+                controllerAs: "ctrl"
+            });
+
+            // $stateProvider.state('iotdm.retrieve-cse', {
+            //     url: "/iotdm/retrieve-cse",
+            //     templateUrl: PathProvider.base() + 'template/side-panel-retrieve-cse.tplt.html',
+            //     controller: 'SidePanelRetrieveCSECtrl',
+            //     controllerAs: "ctrl"
+            // });
+            //
+            // $stateProvider.state('iotdm.retrieve-cse', {
+            //     url: "/iotdm/retrieve-cse",
+            //     templateUrl: PathProvider.base() + 'template/side-panel-retrieve-cse.tplt.html',
+            //     controller: 'SidePanelRetrieveCSECtrl',
+            //     controllerAs: "ctrl"
+            // });
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('blue')

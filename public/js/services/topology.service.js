@@ -1,7 +1,7 @@
 define(['iotdm-gui.services.module'], function(app) {
     'use strict';
 
-    function TopologyService(Nx, Onem2m) {
+    function TopologyService($rootScope,Nx, Onem2m) {
         var _layout = null;
         var _dataStoreAccessKey = null;
         var _selectNodeListeners = null;
@@ -46,8 +46,8 @@ define(['iotdm-gui.services.module'], function(app) {
                     }
                 },
                 tooltipManagerConfig: {
-                       showNodeTooltip: false,
-                       showLinkTooltip:false
+                    showNodeTooltip: false,
+                    showLinkTooltip: false
                 },
                 showIcon: true,
                 identityKey: Onem2m.id()
@@ -75,6 +75,40 @@ define(['iotdm-gui.services.module'], function(app) {
                     });
                 });
             });
+            _topo.stage().on('dblclick', function(sender, event) {
+                var target = event.target;
+                var nodesLayerDom = _topo.getLayer('nodes').dom().$dom;
+                var linksLayerDom = _topo.getLayer('links').dom().$dom;
+                var nodeSetLayerDom = _topo.getLayer('nodeSet').dom().$dom;
+                var id;
+
+
+                //db click node
+                if (nodesLayerDom.contains(target)) {
+                    while (!target.classList.contains('node')) {
+                        target = target.parentElement;
+                    }
+                    id = target.getAttribute('data-id');
+                    $rootScope.$broadcast('dblclick',id);
+                    return;
+                }
+            });
+
+            // var popup = new Nx.ui.Popover({
+            //     width: 300,
+            //     height: 200,
+            //     offset: 5
+            // });
+            //
+            // _topo.on('contextmenu', function(sender, event) {
+            //     popup.open({
+            //         target: {
+            //             x: event.offsetX,
+            //             y: event.offsetY
+            //         }
+            //     });
+            // });
+
             _topo.on('clickStage', function(sender, event) {
                 if (!isSelectNodeAction) {
                     unSelectNode();
@@ -147,6 +181,6 @@ define(['iotdm-gui.services.module'], function(app) {
         }
     }
 
-    TopologyService.$inject = ['Nx', 'Onem2mHelperService'];
+    TopologyService.$inject = ['$rootScope','Nx', 'Onem2mHelperService'];
     app.service('TopologyService', TopologyService);
 });

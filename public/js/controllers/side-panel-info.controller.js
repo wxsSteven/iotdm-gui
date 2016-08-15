@@ -34,6 +34,7 @@ define(['iotdm-gui.controllers.module'], function(app) {
         }
 
         function reset(node) {
+          if(node){
             _this.root = {};
             _this.path = [];
             _this.root[node.key] = node.value;
@@ -41,6 +42,7 @@ define(['iotdm-gui.controllers.module'], function(app) {
 
             var resourceType = node.value.ty;
             descriptions = Onem2mDescription.descriptionByResourceType(resourceType);
+          }
         }
 
         function ancestor(index) {

@@ -34,7 +34,6 @@
 
             'onem2m-input-component-custom.directive':dir('js/directives/onem2m-input-component-custom.directive'),
             'onem2m-input.directive':dir('js/directives/onem2m-input.directive'),
-            'side-panel-crud.directive':dir('js/directives/side-panel-crud.directive'),
             'slider.directive':dir('js/directives/slider.directive'),
 
             'short-to-long.filter':dir('js/filters/short-to-long.filter'),
