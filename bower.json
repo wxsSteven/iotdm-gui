@@ -12,6 +12,7 @@
     "next-bower": "NeXt#^0.9.1",
     "angular-material": "^1.0.9",
     "moment": "momentjs#^2.13.0",
-    "angular-ui-router": "^0.3.1"
+    "angular-ui-router": "^0.3.1",
+    "requirejs": "^2.2.0"
   }
 }
