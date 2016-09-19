@@ -1,7 +1,7 @@
 define(['iotdm-gui.controllers.module'], function(app) {
     'use strict';
 
-    function SidePanelInfoCtrl($scope, Topology, TopologyHelper, Onem2m, Onem2mDescription) {
+    function SidePanelInfoCtrl($scope,DataStore,TopologyHelper,Onem2m, Onem2mDescription) {
         var _this = this;
         var descriptions = {};
 
@@ -21,13 +21,9 @@ define(['iotdm-gui.controllers.module'], function(app) {
         init();
 
         function init() {
-            var key = Topology.addSelectNodeListener(function() {
-                reset(TopologyHelper.getSelectedNode());
+            $scope.$on('selectNode',function(event,id){
+                reset(DataStore.retrieveNode(id));
                 $scope.$apply();
-            });
-
-            $scope.$on("$destory", function() {
-                Topology.removeSelectNodeListener(key);
             });
 
             reset(TopologyHelper.getSelectedNode());
@@ -86,6 +82,6 @@ define(['iotdm-gui.controllers.module'], function(app) {
         }
     }
 
-    SidePanelInfoCtrl.$inject = ['$scope', 'TopologyService', 'TopologyHelperService', 'Onem2mHelperService', 'Onem2mDescriptionService'];
+    SidePanelInfoCtrl.$inject = ['$scope', 'DataStoreService', 'TopologyHelperService','Onem2mHelperService', 'Onem2mDescriptionService'];
     app.controller('SidePanelInfoCtrl', SidePanelInfoCtrl);
 });

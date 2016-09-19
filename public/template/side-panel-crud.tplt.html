@@ -11,7 +11,7 @@
             <span class="subtitle">{{ctrl.mode}}</span>
         </div>
         <div flex="30" layout="row" layout-align="center center">
-            <slider flex modes="ctrl.modes" mode="ctrl.mode" min="ctrl.min" max="ctrl.max" ng-if="ctrl.hasMultipleModes"></slider>
+            <onem2m-slider flex modes="ctrl.modes" mode="ctrl.mode" min="ctrl.min" max="ctrl.max" ng-if="ctrl.hasMultipleModes"></onem2m-slider>
             <md-switch ng-model="ctrl.advancedMode" ng-if="ctrl.hasTwoModes"></md-switch>
         </div>
     </div>

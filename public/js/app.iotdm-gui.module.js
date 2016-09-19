@@ -2,7 +2,9 @@
 var modules = [
     'module',
     'angular',
+    //Start comment for DLUX
     'ngUIRoute',
+    //End comment
     'ngAnimate',
     'ngAria',
     'ngMessages',
@@ -19,7 +21,7 @@ var modules = [
 
     'onem2m-input-component-custom.directive',
     'onem2m-input.directive',
-    'slider.directive',
+    'onem2m-slider.directive',
 
     'short-to-long.filter',
 
@@ -56,7 +58,40 @@ define(modules, function(module, ng) {
     var app = ng.module('app.iotdm-gui', angular_modules);
 
     app.config(
-        function($mdThemingProvider, PathProvider, NxProvider, $stateProvider, $urlRouterProvider) {
+        function($mdThemingProvider,
+            PathProvider,
+            NxProvider,
+            $urlRouterProvider,
+            $stateProvider
+            //Start uncomment below for DLUX
+            //, $compileProvider,
+            //$controllerProvider,
+            //$provide,
+            //NavHelperProvider,
+            //End uncomment
+        ) {
+
+            //Start uncomment below for DLUX
+            //  app.register = {
+            //      controller: $controllerProvider.register,
+            //      directive: $compileProvider.directive,
+            //      factory: $provide.factory,
+            //      service: $provide.service
+            //  };
+            // NavHelperProvider.addToMenu('iotdm', {
+            //     "link": "#/iotdm",
+            //     "active": "iotdm",
+            //     "title": "iotdm",
+            //     "icon": "", // Add navigation icon css class here
+            //     "page": {
+            //         "title": "iotdm",
+            //         "description": "iotdm"
+            //     }
+            // });
+            //
+            //
+            //End uncomment
+
             PathProvider.setBase(baseUrl);
 
             $urlRouterProvider.otherwise("/iotdm");
@@ -109,20 +144,6 @@ define(modules, function(module, ng) {
                 controller: 'SidePanelInfoCtrl',
                 controllerAs: "ctrl"
             });
-
-            // $stateProvider.state('iotdm.retrieve-cse', {
-            //     url: "/iotdm/retrieve-cse",
-            //     templateUrl: PathProvider.base() + 'template/side-panel-retrieve-cse.tplt.html',
-            //     controller: 'SidePanelRetrieveCSECtrl',
-            //     controllerAs: "ctrl"
-            // });
-            //
-            // $stateProvider.state('iotdm.retrieve-cse', {
-            //     url: "/iotdm/retrieve-cse",
-            //     templateUrl: PathProvider.base() + 'template/side-panel-retrieve-cse.tplt.html',
-            //     controller: 'SidePanelRetrieveCSECtrl',
-            //     controllerAs: "ctrl"
-            // });
 
             $mdThemingProvider.theme('default')
                 .primaryPalette('blue')

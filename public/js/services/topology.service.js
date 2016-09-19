@@ -1,24 +1,17 @@
 define(['iotdm-gui.services.module'], function(app) {
     'use strict';
 
-    function TopologyService($rootScope,Nx, Onem2m) {
+    function TopologyService($rootScope, Nx, Onem2m) {
         var _layout = null;
         var _dataStoreAccessKey = null;
-        var _selectNodeListeners = null;
-        var _unSelectNodeListeners = null;
         var _topo = null;
         var _selectedNodeId = null;
 
-        //todo: isSelectNodeAction is stopPropagation Flag since Event.stopPropagation not work. Need to ask
         this.initTopology = initTopology;
         this.layout = layout;
         this.setDataStoreAccessKey = setDataStoreAccessKey;
         this.update = update;
         this.getSelectedNodeId = getSelectedNodeId;
-        this.addSelectNodeListener = addSelectNodeListener();
-        this.addUnSelectNodeListener = addUnSelectNodeListener();
-        this.removeSelectNodeListener = removeSelectNodeListener;
-        this.removeUnSelectNodeListener = removeUnSelectNodeListener;
         this.adaptToContainer = adaptToContainer;
 
         init();
@@ -31,9 +24,6 @@ define(['iotdm-gui.services.module'], function(app) {
                     return null;
                 }
             };
-
-            _selectNodeListeners = {};
-            _unSelectNodeListeners = {};
 
             _topo = new Nx.graphic.Topology({
                 adaptive: true,
@@ -64,14 +54,12 @@ define(['iotdm-gui.services.module'], function(app) {
 
         function initTopology(htmlElementId) {
             var application = new onem2m.Tree();
-            var isSelectNodeAction = false;
             application.container(document.getElementById(htmlElementId));
             application.start();
             _topo.on('topologyGenerated', function(sender, event) {
                 sender.eachNode(function(node) {
                     node.onclickNode(function(sender, event) {
                         selectNode(sender.id());
-                        isSelectNodeAction = true;
                     });
                 });
             });
@@ -89,8 +77,16 @@ define(['iotdm-gui.services.module'], function(app) {
                         target = target.parentElement;
                     }
                     id = target.getAttribute('data-id');
-                    $rootScope.$broadcast('dblclick',id);
+                    $rootScope.$broadcast('dblclick', id);
                     return;
+                }
+            });
+
+            _topo.on('clickStage', function(sender, event) {
+                var target = event.target;
+                var nodesLayerDom = _topo.getLayer('nodes').dom().$dom;
+                if (!nodesLayerDom.contains(target)) {
+                    unSelectNode();
                 }
             });
 
@@ -108,37 +104,6 @@ define(['iotdm-gui.services.module'], function(app) {
             //         }
             //     });
             // });
-
-            _topo.on('clickStage', function(sender, event) {
-                if (!isSelectNodeAction) {
-                    unSelectNode();
-                }
-                isSelectNodeAction = false;
-            });
-        }
-
-        function addSelectNodeListener() {
-            var counter = 0;
-            return function(listener) {
-                _selectNodeListeners[counter++] = listener;
-                return counter;
-            };
-        }
-
-        function addUnSelectNodeListener() {
-            var counter = 0;
-            return function(listener) {
-                _unSelectNodeListeners[counter++] = listener;
-                return counter;
-            };
-        }
-
-        function removeSelectNodeListener(key) {
-            delete _selectNodeListeners[key];
-        }
-
-        function removeUnSelectNodeListener(key) {
-            delete _unSelectNodeListeners[key];
         }
 
         function layout(layout) {
@@ -150,19 +115,13 @@ define(['iotdm-gui.services.module'], function(app) {
         }
 
         function selectNode(id) {
+            $rootScope.$broadcast('selectNode', id);
             _selectedNodeId = id;
-            notifyListeners(_selectNodeListeners, _selectedNodeId);
         }
 
         function unSelectNode() {
+            $rootScope.$broadcast('unSelectNode', _selectedNodeId);
             _selectedNodeId = null;
-            notifyListeners(_unSelectNodeListeners);
-        }
-
-        function notifyListeners(listeners, notification) {
-            for (var key in listeners) {
-                listeners[key](notification);
-            }
         }
 
         function update() {
@@ -181,6 +140,6 @@ define(['iotdm-gui.services.module'], function(app) {
         }
     }
 
-    TopologyService.$inject = ['$rootScope','Nx', 'Onem2mHelperService'];
+    TopologyService.$inject = ['$rootScope', 'Nx', 'Onem2mHelperService'];
     app.service('TopologyService', TopologyService);
 });

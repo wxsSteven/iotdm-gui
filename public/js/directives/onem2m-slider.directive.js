@@ -12,7 +12,7 @@ define(['iotdm-gui.directives.module'], function(app) {
         });
     }
 
-    app.directive('slider', function($compile) {
+    app.directive('onem2mSlider', function($compile) {
         return {
             restrict: 'E',
             scope: {

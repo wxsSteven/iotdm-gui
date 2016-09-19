@@ -42,34 +42,6 @@ html, body{
     padding: 0;
 }
 
-.toolbar-main {
-  background-color: #000000;
-}
-
-.logo {
-  font-weight: 800;
-}
-
-.title{
-  margin: 0;
-  padding: 0;
-
-  text-align: center;
-}
-
-.subtitle{
-  text-align:center;
-
-  font-size:8pt;
-}
-.h100{
-  height:100%;
-}
-
-.w100{
-  width:100%;
-}
-
 .iotdm-container{
     position: relative;
     overflow: hidden;
@@ -78,7 +50,37 @@ html, body{
     height: 100%;
 }
 
-.iotdm-content{
+.iotdm-container .toolbar-main {
+  background-color: #000000;
+}
+
+.iotdm-container .logo {
+  font-weight: 800;
+}
+
+.iotdm-container .title{
+  margin: 0;
+  padding: 0;
+
+  text-align: center;
+}
+
+.iotdm-container .subtitle{
+  text-align:center;
+
+  font-size:8pt;
+}
+.iotdm-container .h100{
+  height:100%;
+}
+
+.iotdm-container .w100{
+  width:100%;
+}
+
+
+
+.iotdm-container .iotdm-content{
   position: relative;
 }
 
@@ -88,7 +90,7 @@ html, body{
     cursor: pointer;
 }
 
-.side-panel {
+.iotdm-container .side-panel {
     position:absolute;
 
     width:20%;
@@ -98,17 +100,17 @@ html, body{
     background:white;
 }
 
-.md-button.animate-hide{
+.iotdm-container .md-button.animate-hide{
   -webkit-transition: all 0.5s;
 
   opacity:1;
 }
 
-.md-button.animate-hide.ng-hide{
+.iotdm-container .md-button.animate-hide.ng-hide{
   opacity:0
 }
 
-.side-panel .show-tag {
+.iotdm-container .side-panel .show-tag {
     position: absolute;
     left: -25px;
 
@@ -117,7 +119,7 @@ html, body{
 
     background: white;
 }
-.side-panel-top .nav-tag {
+.iotdm-container .side-panel-top .nav-tag {
     position: absolute;
     left: 0px;
 
@@ -125,7 +127,7 @@ html, body{
     height: 50px;
 }
 
-.side-panel-top{
+.iotdm-container .side-panel-top{
     position:relative;
 
     overflow: hidden;
@@ -139,19 +141,19 @@ html, body{
     justify-content: center;
 }
 
-.side-panel-content {
+.iotdm-container .side-panel-content {
     overflow: auto;
 
     flex: 1;
 }
-.side-panel-bottom{
+.iotdm-container .side-panel-bottom{
     height:100px;
 }
 
-.side-panel.side-panel-hide{
+.iotdm-container .side-panel.side-panel-hide{
     width:0;
 }
-.submit{
+.iotdm-container .submit{
     width:100%;
     margin:0;
     padding:0;
@@ -161,19 +163,19 @@ html, body{
     opacity: 1;
 }
 
-.submit.ng-hide{
+.iotdm-container .submit.ng-hide{
   -webkit-transition: all 1s;
 
   opacity:0;
 }
 
-.icon-container{
+.iotdm-container .icon-container{
     display:flex;
 
     align-items:center;
 }
 
-.breadcrumb > a+a:before{
+.iotdm-container .breadcrumb > a+a:before{
     padding: 0 5px;
 
     content: "/\00a0";
@@ -181,39 +183,39 @@ html, body{
     color: #ccc;
 }
 
-.breadcrumb a{
+.iotdm-container .breadcrumb a{
     display: inline-block;
 }
 
-.breadcrumb a:last-child{
+.iotdm-container .breadcrumb a:last-child{
     cursor:default;
 
     color: #C0C0C0;
 }
 
-.breadcrumb a:not(:last-child):hover{
+.iotdm-container .breadcrumb a:not(:last-child):hover{
     color:#C0C0C0;
 }
 
-.right{
+.iotdm-container .right{
     position:absolute;
     right:0;
 }
 
-.content{
+.iotdm-container .content{
     clear:both;
 
     width: 100%;
 }
 
-.onem2m-block{
+.iotdm-container .onem2m-block{
     display:block;
 }
 
 /*Override the error space setting in the md*/
 
 
-md-toast.md-success-theme .md-toast-content{
+ md-toast.md-success-theme .md-toast-content{
     background-color: rgb(33,150,243);
 }
 
@@ -221,41 +223,41 @@ md-toast.md-warn-theme .md-toast-content {
     background-color: rgb(223, 55, 111);
 }
 
-onem2m-input{
+.iotdm-container onem2m-input{
   display:block;
 }
 
-.icons-right{
+.iotdm-container .icons-right{
     position:absolute;
     top:5px;
     right:4px;
     z-index:50;
 }
 
-.icons-right-top{
+.iotdm-container .icons-right-top{
     position:absolute;
     top:-15px;
     right:4px;
     z-index:50;
 }
 
-.onem2m-input-container{
+.iotdm-container .onem2m-input-container{
   position: relative;
 }
 
-.onem2m-input-container  .clear{
+.iotdm-container .onem2m-input-container  .clear{
   display:none;
 }
 
-.onem2m-input-container:hover  .clear{
+.iotdm-container .onem2m-input-container:hover  .clear{
   display:inline-block;
 }
 
 
-.edited-text{
+.iotdm-container .edited-text{
   font-style: italic;
 }
 
-md-select{
+.iotdm-container md-select{
   margin: 0;
 }

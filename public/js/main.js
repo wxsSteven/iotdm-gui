@@ -9,8 +9,10 @@
     requirejs.config({
         paths: {
             "moment": dir("vendor/moment/moment"),
-            "d3": dir("vendor/d3/d3"),
+            "material-datetimepicker": dir("custom_vendor/material-datetimepicker/angular-material-datetimepicker"),
             "next": dir("vendor/next-bower/js/next"),
+            //Start comment below for DLUX
+            "d3": dir("vendor/d3/d3"),
             "angular": dir("vendor/angular/angular"),
             "ngRoute": dir("vendor/angular-route/angular-route"),
             "ngUIRoute": dir("vendor/angular-ui-router/release/angular-ui-router"),
@@ -18,7 +20,7 @@
             "ngAria": dir("vendor/angular-aria/angular-aria"),
             "ngMessages": dir("vendor/angular-messages/angular-messages.min"),
             "ngMaterial": dir("vendor/angular-material/angular-material.min"),
-            "material-datetimepicker": dir("custom_vendor/material-datetimepicker/angular-material-datetimepicker"),
+            //End comment
 
             "app.iotdm-gui.module":dir("js/app.iotdm-gui.module"),
             "iotdm-gui.controllers.module":dir("js/controllers/iotdm-gui.controllers.module"),
@@ -34,7 +36,7 @@
 
             'onem2m-input-component-custom.directive':dir('js/directives/onem2m-input-component-custom.directive'),
             'onem2m-input.directive':dir('js/directives/onem2m-input.directive'),
-            'slider.directive':dir('js/directives/slider.directive'),
+            'onem2m-slider.directive':dir('js/directives/onem2m-slider.directive'),
 
             'short-to-long.filter':dir('js/filters/short-to-long.filter'),
 
@@ -65,17 +67,19 @@
             "moment": {
                 exports: "moment"
             },
+            "material-datetimepicker": ['moment', 'ngMaterial'],
+            //Start comment below for ODL
             "ngRoute": ['angular'],
             "ngUIRoute": ['angular'],
             "ngAnimate": ['angular'],
             "ngAria": ['angular'],
             "ngMessages": ['angular'],
             "ngMaterial": ['ngAnimate', 'ngAria', 'ngMessages'],
-            "material-datetimepicker": ['moment', 'ngMaterial']
+            //End comment
         },
         config:{
           "app.iotdm-gui.module":{
-            baseUrl:"/"
+            baseUrl:baseUrl
           }
         }
     });

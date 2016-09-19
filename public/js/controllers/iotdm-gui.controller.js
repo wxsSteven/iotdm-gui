@@ -34,17 +34,19 @@ define(['iotdm-gui.controllers.module'], function(app) {
                 });
             });
 
-            Topology.addSelectNodeListener(function() {
+            $scope.$on('selectNode',function(event,id){
                 _this.isSelect = true;
                 openSidePanel();
+                $scope.$apply();
                 $state.go('iotdm.info');
             });
 
-            Topology.addUnSelectNodeListener(function() {
+            $scope.$on('unSelectNode',function(event,id){
                 _this.isSelect = false;
                 closeSidePanel();
                 $scope.$apply();
             });
+
 
             var treeLayout = TreeLayout.init(50, 50);
             Topology.initTopology('topology');
